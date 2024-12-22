@@ -1,13 +1,12 @@
 package com.example.paypergo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -22,4 +21,7 @@ public class Product {
 
     String product_name;
     String product_baseurl;
+
+    @OneToMany(mappedBy = "product")
+    private List<LinkTraker> linkTrakers;
 }

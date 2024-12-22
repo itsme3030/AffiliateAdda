@@ -6,23 +6,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-public class User {
+public class LinkTraker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long lkid;
+
     Long user_id;
+    Long product_id;
+    String product_gereratedurl;
+    Long count;
 
-    String user_username;
-    String user_email;
-    String user_password;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @OneToMany(mappedBy = "user")
-    private List<LinkTraker> linkTrakers;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 }
