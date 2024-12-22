@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-public class LinkTraker {
+public class LinkTrakerTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

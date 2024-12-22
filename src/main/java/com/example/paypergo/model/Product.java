@@ -23,5 +23,5 @@ public class Product {
     String product_baseurl;
 
     @OneToMany(mappedBy = "product")
-    private List<LinkTraker> linkTrakers;
+    private List<LinkTrakerTable> linkTrakerTables;
 }

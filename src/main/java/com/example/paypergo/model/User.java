@@ -24,5 +24,5 @@ public class User {
     String user_password;
 
     @OneToMany(mappedBy = "user")
-    private List<LinkTraker> linkTrakers;
+    private List<LinkTrakerTable> linkTrakerTables;
 }
