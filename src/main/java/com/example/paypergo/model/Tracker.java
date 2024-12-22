@@ -11,11 +11,11 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-public class LinkTrakerTable {
+public class Traker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long lkid;
+    Long t_id;
 
     Long user_id;
     Long product_id;

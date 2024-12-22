@@ -21,7 +21,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody UserDto userDto) {
         try{
-            User user = userService.registerUser(userDto.getUsername(), userDto.getEmail(), userDto.getPassword());
+            User user = userService.registerUser(userDto.getUser_username(), userDto.getUser_email(), userDto.getUser_password());
             return new ResponseEntity<>(user, HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -31,7 +31,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDto userDto) {
         try{
-            User user = userService.loginUser(userDto.getEmail(), userDto.getPassword());
+            User user = userService.loginUser(userDto.getUser_email(), userDto.getUser_password());
             return new ResponseEntity<>(user, HttpStatus.OK);
         }catch (RuntimeException e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
