@@ -26,6 +26,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Tracker> trackers;
 
+    @OneToMany(mappedBy = "user")
+    private List<Product> products;
+
     public User() {}
 
     public User(Long user_id, String user_username, String user_email, String user_password, List<Tracker> trackers) {

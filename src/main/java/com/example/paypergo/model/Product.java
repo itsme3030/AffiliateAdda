@@ -25,6 +25,10 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Tracker> trackers;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Product() {}
 
     public Product(Long product_id, String product_name, String product_baseurl, List<Tracker> trackers) {
