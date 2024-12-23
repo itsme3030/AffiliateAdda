@@ -1,9 +1,6 @@
 package com.example.paypergo.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Entity
@@ -11,15 +8,14 @@ import org.springframework.stereotype.Component;
 //@AllArgsConstructor
 //@NoArgsConstructor
 @Component
+@Table(name = "trackers")
 public class Tracker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long t_id;
+    Long tId;
 
-    Long user_id;
-    Long product_id;
-    String product_gereratedurl;
+    String productGereratedurl;
     Long count = 0L;
 
     @ManyToOne
@@ -32,46 +28,28 @@ public class Tracker {
 
     public Tracker() {}
 
-    public Tracker(Long t_id, Long user_id, Long product_id, String product_gereratedurl, Long count, User user, Product product) {
-        this.t_id = t_id;
-        this.user_id = user_id;
-        this.product_id = product_id;
-        this.product_gereratedurl = product_gereratedurl;
+    public Tracker(Long tId, String productGereratedurl, Long count, User user, Product product) {
+        this.tId = tId;
+        this.productGereratedurl = productGereratedurl;
         this.count = count;
         this.user = user;
         this.product = product;
     }
 
-    public Long getT_id() {
-        return t_id;
+    public Long getTId() {
+        return tId;
     }
 
-    public void setT_id(Long t_id) {
-        this.t_id = t_id;
+    public void setTId(Long t_id) {
+        this.tId = t_id;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public String getProductGereratedurl() {
+        return productGereratedurl;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
-    }
-
-    public Long getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(Long product_id) {
-        this.product_id = product_id;
-    }
-
-    public String getProduct_gereratedurl() {
-        return product_gereratedurl;
-    }
-
-    public void setProduct_gereratedurl(String product_gereratedurl) {
-        this.product_gereratedurl = product_gereratedurl;
+    public void setProductGereratedurl(String product_gereratedurl) {
+        this.productGereratedurl = product_gereratedurl;
     }
 
     public Long getCount() {

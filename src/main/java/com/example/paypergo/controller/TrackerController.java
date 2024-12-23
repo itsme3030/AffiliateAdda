@@ -20,14 +20,14 @@ public class TrackerController {
 
     @PostMapping("/generate")
     public String generateLink(@RequestBody LinkDto linkDto) {
-        Long productId = linkDto.getProduct_id();
+        Long productId = linkDto.getProductId();
         Product product = productService.getProductById(productId);
         if (product == null) {
             return "Product not found";
         }
-        Long user_id = linkDto.getUser_id();
-        Long product_id = product.getProduct_id();
-        String product_baseurl = product.getProduct_baseurl();
+        Long user_id = linkDto.getUserId();
+        Long product_id = product.getProductId();
+        String product_baseurl = product.getProductBaseurl();
 
         return trackerService.generateLink(user_id, product_id, product_baseurl);
     }

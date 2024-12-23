@@ -1,9 +1,6 @@
 package com.example.paypergo.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,15 +10,16 @@ import java.util.List;
 //@AllArgsConstructor
 //@NoArgsConstructor
 @Component
+@Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long user_id;
+    Long userId;
 
-    String user_username;
-    String user_email;
-    String user_password;
+    String userUsername;
+    String userEmail;
+    String userPassword;
 
     @OneToMany(mappedBy = "user")
     private List<Tracker> trackers;
@@ -31,44 +29,44 @@ public class User {
 
     public User() {}
 
-    public User(Long user_id, String user_username, String user_email, String user_password, List<Tracker> trackers) {
-        this.user_id = user_id;
-        this.user_username = user_username;
-        this.user_email = user_email;
-        this.user_password = user_password;
+    public User(Long userId, String userUsername, String userEmail, String userPassword, List<Tracker> trackers) {
+        this.userId = userId;
+        this.userUsername = userUsername;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
         this.trackers = trackers;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long user_id) {
+        this.userId = user_id;
     }
 
-    public String getUser_username() {
-        return user_username;
+    public String getUserUsername() {
+        return userUsername;
     }
 
-    public void setUser_username(String user_username) {
-        this.user_username = user_username;
+    public void setUserUsername(String user_username) {
+        this.userUsername = user_username;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
+    public void setUserEmail(String user_email) {
+        this.userEmail = user_email;
     }
 
-    public String getUser_password() {
-        return user_password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
+    public void setUserPassword(String user_password) {
+        this.userPassword = user_password;
     }
 
     public List<Tracker> getTrackers() {

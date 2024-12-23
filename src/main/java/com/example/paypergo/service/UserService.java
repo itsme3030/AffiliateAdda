@@ -5,6 +5,8 @@ import com.example.paypergo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -18,9 +20,9 @@ public class UserService {
         }
 
         User user = new User();
-        user.setUser_username(username);
-        user.setUser_email(email);
-        user.setUser_password(password);
+        user.setUserUsername(username);
+        user.setUserEmail(email);
+        user.setUserPassword(password);
         return userRepository.save(user);
 
     }
@@ -30,10 +32,14 @@ public class UserService {
         User user = userRepository.findByUserEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
 
         // Check password
-        if (!(password.endsWith(user.getUser_password()))) {
+        if (!(password.endsWith(user.getUserPassword()))) {
             throw new RuntimeException("Invalid credentials");
         }
 
         return user;
+    }
+
+    public Optional<User> findByUserId(Long userId) {
+        return userRepository.findByUserId(userId);
     }
 }

@@ -1,45 +1,44 @@
 package com.example.paypergo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 //@Data
 //@AllArgsConstructor
 //@NoArgsConstructor
+
 public class UserDto {
 
-    private String user_username;
-    private String user_email;
-    private String user_password;
+    private String userUsername;
+    private String userEmail;
+    private String userPassword;
 
-    public UserDto(String user_username, String user_email, String user_password) {
-        this.user_username = user_username;
-        this.user_email = user_email;
-        this.user_password = user_password;
+    public UserDto(String userUsername, String userEmail, String userPassword) {
+        this.userUsername = userUsername;
+        this.userEmail = userEmail;
+        this.userPassword = userPassword;
     }
 
-    public String getUser_username() {
-        return user_username;
+    public String getUserUsername() {
+        return userUsername;
     }
 
-    public void setUser_username(String user_username) {
-        this.user_username = user_username;
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
     }
 
-    public String getUser_email() {
-        return user_email;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUser_email(String user_email) {
-        this.user_email = user_email;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
-    public String getUser_password() {
-        return user_password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setUser_password(String user_password) {
-        this.user_password = user_password;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 }

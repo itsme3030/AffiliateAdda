@@ -1,6 +1,8 @@
 package com.example.paypergo.service;
 
+import com.example.paypergo.model.Product;
 import com.example.paypergo.model.Tracker;
+import com.example.paypergo.model.User;
 import com.example.paypergo.repository.TrackerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,13 @@ public class TrackerService {
     @Autowired
     private TrackerRepository trackerRepository;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ProductService productService;
+
+
     public String generateLink(Long user_id, Long product_id, String product_baseurl) {
         // Construct the URL with the parameters
         String mydomainurl = "http://localhost:5432/track";
@@ -22,10 +31,22 @@ public class TrackerService {
         // Encode the URL
         String encodedUrl = Base64.getEncoder().encodeToString(url.getBytes());
 
+        // Fetch the User and Product entities using the IDs
+        Optional<User> user = userService.findByUserId(user_id);  // Assuming you have a service method to fetch User
+        Optional<Product> product = productService.findByProductId(product_id);  // Similarly, for Product
+
+        // Check if user and product exist
+        if (!user.isPresent() || !product.isPresent()) {
+            return "User or Product not found";
+        }
+
         Tracker tracker = new Tracker();
-        tracker.setUser_id(user_id);
-        tracker.setProduct_id(product_id);
-        tracker.setProduct_gereratedurl(encodedUrl);
+        tracker.setProductGereratedurl(encodedUrl);
+
+
+        // Set the user and product associations
+        tracker.setUser(user.get());
+        tracker.setProduct(product.get());
 
         // Save or update the record in the database
         trackerRepository.save(tracker);
@@ -49,8 +70,17 @@ public class TrackerService {
         Long product_Id = Long.valueOf(params[1].split("=")[1]);
         String product_baseurl = params[2].split("=")[1];
 
-        // Find the LinkTrackerTable entry based on user_id and product_id
-        Optional<Tracker> linkTracker = Optional.ofNullable(trackerRepository.findByUserIdAndProductId(user_Id, product_Id));
+        // Fetch the User and Product entities
+        Optional<User> user = userService.findByUserId(user_Id);
+        Optional<Product> product = productService.findByProductId(product_Id);
+
+        // Check if user and product exist
+        if (!user.isPresent() || !product.isPresent()) {
+            return;
+        }
+
+        // Find the LinkTrackerTable entry based on the user and product associations
+        Optional<Tracker> linkTracker = Optional.ofNullable(trackerRepository.findByUserAndProduct(user.get(), product.get()));
 
         if (linkTracker.isPresent()) {
             Tracker tracker = linkTracker.get();

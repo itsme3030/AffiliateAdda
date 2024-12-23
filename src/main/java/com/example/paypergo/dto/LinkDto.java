@@ -1,34 +1,33 @@
 package com.example.paypergo.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 //@Data
 //@NoArgsConstructor
 //@AllArgsConstructor
+
 public class LinkDto {
-    private Long user_id;
-    private Long product_id;
+    private Long userId;
+    private Long productId;
 
-    public LinkDto(Long user_id, Long product_id) {
-        this.user_id = user_id;
-        this.product_id = product_id;
+    public LinkDto(Long userId, Long productId) {
+        this.userId = userId;
+        this.productId = productId;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public Long getProduct_id() {
-        return product_id;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setProduct_id(Long product_id) {
-        this.product_id = product_id;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }
