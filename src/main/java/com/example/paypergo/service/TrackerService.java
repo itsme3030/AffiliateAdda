@@ -24,12 +24,15 @@ public class TrackerService {
 
 
     public String generateLink(Long user_id, Long product_id, String product_baseurl) {
-        // Construct the URL with the parameters
-        String mydomainurl = "http://localhost:5432/track";
-        String url = String.format("%s?user_id=%d&product_id=%d&product_baseurl=%s",mydomainurl, user_id, product_id, product_baseurl);
+        // Construct the query string with the parameters
+        String queryString = String.format("user_id=%d&product_id=%d&product_baseurl=%s", user_id, product_id, product_baseurl);
 
-        // Encode the URL
-        String encodedUrl = Base64.getEncoder().encodeToString(url.getBytes());
+        // Encode only the query parameters part
+        String encodedParams = Base64.getEncoder().encodeToString(queryString.getBytes());
+
+        // Construct the base URL with the encoded query parameters
+        String mydomainurl = "http://localhost:8080/link/track";
+        String url = String.format("%s?data=%s", mydomainurl, encodedParams);
 
         // Fetch the User and Product entities using the IDs
         Optional<User> user = userService.findByUserId(user_id);  // Assuming you have a service method to fetch User
@@ -41,8 +44,7 @@ public class TrackerService {
         }
 
         Tracker tracker = new Tracker();
-        tracker.setProductGereratedurl(encodedUrl);
-
+        tracker.setProductGereratedurl(url); // Save the full URL with encoded query params
 
         // Set the user and product associations
         tracker.setUser(user.get());
@@ -51,21 +53,19 @@ public class TrackerService {
         // Save or update the record in the database
         trackerRepository.save(tracker);
 
-        return encodedUrl;
+        return url; // Returning the full URL with the encoded query parameters
     }
 
-    public void trackClick(String encodedUrl) {
 
-        // Decode the URL
-        String decodedUrl = new String(Base64.getDecoder().decode(encodedUrl));
+    public boolean trackClick(String encodedUrl) {
 
-        // Step 1: Extract the query string (everything after the "?")
-        String queryString = decodedUrl.split("\\?")[1]; // Splits at the "?" and gets the second part
+        // Decode the parameters
+        String decodedParams = new String(Base64.getDecoder().decode(encodedUrl));
 
-        // Step 2: Split the query string by "&" to get the individual key-value pairs
-        String[] params = queryString.split("&");
+        // Split the decoded parameters by "&"
+        String[] params = decodedParams.split("&");
 
-        // Step 3: Extract the individual parameters
+        // Extract the individual parameters
         Long user_Id = Long.valueOf(params[0].split("=")[1]);
         Long product_Id = Long.valueOf(params[1].split("=")[1]);
         String product_baseurl = params[2].split("=")[1];
@@ -76,7 +76,7 @@ public class TrackerService {
 
         // Check if user and product exist
         if (!user.isPresent() || !product.isPresent()) {
-            return;
+            return false; // If either user or product not found, return false
         }
 
         // Find the LinkTrackerTable entry based on the user and product associations
@@ -84,9 +84,10 @@ public class TrackerService {
 
         if (linkTracker.isPresent()) {
             Tracker tracker = linkTracker.get();
-            tracker.setCount(tracker.getCount() + 1);
-            trackerRepository.save(tracker); // Update the count
+            tracker.setCount(tracker.getCount() + 1); // Increment click count
+            trackerRepository.save(tracker); // Save the updated tracker
         }
-
+        return true; // Return true indicating the click was successfully tracked
     }
+
 }
