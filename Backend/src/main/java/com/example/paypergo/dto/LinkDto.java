@@ -1,5 +1,7 @@
 package com.example.paypergo.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.stereotype.Component;
 
 //@Data
@@ -7,27 +9,19 @@ import org.springframework.stereotype.Component;
 //@AllArgsConstructor
 
 public class LinkDto {
-    private Long userId;
-    private Long productId;
 
-    public LinkDto(Long userId, Long productId) {
-        this.userId = userId;
-        this.productId = productId;
+    private String productName;
+
+    @JsonCreator
+    public LinkDto(@JsonProperty("productName") String productName) {
+        this.productName = productName;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }

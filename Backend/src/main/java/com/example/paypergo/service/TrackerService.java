@@ -24,8 +24,29 @@ public class TrackerService {
 
 
     public String generateLink(Long user_id, Long product_id, String product_baseurl) {
+
+        // Fetch the User and Product entities using the IDs
+        Optional<User> user = userService.findByUserId(user_id);  // Assuming you have a service method to fetch User
+        Optional<Product> product = productService.findByProductId(product_id);  // Similarly, for Product
+
+        // Check if either user or product is missing
+        if (!user.isPresent()) {
+            return "User not found";
+        }
+        if (!product.isPresent()) {
+            return "Product not found";
+        }
+
+        // Find the LinkTrackerTable entry based on the user and product associations
+        Optional<Tracker> linkTracker = Optional.ofNullable(trackerRepository.findByUserAndProduct(user.get(), product.get()));
+        if(linkTracker.isPresent()) {
+            Tracker tracker = linkTracker.get();
+            return tracker.getProductGereratedurl();
+        }
+
+        Long productId = product.get().getProductId();
         // Construct the query string with the parameters
-        String queryString = String.format("user_id=%d&product_id=%d&product_baseurl=%s", user_id, product_id, product_baseurl);
+        String queryString = String.format("user_id=%d&product_id=%d&product_baseurl=%s", user_id, productId, product_baseurl);
 
         // Encode only the query parameters part
         String encodedParams = Base64.getEncoder().encodeToString(queryString.getBytes());
@@ -33,10 +54,6 @@ public class TrackerService {
         // Construct the base URL with the encoded query parameters
         String mydomainurl = "http://localhost:8080/link/track";
         String url = String.format("%s?data=%s", mydomainurl, encodedParams);
-
-        // Fetch the User and Product entities using the IDs
-        Optional<User> user = userService.findByUserId(user_id);  // Assuming you have a service method to fetch User
-        Optional<Product> product = productService.findByProductId(product_id);  // Similarly, for Product
 
         // Check if user and product exist
         if (!user.isPresent() || !product.isPresent()) {

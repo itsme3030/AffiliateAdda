@@ -29,35 +29,20 @@ public class Product {
 
     public Product() {}
 
-    public Product(Long productId, String productName, String productBaseurl, List<Tracker> trackers) {
+    public Product(Long productId, String productName, String productBaseurl, List<Tracker> trackers, User user) {
         this.productId = productId;
         this.productName = productName;
         this.productBaseurl = productBaseurl;
         this.trackers = trackers;
+        this.user = user;
     }
 
-    public Long getProductId() {
-        return productId;
+    public User getUser() {
+        return user;
     }
 
-    public void setProductId(Long product_id) {
-        this.productId = product_id;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String product_name) {
-        this.productName = product_name;
-    }
-
-    public String getProductBaseurl() {
-        return productBaseurl;
-    }
-
-    public void setProductBaseurl(String product_baseurl) {
-        this.productBaseurl = product_baseurl;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Tracker> getTrackers() {
@@ -66,5 +51,29 @@ public class Product {
 
     public void setTrackers(List<Tracker> trackers) {
         this.trackers = trackers;
+    }
+
+    public String getProductBaseurl() {
+        return productBaseurl;
+    }
+
+    public void setProductBaseurl(String productBaseurl) {
+        this.productBaseurl = productBaseurl;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }
