@@ -22,6 +22,10 @@ public class UserService {
             throw new RuntimeException("Email already taken");
         }
 
+        if(userRepository.findByUserUsername(username).isPresent()){
+            throw new RuntimeException("Username already taken");
+        }
+
         User user = new User();
         user.setUserUsername(username);
         user.setUserEmail(email);

@@ -6,15 +6,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Entity
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Component
 @Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long userId;
 
     String userUsername;
