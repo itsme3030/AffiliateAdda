@@ -1,5 +1,5 @@
 import React from "react";
-import ProductList from "../components/Products/ProductList";
+import ProductList from "../components/ProductList";
 
 const Home = () => (
   <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">

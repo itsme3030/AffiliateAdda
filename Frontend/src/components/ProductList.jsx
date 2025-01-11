@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from './ProductCard';  // Import ProductCard Component
-import { getProducts } from '../../utils/api';
+import { useNavigate } from "react-router-dom";
+import ProductCard from './ProductCard';
+import axios from "axios";
 
 function ProductList() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   // Fetch product list from backend
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await getProducts();  // Fetching the list of product names
+
+        const response = await axios.get("http://localhost:8080/product/list");
+
         console.log('Fetching the list of productName');
         setProducts(response.data);
       } catch (err) {

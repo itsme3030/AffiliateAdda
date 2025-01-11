@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { generateLink } from '../../utils/api';  // Assuming the API file is in the same folder
+import axios from "axios";
 
 function ProductCard({ productName }) {
   const [generatedLink, setGeneratedLink] = useState('');
@@ -10,9 +10,20 @@ function ProductCard({ productName }) {
     setGeneratedLink('');  // Reset the generated link
     setError('');  // Clear any error message
 
+    const token = localStorage.getItem("token");
+    if (token == null) {
+      navigate("/Authenticate");
+    }
+    console.log("TodoList : Token : ", token);
+
     try {
       console.log('Reuest send for link generation...');
-      const response = await generateLink({ productName });
+      //const response = await generateLink({ productName });
+      const response = await axios.get("http://localhost:8080//link/generate",
+        { productName },
+        {
+          headers: { 'Authorization': `Bearer ${token}` },
+        });
       setGeneratedLink(response.data);  // Set the generated link
     } catch (err) {
       setError('Failed to generate link');
