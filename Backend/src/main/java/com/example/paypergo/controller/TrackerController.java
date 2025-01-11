@@ -3,6 +3,7 @@ package com.example.paypergo.controller;
 import com.example.paypergo.dto.LinkDto;
 import com.example.paypergo.model.Product;
 import com.example.paypergo.model.User;
+import com.example.paypergo.repository.UserRepository;
 import com.example.paypergo.service.ProductService;
 import com.example.paypergo.service.TrackerService;
 import com.example.paypergo.service.UserService;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
@@ -29,33 +31,18 @@ public class TrackerController {
     private ProductService productService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private UserService userService;
 
     @PostMapping("/generate")
-    public ResponseEntity<String> generateLink(@RequestBody LinkDto linkDto, HttpSession session, Model model, HttpServletRequest request) {
+    public ResponseEntity<String> generateLink(@RequestBody LinkDto linkDto, Principal principal) {
 
-        //Get User
-//        System.out.println("user finding...");
-//        User user = userService.validateUser(session);
-//        if (user == null) {
-//            System.out.println("user not found...");
-//            return new ResponseEntity<>("User not logged in(Tracker controller)", HttpStatus.UNAUTHORIZED);
-//        }
-//        System.out.println("user found...");
-//        Long userId = user.getUserId();
-
-        HttpSession sessionObj = request.getSession(false);
-        System.out.println("Session ID (Tracker controller - generate): " + sessionObj.getId());
-        Long userId = (Long) sessionObj.getAttribute("userId");
-
-//        System.out.println("Session ID (Tracker controller - generate): " + session.getId());
-//        Long userId = (Long) session.getAttribute("userId");
-//        System.out.println("UserId : " + userId);
-
-//        Long userId = (Long) model.getAttribute("userId");
-//        if (userId == null) {
-//            return new ResponseEntity<>("User not logged in", HttpStatus.UNAUTHORIZED);
-//        }
+        //get user
+        String username = principal.getName();
+        Optional<User> user = userRepository.findByUsername(username);
+        Long userId = user.map(User::getId).orElse(null);
 
         //get Product
         String productName = linkDto.getProductName();

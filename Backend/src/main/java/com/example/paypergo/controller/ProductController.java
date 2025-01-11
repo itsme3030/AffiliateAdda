@@ -2,14 +2,14 @@ package com.example.paypergo.controller;
 
 import com.example.paypergo.model.Product;
 import com.example.paypergo.model.User;
+import com.example.paypergo.repository.UserRepository;
 import com.example.paypergo.service.ProductService;
-import com.example.paypergo.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,18 +22,17 @@ public class ProductController {
     private ProductService productService;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
     // Endpoint to add a new product
     @PostMapping("/add")
-    public ResponseEntity<Product> addProduct(@RequestBody Product product, HttpServletRequest request) {
+    public ResponseEntity<Product> addProduct(@RequestBody Product product, Principal principal) {
         //Get User
-        Long userId= 0L;
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            userId = (Long) session.getAttribute("userId");
+        String username = principal.getName();
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
+            return ResponseEntity.badRequest().body(product);
         }
-        Optional<User> user = userService.findByUserId(userId);
 
         //set User to Product
         product.setUser(user.get());

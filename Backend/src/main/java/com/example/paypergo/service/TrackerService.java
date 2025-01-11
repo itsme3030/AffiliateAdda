@@ -23,11 +23,11 @@ public class TrackerService {
     private ProductService productService;
 
 
-    public String generateLink(Long user_id, Long product_id, String product_baseurl) {
+    public String generateLink(Long userId, Long productId, String productBaseurl) {
 
         // Fetch the User and Product entities using the IDs
-        Optional<User> user = userService.findByUserId(user_id);  // Assuming you have a service method to fetch User
-        Optional<Product> product = productService.findByProductId(product_id);  // Similarly, for Product
+        Optional<User> user = userService.findByUserId(userId);
+        Optional<Product> product = productService.findByProductId(productId);
 
         // Check if either user or product is missing
         if (!user.isPresent()) {
@@ -44,9 +44,8 @@ public class TrackerService {
             return tracker.getProductGereratedurl();
         }
 
-        Long productId = product.get().getProductId();
         // Construct the query string with the parameters
-        String queryString = String.format("user_id=%d&product_id=%d&product_baseurl=%s", user_id, productId, product_baseurl);
+        String queryString = String.format("user_id=%d&product_id=%d&product_baseurl=%s", userId, productId, productBaseurl);
 
         // Encode only the query parameters part
         String encodedParams = Base64.getEncoder().encodeToString(queryString.getBytes());

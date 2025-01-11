@@ -12,11 +12,13 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long userId;
+    private Long id;
 
-    String userUsername;
-    String userEmail;
-    String userPassword;
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
 
     @OneToMany(mappedBy = "user")
     private List<Tracker> trackers;
@@ -26,44 +28,36 @@ public class User {
 
     public User() {}
 
-    public User(Long userId, String userUsername, String userEmail, String userPassword, List<Tracker> trackers) {
-        this.userId = userId;
-        this.userUsername = userUsername;
-        this.userEmail = userEmail;
-        this.userPassword = userPassword;
+    public User(Long id, String username, String password, List<Tracker> trackers, List<Product> products) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
         this.trackers = trackers;
+        this.products = products;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getId() {
+        return id;
     }
 
-    public void setUserId(Long user_id) {
-        this.userId = user_id;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getUserUsername() {
-        return userUsername;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserUsername(String user_username) {
-        this.userUsername = user_username;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserEmail(String user_email) {
-        this.userEmail = user_email;
-    }
-
-    public String getUserPassword() {
-        return userPassword;
-    }
-
-    public void setUserPassword(String user_password) {
-        this.userPassword = user_password;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<Tracker> getTrackers() {
@@ -72,5 +66,13 @@ public class User {
 
     public void setTrackers(List<Tracker> trackers) {
         this.trackers = trackers;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
     }
 }

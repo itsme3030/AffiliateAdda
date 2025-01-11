@@ -6,9 +6,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Entity
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
 @Component
 @Table(name = "products")
 public class Product {
