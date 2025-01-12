@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class Tracker {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long tId;
 
     String productGereratedurl;

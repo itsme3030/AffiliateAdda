@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function ProductCard({ productName }) {
+function ProductCard({ product }) {
   const [generatedLink, setGeneratedLink] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   // Handle Generate Link button click
   const handleGenerateLink = async () => {
@@ -14,16 +16,21 @@ function ProductCard({ productName }) {
     if (token == null) {
       navigate("/Authenticate");
     }
-    console.log("TodoList : Token : ", token);
+    console.log("ProductCard : Token : ", token);
 
     try {
-      console.log('Reuest send for link generation...');
-      //const response = await generateLink({ productName });
-      const response = await axios.get("http://localhost:8080//link/generate",
-        { productName },
-        {
-          headers: { 'Authorization': `Bearer ${token}` },
-        });
+      console.log('Request sent for link generation...');
+      console.log('Product : ',{product});
+      // console.log('ProductId : ',{product.productId});
+      // Assuming the link generation needs productId or productName
+      const response = await axios.post("http://localhost:8080/link/generate", {
+        productId: product.productId, // Send productId in the body
+      }, {
+        headers: { 
+          'Authorization': `Bearer ${token}` 
+        }
+      });
+      
       setGeneratedLink(response.data);  // Set the generated link
     } catch (err) {
       setError('Failed to generate link');
@@ -33,8 +40,9 @@ function ProductCard({ productName }) {
 
   return (
     <div className="max-w-sm rounded-lg shadow-lg bg-white overflow-hidden border border-gray-200 p-6 space-y-4">
-      {/* Product Name */}
-      <h3 className="text-2xl font-semibold text-gray-800 truncate">{productName}</h3>
+      {/* Product details */}
+      <h3 className="text-2xl font-semibold text-gray-800 truncate">{product.productName}</h3>
+      <p className="text-sm text-gray-600">Price per click: ${product.perClickPrice}</p>
 
       {/* Button to generate link */}
       <button

@@ -12,10 +12,8 @@ function ProductList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-
         const response = await axios.get("http://localhost:8080/product/list");
-
-        console.log('Fetching the list of productName');
+        console.log('Fetching the list of products');
         setProducts(response.data);
       } catch (err) {
         setError('Failed to fetch products');
@@ -37,8 +35,11 @@ function ProductList() {
 
       {/* Product grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product, index) => (
-          <ProductCard key={index} productName={product} />
+        {products.map((product) => (
+          <ProductCard
+            key={product.productId} // Use productId as key
+            product={product} // Pass the entire product object
+          />
         ))}
       </div>
     </div>

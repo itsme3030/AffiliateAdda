@@ -1,5 +1,6 @@
 package com.example.paypergo.controller;
 
+import com.example.paypergo.dto.ProductDTO;
 import com.example.paypergo.model.Product;
 import com.example.paypergo.model.User;
 import com.example.paypergo.repository.UserRepository;
@@ -42,8 +43,9 @@ public class ProductController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<String>> listProduct() {
-        System.out.println("Fetching the list of productName...(Controller)");
-        return ResponseEntity.ok(productService.getAllProductNames());
+    public ResponseEntity<List<ProductDTO>> listProduct() {
+        System.out.println("Fetching the list of products...(Controller)");
+        List<ProductDTO> products = productService.getAllProducts();
+        return ResponseEntity.ok(products);
     }
 }

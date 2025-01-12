@@ -1,5 +1,6 @@
 package com.example.paypergo.service;
 
+import com.example.paypergo.dto.ProductDTO;
 import com.example.paypergo.model.Product;
 import com.example.paypergo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,16 @@ public class ProductService {
 
     public Optional<Product> findByProductName(String productName) {
         return productRepository.findByProductName(productName);
+    }
+
+    public List<ProductDTO> getAllProducts() {
+        // Fetch all products and convert to ProductDTO
+        System.out.println("Fetching the list of products...(Service)");
+
+        List<Product> products = productRepository.findAll();
+
+        return products.stream()
+                .map(product -> new ProductDTO(product.getProductId(), product.getProductName(), product.getPerClickPrice()))
+                .collect(Collectors.toList());
     }
 }

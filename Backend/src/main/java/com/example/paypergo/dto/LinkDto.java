@@ -10,18 +10,21 @@ import org.springframework.stereotype.Component;
 
 public class LinkDto {
 
-    private String productName;
+    private Long productId;
 
-    @JsonCreator
-    public LinkDto(@JsonProperty("productName") String productName) {
-        this.productName = productName;
+    public LinkDto() {
+
     }
 
-    public String getProductName() {
-        return productName;
+    public LinkDto(Long productId) {
+        this.productId = productId;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 }

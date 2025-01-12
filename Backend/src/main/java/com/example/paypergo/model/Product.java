@@ -11,11 +11,12 @@ import java.util.List;
 public class Product {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long productId;
 
     String productName;
     String productBaseurl;
+    Long perClickPrice;
 
     @OneToMany(mappedBy = "product")
     private List<Tracker> trackers;
@@ -26,12 +27,21 @@ public class Product {
 
     public Product() {}
 
-    public Product(Long productId, String productName, String productBaseurl, List<Tracker> trackers, User user) {
+    public Product(Long productId, String productName, String productBaseurl, Long perClickPrice, List<Tracker> trackers, User user) {
         this.productId = productId;
         this.productName = productName;
         this.productBaseurl = productBaseurl;
+        this.perClickPrice = perClickPrice;
         this.trackers = trackers;
         this.user = user;
+    }
+
+    public Long getPerClickPrice() {
+        return perClickPrice;
+    }
+
+    public void setPerClickPrice(Long perClickPrice) {
+        this.perClickPrice = perClickPrice;
     }
 
     public User getUser() {

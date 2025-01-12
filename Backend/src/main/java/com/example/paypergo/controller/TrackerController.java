@@ -39,19 +39,24 @@ public class TrackerController {
     @PostMapping("/generate")
     public ResponseEntity<String> generateLink(@RequestBody LinkDto linkDto, Principal principal) {
 
+        System.out.println("inside generateLink - controller");
+
         //get user
         String username = principal.getName();
         Optional<User> user = userRepository.findByUsername(username);
         Long userId = user.map(User::getId).orElse(null);
+        System.out.println("username " + username + " : id " + userId);
 
         //get Product
-        String productName = linkDto.getProductName();
-        Optional<Product> product = productService.findByProductName(productName);
+        Long productId = linkDto.getProductId();
+        System.out.println("productId " + productId);
+        Optional<Product> product = productService.findByProductId(productId);
         if (product.isEmpty()) {
             return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
         }
-        Long productId = product.get().getProductId();
         String productBaseurl = product.get().getProductBaseurl();
+
+        System.out.println("productBaseurl " + productBaseurl);
 
         //encode url
         String encodedUrl = trackerService.generateLink(userId, productId, productBaseurl);
