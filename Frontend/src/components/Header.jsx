@@ -28,6 +28,13 @@ function Header() {
           >
             Logout
           </Link>
+
+          <Link
+            to="/user-profile"
+            className="text-lg hover:text-teal-200 transition duration-300"
+          >
+            user-profile
+          </Link>
         
         </nav>
       </div>

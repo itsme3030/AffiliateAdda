@@ -4,9 +4,9 @@ public class ProductDTO {
 
     private Long productId;
     private String productName;
-    private Long perClickPrice;
+    private double perClickPrice;
 
-    public ProductDTO(Long productId, String productName, Long perClickPrice) {
+    public ProductDTO(Long productId, String productName, double perClickPrice) {
         this.productId = productId;
         this.productName = productName;
         this.perClickPrice = perClickPrice;
@@ -29,11 +29,11 @@ public class ProductDTO {
         this.productName = productName;
     }
 
-    public Long getPerClickPrice() {
+    public double getPerClickPrice() {
         return perClickPrice;
     }
 
-    public void setPerClickPrice(Long perClickPrice) {
+    public void setPerClickPrice(double perClickPrice) {
         this.perClickPrice = perClickPrice;
     }
 }

@@ -3,7 +3,7 @@ import GoogleAuthentication from './components/GoogleAuthentication'
 import Logout from "./components/Logout";
 import Home from "./pages/Home";
 import AddProduct from "./pages/AddProduct";
-import UserProfile from "./pages/UserProfile";
+import UserProfile from "./components/UserProfile";
 import Header from "./components/Header"
 // import NotFound from "./pages/NotFound";
 

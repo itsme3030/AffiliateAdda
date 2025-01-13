@@ -12,11 +12,12 @@ function Logout() {
             localStorage.removeItem("token");
             sessionStorage.clear();
 
-            // Redirect to login or home page
-            navigate("/login");
-
             // Optional: Force a reload to clear cached pages
-            window.location.reload();
+            //window.location.reload();
+
+            // Redirect to login or home page
+            navigate("/");
+
         } catch (error) {
             console.error("Logout failed:", error);
         }
