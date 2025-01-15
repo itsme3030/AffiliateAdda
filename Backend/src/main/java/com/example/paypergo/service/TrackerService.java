@@ -73,8 +73,7 @@ public class TrackerService {
     }
 
 
-    public boolean trackClick(String encodedUrl) {
-
+    public String trackClick(String encodedUrl) {
         // Decode the parameters
         String decodedParams = new String(Base64.getDecoder().decode(encodedUrl));
 
@@ -82,17 +81,17 @@ public class TrackerService {
         String[] params = decodedParams.split("&");
 
         // Extract the individual parameters
-        Long user_Id = Long.valueOf(params[0].split("=")[1]);
-        Long product_Id = Long.valueOf(params[1].split("=")[1]);
-        String product_baseurl = params[2].split("=")[1];
+        Long userId = Long.valueOf(params[0].split("=")[1]);
+        Long productId = Long.valueOf(params[1].split("=")[1]);
+        String productBaseUrl = params[2].split("=")[1];  // Extract product base URL
 
         // Fetch the User and Product entities
-        Optional<User> user = userService.findByUserId(user_Id);
-        Optional<Product> product = productService.findByProductId(product_Id);
+        Optional<User> user = userService.findByUserId(userId);
+        Optional<Product> product = productService.findByProductId(productId);
 
         // Check if user and product exist
         if (!user.isPresent() || !product.isPresent()) {
-            return false; // If either user or product not found, return false
+            return null; // Return null if user or product not found
         }
 
         // Find the LinkTrackerTable entry based on the user and product associations
@@ -103,7 +102,10 @@ public class TrackerService {
             tracker.setCount(tracker.getCount() + 1); // Increment click count
             trackerRepository.save(tracker); // Save the updated tracker
         }
-        return true; // Return true indicating the click was successfully tracked
+
+        // Return the product base URL if click tracking was successful
+        return productBaseUrl;
     }
+
 
 }

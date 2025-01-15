@@ -10,6 +10,7 @@ import com.example.paypergo.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -66,17 +67,21 @@ public class TrackerController {
     }
 
     @GetMapping("/track")
-    public ResponseEntity<String> trackClick(@RequestParam String data){
-        boolean isTracked = trackerService.trackClick(data);
+    public ResponseEntity<String> trackClick(@RequestParam String data) {
+        // Track the click and retrieve the product base URL after tracking
+        String productBaseUrl = trackerService.trackClick(data);
 
         // If tracking fails, return a 400 Bad Request status
-        if (!isTracked) {
+        if (productBaseUrl == null) {
             return new ResponseEntity<>("Failed to track click", HttpStatus.BAD_REQUEST);
         }
 
-        // Return a success message with a 200 OK status
-        return new ResponseEntity<>("Click tracked successfully!", HttpStatus.OK);
+        // Return a success message with a 302 Found status for redirection
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", productBaseUrl);  // Redirect to the base URL
 
+        return new ResponseEntity<>("Click tracked successfully!", headers, HttpStatus.FOUND);
     }
+
 
 }
