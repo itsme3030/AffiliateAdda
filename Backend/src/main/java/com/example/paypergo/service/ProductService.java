@@ -50,7 +50,7 @@ public class ProductService {
         List<Product> products = productRepository.findAll();
 
         return products.stream()
-                .map(product -> new ProductDTO(product.getProductId(), product.getProductName(), product.getPerClickPrice()))
+                .map(product -> new ProductDTO(product.getProductId(), product.getProductName(), product.getPerClickPrice(), product.getProductType()))
                 .collect(Collectors.toList());
     }
 }

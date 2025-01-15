@@ -43,12 +43,13 @@ public class UserService {
         // Calculate earnings (for the user who is sharing the link)
         List<ProfileResponseDTO.EarningDTO> earnings = new ArrayList<>();
         double totalEarnings = 0;
+        double commission = 0.5;
 
         // Loop through trackers directly to compute earnings
         for (Tracker tracker : trackers) {
             Product product = tracker.getProduct();
             long count = tracker.getCount();
-            double earningForProduct = product.getPerClickPrice() * count;
+            double earningForProduct = product.getPerClickPrice() * commission * count;
 
             ProfileResponseDTO.EarningDTO earningDTO = new ProfileResponseDTO.EarningDTO();
             earningDTO.setProductName(product.getProductName());

@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
 import ProductCard from './ProductCard';
-import axios from "axios";
+import axios from 'axios';
 
-function ProductList() {
+function ProductList({ searchTerm, selectedType }) {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
   // Fetch product list from backend
   useEffect(() => {
@@ -24,6 +22,15 @@ function ProductList() {
     fetchProducts();
   }, []);
 
+  // Filter products based on search term and selected type
+  const filteredProducts = products.filter((product) => {
+    const matchesType = selectedType ? product.productType === selectedType : true;
+    const matchesSearch = searchTerm
+      ? product.productName.toLowerCase().includes(searchTerm.toLowerCase())
+      : true;
+    return matchesType && matchesSearch;
+  });
+
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
       {/* Error message */}
@@ -35,12 +42,18 @@ function ProductList() {
 
       {/* Product grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {products.map((product) => (
-          <ProductCard
-            key={product.productId} // Use productId as key
-            product={product} // Pass the entire product object
-          />
-        ))}
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <ProductCard
+              key={product.productId}
+              product={product}
+            />
+          ))
+        ) : (
+          <div className="col-span-4 text-center text-gray-500">
+            No products found
+          </div>
+        )}
       </div>
     </div>
   );

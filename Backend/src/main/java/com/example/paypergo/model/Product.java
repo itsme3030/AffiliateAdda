@@ -17,6 +17,7 @@ public class Product {
     String productName;
     String productBaseurl;
     double perClickPrice;
+    String productType;
 
     @OneToMany(mappedBy = "product")
     private List<Tracker> trackers;
@@ -27,11 +28,12 @@ public class Product {
 
     public Product() {}
 
-    public Product(Long productId, String productName, String productBaseurl, double perClickPrice, List<Tracker> trackers, User user) {
+    public Product(Long productId, String productName, String productBaseurl, double perClickPrice, String productType, List<Tracker> trackers, User user) {
         this.productId = productId;
         this.productName = productName;
         this.productBaseurl = productBaseurl;
         this.perClickPrice = perClickPrice;
+        this.productType = productType;
         this.trackers = trackers;
         this.user = user;
     }
@@ -82,5 +84,13 @@ public class Product {
 
     public void setProductId(Long productId) {
         this.productId = productId;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }

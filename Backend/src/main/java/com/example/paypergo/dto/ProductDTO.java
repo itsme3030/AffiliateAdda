@@ -5,11 +5,13 @@ public class ProductDTO {
     private Long productId;
     private String productName;
     private double perClickPrice;
+    private String productType;
 
-    public ProductDTO(Long productId, String productName, double perClickPrice) {
+    public ProductDTO(Long productId, String productName, double perClickPrice, String productType) {
         this.productId = productId;
         this.productName = productName;
         this.perClickPrice = perClickPrice;
+        this.productType = productType;
     }
 
     // Getters and Setters
@@ -35,5 +37,13 @@ public class ProductDTO {
 
     public void setPerClickPrice(double perClickPrice) {
         this.perClickPrice = perClickPrice;
+    }
+
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
     }
 }
