@@ -14,6 +14,13 @@ function Header() {
           >
             Home
           </Link>
+
+          <Link
+            to="/add-product"
+            className="text-lg hover:text-teal-200 transition duration-300"
+          >
+            Add-Product
+          </Link>
           
           <Link
             to="/Authenticate"

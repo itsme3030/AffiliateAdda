@@ -28,12 +28,21 @@ public class ProductController {
     // Endpoint to add a new product
     @PostMapping("/add")
     public ResponseEntity<Product> addProduct(@RequestBody Product product, Principal principal) {
+
+        //debug
+        System.out.println("------------------------------------------------->inside addProduct - controller : "+product);
+        System.out.println("Product received: " + product.getProductName() + ", " + product.getProductBaseurl() + ", " + product.getPerClickPrice());
+
         //Get User
+        System.out.println("------------------------------------------------->finding the user");
         String username = principal.getName();
+        System.out.println("------------------------------------------------->Username is " + username);
         Optional<User> user = userRepository.findByUsername(username);
-        if (user.isPresent()) {
+        if (user.isEmpty()) {
             return ResponseEntity.badRequest().body(product);
         }
+        //debug
+        System.out.println("-------------------------------------------------->User found :"+user);
 
         //set User to Product
         product.setUser(user.get());

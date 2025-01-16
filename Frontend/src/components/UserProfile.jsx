@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'; // Import Axios
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import SummaryCard from './SummaryCard';
 
 const UserProfile = () => {
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Initialize navigate hook
-
-  
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // Fetch token from localStorage
+    const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/Authenticate"); // If no token, redirect to Authenticate page
-      return; // Return to prevent further rendering
+      navigate("/Authenticate");
+      return;
     }
 
-    // Fetch user profile data from backend using Axios
     axios
       .get(`http://localhost:8080/user/profile`, {
         headers: {
-          Authorization: `Bearer ${token}`, // Add the token in the Authorization header
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
@@ -36,16 +33,24 @@ const UserProfile = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-lg text-gray-600">Loading...</div>
+      </div>
+    );
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="text-lg text-red-600">{error}</div>
+      </div>
+    );
   }
 
   return (
-    <div className="p-4">
-      <h2 className="text-3xl font-semibold mb-6">User Profile</h2>
+    <div className="container mx-auto p-4 md:p-6">
+      <h2 className="text-4xl font-semibold mb-8 text-center text-gray-800">User Profile</h2>
 
       {/* Earnings Card */}
       <SummaryCard

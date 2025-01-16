@@ -14,8 +14,11 @@ public interface TrackerRepository extends JpaRepository<Tracker, Long> {
     Tracker findByUserAndProduct(User user, Product product);
 
     // Custom query to sum the 'count' field for a given productId
-    @Query("SELECT SUM(t.count) FROM Tracker t WHERE t.product.productId = :productId")
+//    @Query("SELECT SUM(t.count) FROM Tracker t WHERE t.product.productId = :productId")
+//    long sumCountByProductId(Long productId);
+    @Query("SELECT COALESCE(SUM(t.count), 0) FROM Tracker t WHERE t.product.productId = :productId")
     long sumCountByProductId(Long productId);
+
 
     List<Tracker> findByUserId(Long userId);
 }

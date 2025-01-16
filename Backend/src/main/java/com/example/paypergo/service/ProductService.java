@@ -21,7 +21,8 @@ public class ProductService {
     }
 
     public Product addProduct(Product product) {
-
+        System.out.println("---------------------------------------------------->inside addProduct - controller : "+product);
+        System.out.println("Product received: " + product.getProductName() + ", " + product.getProductBaseurl() + ", " + product.getPerClickPrice());
         return productRepository.save(product);
     }
 
