@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaArrowDown, FaArrowUp } from 'react-icons/fa'; // Toggle icons
 
 const SummaryCard = ({ type, title, data, totalAmount }) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -8,34 +9,39 @@ const SummaryCard = ({ type, title, data, totalAmount }) => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden mb-6 md:mb-8">
-      <div className="p-6">
+    <div className="bg-white p-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:scale-105">
+      <div className="flex justify-between items-center mb-6">
         <h3 className="text-2xl font-semibold text-gray-800">{title}</h3>
-
-        {/* Total Amount */}
-        <div className="mt-6">
-          <p className="text-lg text-gray-600">
-            {type === 'earnings' ? 'Earnings' : 'Payable Amount'}: 
-          </p>
-          <p className="text-3xl font-bold text-green-600">
-            ${totalAmount.toFixed(2)}
-          </p>
+        <div className="text-xl font-semibold text-green-600">
+          ${totalAmount.toFixed(2)}
         </div>
+      </div>
 
-        {/* Toggle Button */}
+      <div className="space-y-4">
+        {/* Show Details Toggle Button */}
         <button
-          className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
           onClick={handleDetailsClick}
+          className="flex items-center justify-center text-blue-600 hover:text-blue-800 transition duration-300"
         >
-          {showDetails ? 'Hide Details' : 'Show Details'}
+          {showDetails ? (
+            <>
+              <FaArrowUp className="mr-2" />
+              Hide Details
+            </>
+          ) : (
+            <>
+              <FaArrowDown className="mr-2" />
+              Show Details
+            </>
+          )}
         </button>
 
         {/* Table Section */}
         {showDetails && (
-          <div className="mt-6 overflow-x-auto">
+          <div className="overflow-x-auto mt-4">
             <table className="min-w-full table-auto border-collapse">
-              <thead>
-                <tr className="bg-gray-100 text-left">
+              <thead className="bg-gray-100">
+                <tr>
                   <th className="px-4 py-2 text-sm font-semibold text-gray-600 border-b">Product</th>
                   <th className="px-4 py-2 text-sm font-semibold text-gray-600 border-b text-center">Clicks</th>
                   <th className="px-4 py-2 text-sm font-semibold text-gray-600 border-b text-center">Price per Click</th>
