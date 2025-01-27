@@ -5,6 +5,7 @@ import axios from 'axios';
 function ProductList({ searchTerm, selectedType }) {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true); // Loading state for the products
 
   // Fetch product list from backend
   useEffect(() => {
@@ -16,6 +17,8 @@ function ProductList({ searchTerm, selectedType }) {
       } catch (err) {
         setError('Failed to fetch products');
         console.error('Error fetching products:', err);
+      } finally {
+        setLoading(false); // Stop loading after fetching is done
       }
     };
 
@@ -40,6 +43,14 @@ function ProductList({ searchTerm, selectedType }) {
         </div>
       )}
 
+      {/* Loading spinner */}
+      {loading && (
+        <div className="flex justify-center items-center space-x-2">
+          <div className="w-8 h-8 border-4 border-t-4 border-blue-500 rounded-full animate-spin"></div>
+          <p>Loading products...</p>
+        </div>
+      )}
+
       {/* Product grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredProducts.length > 0 ? (
@@ -50,9 +61,11 @@ function ProductList({ searchTerm, selectedType }) {
             />
           ))
         ) : (
-          <div className="col-span-4 text-center text-gray-500">
-            No products found
-          </div>
+          !loading && (
+            <div className="col-span-4 text-center text-gray-500">
+              No products found matching your search criteria.
+            </div>
+          )
         )}
       </div>
     </div>

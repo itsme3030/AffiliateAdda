@@ -6,6 +6,15 @@ public class ProductDTO {
     private String productName;
     private double perClickPrice;
     private String productType;
+    private double perBuyPrice;
+
+    public ProductDTO(Long productId, String productName, double perClickPrice, String productType, double perBuyPrice) {
+        this.productId = productId;
+        this.productName = productName;
+        this.perClickPrice = perClickPrice;
+        this.productType = productType;
+        this.perBuyPrice = perBuyPrice;
+    }
 
     public ProductDTO(Long productId, String productName, double perClickPrice, String productType) {
         this.productId = productId;
@@ -46,4 +55,13 @@ public class ProductDTO {
     public void setProductType(String productType) {
         this.productType = productType;
     }
+
+    public double getPerBuyPrice() {
+        return perBuyPrice;
+    }
+
+    public void setPerBuyPrice(double perBuyPrice) {
+        this.perBuyPrice = perBuyPrice;
+    }
+
 }

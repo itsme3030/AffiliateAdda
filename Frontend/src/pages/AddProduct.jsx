@@ -7,6 +7,7 @@ function AddProduct() {
   const [productBaseurl, setProductBaseurl] = useState("");
   const [perClickPrice, setPerClickPrice] = useState("");
   const [productType, setProductType] = useState("");
+  const [perBuyPrice, setPerBuyPrice] = useState(""); // New state for perBuyPrice
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -28,6 +29,7 @@ function AddProduct() {
       productBaseurl,
       perClickPrice: parseFloat(perClickPrice),
       productType,
+      perBuyPrice: parseFloat(perBuyPrice), // Include perBuyPrice here
     };
 
     try {
@@ -101,18 +103,40 @@ function AddProduct() {
         </div>
 
         <div>
+          <label htmlFor="perBuyPrice" className="block text-sm font-medium text-gray-700">
+            Price per Buy
+          </label>
+          <input
+            type="number"
+            id="perBuyPrice"
+            value={perBuyPrice}
+            onChange={(e) => setPerBuyPrice(e.target.value)}
+            required
+            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter price per buy"
+            step="0.01"
+          />
+        </div>
+
+        <div>
           <label htmlFor="productType" className="block text-sm font-medium text-gray-700">
             Product Type
           </label>
-          <input
-            type="text"
+          <select
             id="productType"
             value={productType}
             onChange={(e) => setProductType(e.target.value)}
             required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter product type"
-          />
+            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm        focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select Product Type</option>
+            <option value="Product - Amazon">Product - Amazon</option>
+            <option value="Product - Flipkar">Product - Flipkart</option>
+            <option value="Product">Other Products</option>
+            <option value="YouTube Video">YouTube Video</option>
+            <option value="Website">Website</option>
+            <option value="Landing Page">Landing Page</option>
+          </select>
         </div>
 
         <button

@@ -83,5 +83,10 @@ public class TrackerController {
         return new ResponseEntity<>("Click tracked successfully!", headers, HttpStatus.FOUND);
     }
 
+    @PostMapping("/track-buy")
+    public ResponseEntity<String> trackBuy(@RequestParam String data) {
+        return trackerService.trackBuy(data);
+    }
+
 
 }

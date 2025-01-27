@@ -7,6 +7,7 @@ function ProductCard({ product }) {
   const [generatedLink, setGeneratedLink] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [copyMessage, setCopyMessage] = useState(''); // To show confirmation when the link is copied
   const navigate = useNavigate();
 
   // Handle Generate Link button click
@@ -49,7 +50,8 @@ function ProductCard({ product }) {
   const handleCopyLink = () => {
     if (generatedLink) {
       navigator.clipboard.writeText(generatedLink);
-      alert("Link copied to clipboard!");
+      setCopyMessage("Link copied to clipboard!");
+      setTimeout(() => setCopyMessage(''), 3000); // Reset the copy message after 3 seconds
     }
   };
 
@@ -57,7 +59,7 @@ function ProductCard({ product }) {
     <div className="max-w-sm rounded-lg shadow-lg bg-white overflow-hidden border border-gray-200 p-6 space-y-4">
       {/* Product details */}
       <h3 className="text-2xl font-semibold text-gray-800 truncate">
-          {product.productName}
+        {product.productName}
       </h3>
       <p className="text-sm text-gray-600">Price per click: ${product.perClickPrice}</p>
 
@@ -93,6 +95,11 @@ function ProductCard({ product }) {
 
       {/* Show error message if link generation fails */}
       {error && <div className="text-red-600 text-sm mt-2">{error}</div>}
+
+      {/* Show success message when the link is copied */}
+      {copyMessage && (
+        <div className="text-green-500 text-sm mt-2">{copyMessage}</div>
+      )}
     </div>
   );
 }

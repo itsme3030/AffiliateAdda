@@ -22,7 +22,7 @@ public class ProductService {
 
     public Product addProduct(Product product) {
         System.out.println("---------------------------------------------------->inside addProduct - controller : "+product);
-        System.out.println("Product received: " + product.getProductName() + ", " + product.getProductBaseurl() + ", " + product.getPerClickPrice());
+        System.out.println("Product received: " + product.getProductName() + ", " + product.getProductBaseurl() + ", " + product.getPerClickPrice()+ ", "+product.getPerBuyPrice());
         return productRepository.save(product);
     }
 
@@ -48,10 +48,19 @@ public class ProductService {
         // Fetch all products and convert to ProductDTO
         System.out.println("Fetching the list of products...(Service)");
 
+        // Fetch all products from the repository
         List<Product> products = productRepository.findAll();
 
+        // Map the Product list to ProductDTO
         return products.stream()
-                .map(product -> new ProductDTO(product.getProductId(), product.getProductName(), product.getPerClickPrice(), product.getProductType()))
-                .collect(Collectors.toList());
+                .map(product -> new ProductDTO(
+                        product.getProductId(),           // productId
+                        product.getProductName(),         // productName
+                        product.getPerClickPrice(),       // perClickPrice
+                        product.getProductType(),         // productType
+                        product.getPerBuyPrice()          // perBuyPrice
+                ))
+                .collect(Collectors.toList()); // Collect to list
     }
+
 }

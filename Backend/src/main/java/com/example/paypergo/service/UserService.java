@@ -49,15 +49,20 @@ public class UserService {
         for (Tracker tracker : trackers) {
             Product product = tracker.getProduct();
             long count = tracker.getCount();
+            long buyCount = tracker.getBuyCount();
+
             double earningForProduct = product.getPerClickPrice() * commission * count;
+            double earningForProductBuy = product.getPerBuyPrice() * commission * buyCount;
 
             ProfileResponseDTO.EarningDTO earningDTO = new ProfileResponseDTO.EarningDTO();
             earningDTO.setProductName(product.getProductName());
             earningDTO.setPerClickPrice(product.getPerClickPrice());
             earningDTO.setCount(count);
+            earningDTO.setPerBuyPrice(product.getPerBuyPrice());
+            earningDTO.setBuyCount(buyCount);
 
             earnings.add(earningDTO);
-            totalEarnings += earningForProduct;
+            totalEarnings += earningForProduct + earningForProductBuy;
         }
 
 
@@ -70,13 +75,19 @@ public class UserService {
         List<Product> products = productRepository.findByUserId(userId);
         for (Product product : products) {
             // Count the number of clicks for each product based on trackers
+
             long totalCountForProduct = trackerRepository.sumCountByProductId(product.getProductId());
-            double payableForProduct = product.getPerClickPrice() * totalCountForProduct;
+            long totalCountForProductBuy = trackerRepository.sumBuyCountByProductId(product.getProductId());
+
+            double payableForProduct = product.getPerClickPrice() * totalCountForProduct +
+                                        product.getPerBuyPrice() * totalCountForProductBuy;
 
             ProfileResponseDTO.PayableDTO payableDTO = new ProfileResponseDTO.PayableDTO();
             payableDTO.setProductName(product.getProductName());
             payableDTO.setPerClickPrice(product.getPerClickPrice());
             payableDTO.setCount(totalCountForProduct);
+            payableDTO.setPerBuyPrice(product.getPerBuyPrice());
+            payableDTO.setBuyCount(totalCountForProductBuy);
 
             payableAmounts.add(payableDTO);
             totalPayableAmount += payableForProduct;

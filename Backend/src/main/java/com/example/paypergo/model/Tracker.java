@@ -17,6 +17,7 @@ public class Tracker {
 
     String productGereratedurl;
     Long count = 0L;
+    Long buyCount = 0L;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -27,6 +28,15 @@ public class Tracker {
     private Product product;
 
     public Tracker() {}
+
+    public Tracker(Long tId, String productGereratedurl, Long count, Long buyCount, User user, Product product) {
+        this.tId = tId;
+        this.productGereratedurl = productGereratedurl;
+        this.count = count;
+        this.buyCount = buyCount;
+        this.user = user;
+        this.product = product;
+    }
 
     public Tracker(Long tId, String productGereratedurl, Long count, User user, Product product) {
         this.tId = tId;
@@ -64,6 +74,14 @@ public class Tracker {
         return user;
     }
 
+    public Long getBuyCount() {
+        return buyCount;
+    }
+
+    public void setBuyCount(Long buyCount) {
+        this.buyCount = buyCount;
+    }
+
     public void setUser(User user) {
         this.user = user;
     }
@@ -75,4 +93,6 @@ public class Tracker {
     public void setProduct(Product product) {
         this.product = product;
     }
+
+
 }

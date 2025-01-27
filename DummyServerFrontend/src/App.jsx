@@ -1,9 +1,17 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Product from "./components/Product";
+import Home from "./components/Home";
 
 function App() {
   
   return (
     <>
-      <h1>Initial Setup</h1>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/product" element={<Product />} />
+      </Routes>
+    </BrowserRouter>
     </>
   )
 }

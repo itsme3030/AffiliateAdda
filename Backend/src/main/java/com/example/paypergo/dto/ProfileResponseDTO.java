@@ -53,6 +53,8 @@ public class ProfileResponseDTO {
         private String productName;
         private double perClickPrice;
         private long count;
+        private double perBuyPrice;
+        private long buyCount;
 
         // Getters and setters
 
@@ -78,6 +80,22 @@ public class ProfileResponseDTO {
 
         public void setCount(long count) {
             this.count = count;
+        }
+
+        public double getPerBuyPrice() {
+            return perBuyPrice;
+        }
+
+        public void setPerBuyPrice(double perBuyPrice) {
+            this.perBuyPrice = perBuyPrice;
+        }
+
+        public long getBuyCount() {
+            return buyCount;
+        }
+
+        public void setBuyCount(long buyCount) {
+            this.buyCount = buyCount;
         }
     }
 
@@ -85,6 +103,8 @@ public class ProfileResponseDTO {
         private String productName;
         private double perClickPrice;
         private long count;
+        private double perBuyPrice;
+        private long buyCount;
 
         // Getters and setters
 
@@ -110,6 +130,22 @@ public class ProfileResponseDTO {
 
         public void setCount(long count) {
             this.count = count;
+        }
+
+        public double getPerBuyPrice() {
+            return perBuyPrice;
+        }
+
+        public void setPerBuyPrice(double perBuyPrice) {
+            this.perBuyPrice = perBuyPrice;
+        }
+
+        public long getBuyCount() {
+            return buyCount;
+        }
+
+        public void setBuyCount(long buyCount) {
+            this.buyCount = buyCount;
         }
     }
 }
