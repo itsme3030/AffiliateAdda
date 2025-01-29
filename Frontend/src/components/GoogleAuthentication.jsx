@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa"; // Import spinner icon for loading
+// import * as jwt_decode from 'jwt-decode'; 
+// import jwt_decode from 'jsonwebtoken';
+import { jwtDecode } from "jwt-decode";
 
-const GoogleAuthentication = () => {
+const GoogleAuthentication = ({ setRole }) => {
     const [loading, setLoading] = useState(false); // State for loading
     const [errorMessage, setErrorMessage] = useState(''); // State for error messages
     const navigate = useNavigate();
@@ -28,7 +31,26 @@ const GoogleAuthentication = () => {
             const data = await res.json();
             localStorage.setItem("token", data.token);
             console.log("JWT Token:", data.token);
-            navigate("/"); // Redirect to home page after success
+
+            // Decode the JWT token
+            const decodedToken = jwtDecode(data.token);
+            const role = decodedToken.role;
+            console.log("JWT Token role :", role);
+
+            // navigate("/");
+
+            // Update the role state in parent component
+            setRole(role);
+
+            // Redirect based on user role
+            if (role === "ADMIN") {
+                console.log("redirect to........admin-home");
+                navigate("/admin-home");  // Redirect to admin view
+            } else {
+                console.log("redirect to........home");
+                navigate("/");  // Redirect to user home page
+            }
+
         } catch (error) {
             setErrorMessage('Authentication failed, please try again later.');
             console.error("Authentication error:", error);
@@ -45,7 +67,7 @@ const GoogleAuthentication = () => {
 
     return (
         <GoogleOAuthProvider
-            clientId={import.meta.env.REACT_APP_CLIENTID || "894699118587-l20o01e237hkhho2u8r4107r333vq4bc.apps.googleusercontent.com"}
+            clientId={import.meta.env.VITE_CLIENTID || ""}
         >
             <div className="flex justify-center items-center min-h-screen bg-gray-50">
                 <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">

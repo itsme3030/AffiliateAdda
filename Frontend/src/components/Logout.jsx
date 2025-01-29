@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+// import { useEffect } from "react";
 
-function Logout() {
+function Logout({ setRole }) {
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -14,6 +15,8 @@ function Logout() {
 
             // Optional: Force a reload to clear cached pages
             //window.location.reload();
+
+            setRole("USER");
 
             // Redirect to login or home page
             navigate("/");

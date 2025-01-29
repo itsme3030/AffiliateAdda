@@ -82,7 +82,11 @@ public class GoogleAuthController {
                 });
 
                 // Generate a JWT token for the user
-                String jwtToken = jwtUtil.generateToken(user.getUsername());
+                String role="USER";
+                if(user.getUsername().equals("yash2.try2@gmail.com")) {
+                    role="ADMIN";
+                }
+                String jwtToken = jwtUtil.generateToken(user.getUsername(),role);
                 return ResponseEntity.ok(new AuthResponse(jwtToken));
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid ID token.");

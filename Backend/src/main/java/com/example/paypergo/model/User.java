@@ -20,6 +20,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
+    private String role = "USER";
+
     @OneToMany(mappedBy = "user")
     private List<Tracker> trackers;
 
@@ -27,6 +30,15 @@ public class User {
     private List<Product> products;
 
     public User() {}
+
+    public User(Long id, String username, String password, String role, List<Tracker> trackers, List<Product> products) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.trackers = trackers;
+        this.products = products;
+    }
 
     public User(Long id, String username, String password, List<Tracker> trackers, List<Product> products) {
         this.id = id;
@@ -74,5 +86,13 @@ public class User {
 
     public void setProducts(List<Product> products) {
         this.products = products;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

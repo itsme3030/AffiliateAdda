@@ -1,5 +1,6 @@
 package com.example.paypergo.config;
 
+import com.example.paypergo.model.CustomUserDetails;
 import com.example.paypergo.service.CustomUserDetailsService;
 import com.example.paypergo.util.JwtUtil;
 
@@ -10,6 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -19,6 +22,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class JwtFilter extends OncePerRequestFilter {
@@ -72,10 +77,19 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
     private UserDetails getUserDetailsFromToken(String token) {
-        //debug : getUserDetailsFromToken
-        System.out.println("inside getUserDetailsFromToken");
+        // Extract username from the token
         String username = jwtUtil.extractUserName(token);
-        return userDetailsService.loadUserByUsername(username);
+
+        // Extract role from the token
+        String role = jwtUtil.extractClaim(token, claims -> claims.get("role", String.class));
+
+        // Create authorities based on role
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role)); // Prepend 'ROLE_' to the role
+
+        // Return a CustomUserDetails object with the authorities
+        return new CustomUserDetails(username, "", authorities);
     }
+
 }
 

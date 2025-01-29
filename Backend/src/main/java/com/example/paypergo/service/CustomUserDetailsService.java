@@ -27,9 +27,13 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        // Assign roles/authorities here. Assuming a basic ROLE_USER for simplicity.
+        // Assign roles/authorities here based on the user role.
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        if (user.getRole().equals("ADMIN")) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        } else {
+            authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        }
 
         // Return custom UserDetails object
         return new CustomUserDetails(user.getUsername(), user.getPassword(), authorities);
