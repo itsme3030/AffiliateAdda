@@ -50,6 +50,7 @@ public class ProfileResponseDTO {
     }
 
     public static class EarningDTO {
+        private Long tId;
         private String productName;
         private double perClickPrice;
         private long count;
@@ -57,6 +58,15 @@ public class ProfileResponseDTO {
         private long buyCount;
 
         // Getters and setters
+
+
+        public Long gettId() {
+            return tId;
+        }
+
+        public void settId(Long tId) {
+            this.tId = tId;
+        }
 
         public String getProductName() {
             return productName;
@@ -100,6 +110,7 @@ public class ProfileResponseDTO {
     }
 
     public static class PayableDTO {
+        private Long productId;
         private String productName;
         private double perClickPrice;
         private long count;
@@ -107,6 +118,15 @@ public class ProfileResponseDTO {
         private long buyCount;
 
         // Getters and setters
+
+
+        public Long getProductId() {
+            return productId;
+        }
+
+        public void setProductId(Long productId) {
+            this.productId = productId;
+        }
 
         public String getProductName() {
             return productName;

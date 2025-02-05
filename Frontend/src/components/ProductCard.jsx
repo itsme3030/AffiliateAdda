@@ -62,6 +62,8 @@ function ProductCard({ product }) {
         {product.productName}
       </h3>
       <p className="text-sm text-gray-600">Price per click: ${product.perClickPrice}</p>
+      <p className="text-sm text-gray-600">Product Type: {product.productType}</p>
+      <p className="text-sm text-gray-600">Price per buy: ${product.perBuyPrice}</p>
 
       {/* Button to generate link */}
       <button

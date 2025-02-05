@@ -54,8 +54,8 @@ const SummaryCard = ({ type, title, data, totalAmount }) => {
                 </tr>
               </thead>
               <tbody>
-                {data.map((item, index) => (
-                  <tr key={index} className="border-t">
+                {data.map((item) => (
+                  <tr key={type === 'payable' ? item.productId : item.tId} className="border-t">
                     <td className="px-4 py-2 text-gray-700">{item.productName}</td>
                     <td className="px-4 py-2 text-gray-700 text-center">{item.count}</td>
                     <td className="px-4 py-2 text-gray-700 text-center">${item.perClickPrice.toFixed(2)}</td>

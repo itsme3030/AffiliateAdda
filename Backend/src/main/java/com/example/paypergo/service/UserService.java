@@ -48,11 +48,13 @@ public class UserService {
             Product product = tracker.getProduct();
             long count = tracker.getCount();
             long buyCount = tracker.getBuyCount();
+            long tId = tracker.getTId();
 
             double earningForProduct = product.getPerClickPrice() * commission * count;
             double earningForProductBuy = product.getPerBuyPrice() * commission * buyCount;
 
             ProfileResponseDTO.EarningDTO earningDTO = new ProfileResponseDTO.EarningDTO();
+            earningDTO.settId(tId);
             earningDTO.setProductName(product.getProductName());
             earningDTO.setPerClickPrice(product.getPerClickPrice());
             earningDTO.setCount(count);
@@ -74,6 +76,7 @@ public class UserService {
         for (Product product : products) {
             // Count the number of clicks for each product based on trackers
 
+            long productId = product.getProductId();
             long totalCountForProduct = trackerRepository.sumCountByProductId(product.getProductId());
             long totalCountForProductBuy = trackerRepository.sumBuyCountByProductId(product.getProductId());
 
@@ -81,6 +84,7 @@ public class UserService {
                                         product.getPerBuyPrice() * totalCountForProductBuy;
 
             ProfileResponseDTO.PayableDTO payableDTO = new ProfileResponseDTO.PayableDTO();
+            payableDTO.setProductId(productId);
             payableDTO.setProductName(product.getProductName());
             payableDTO.setPerClickPrice(product.getPerClickPrice());
             payableDTO.setCount(totalCountForProduct);
