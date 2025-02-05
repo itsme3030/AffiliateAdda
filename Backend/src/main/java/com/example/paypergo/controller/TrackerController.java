@@ -4,6 +4,7 @@ import com.example.paypergo.dto.LinkDto;
 import com.example.paypergo.model.Product;
 import com.example.paypergo.model.User;
 import com.example.paypergo.repository.UserRepository;
+import com.example.paypergo.service.DeactivationService;
 import com.example.paypergo.service.ProductService;
 import com.example.paypergo.service.TrackerService;
 import com.example.paypergo.service.UserService;
@@ -35,7 +36,7 @@ public class TrackerController {
     private UserRepository userRepository;
 
     @Autowired
-    private UserService userService;
+    private DeactivationService deactivationService;
 
     @PostMapping("/generate")
     public ResponseEntity<String> generateLink(@RequestBody LinkDto linkDto, Principal principal) {
@@ -64,6 +65,17 @@ public class TrackerController {
         System.out.println("Generated link: " + encodedUrl);
 
         return new ResponseEntity<>(encodedUrl, HttpStatus.OK);
+    }
+
+    // deactivate a tracker (generated link)
+    @PostMapping("/deactivateTracker/{trackerId}")
+    public ResponseEntity<String> deactivateTracker(@PathVariable Long trackerId) {
+        try {
+            deactivationService.deactivateTracker(trackerId, "Link deactivated");
+            return new ResponseEntity<>("link deactivated successfully", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Error deactivating tracker: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/track")

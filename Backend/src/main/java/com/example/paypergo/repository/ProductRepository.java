@@ -1,6 +1,7 @@
 package com.example.paypergo.repository;
 
 import com.example.paypergo.model.Product;
+import com.example.paypergo.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,4 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Optional<Product> findByProductName(String productName);
 
     List<Product> findByUserId(Long userId);
+
+    List<Product> findByUser(User user);
+
 }

@@ -2,18 +2,16 @@ package com.example.paypergo.service;
 
 import com.example.paypergo.dto.ProfileResponseDTO;
 
-import com.example.paypergo.model.Product;
-import com.example.paypergo.model.Tracker;
-import com.example.paypergo.model.User;
+import com.example.paypergo.model.*;
 
-import com.example.paypergo.repository.ProductRepository;
-import com.example.paypergo.repository.TrackerRepository;
-import com.example.paypergo.repository.UserRepository;
+import com.example.paypergo.repository.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,4 +101,9 @@ public class UserService {
 
         return profileResponseDTO;
     }
+
+
+//    public void deleteUser(Long userId) {
+//
+//    }
 }

@@ -26,4 +26,9 @@ public interface TrackerRepository extends JpaRepository<Tracker, Long> {
 
 
     List<Tracker> findByUserId(Long userId);
+
+    List<Tracker> findByProduct(Product product);
+
+    List<Tracker> findByUser(User user);
+
 }

@@ -4,8 +4,10 @@ import com.example.paypergo.dto.ProductDTO;
 import com.example.paypergo.model.Product;
 import com.example.paypergo.model.User;
 import com.example.paypergo.repository.UserRepository;
+import com.example.paypergo.service.DeactivationService;
 import com.example.paypergo.service.ProductService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,9 @@ public class ProductController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private DeactivationService deactivationService;
 
     // Endpoint to add a new product
     @PostMapping("/add")
@@ -49,6 +54,17 @@ public class ProductController {
 
         Product savedProduct = productService.addProduct(product);
         return ResponseEntity.ok(savedProduct);
+    }
+
+    // deactivate a product
+    @PostMapping("/deactivateProduct/{productId}")
+    public ResponseEntity<String> deactivateProduct(@PathVariable Long productId) {
+        try {
+            deactivationService.deactivateProduct(productId, "Product deactivated");
+            return new ResponseEntity<>("Product deactivated successfully", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Error deactivating product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/list")
