@@ -1,11 +1,26 @@
 import React, { useState } from 'react';
-import { FaArrowDown, FaArrowUp } from 'react-icons/fa'; // Toggle icons
+import { FaArrowDown, FaArrowUp, FaCopy, FaTrash } from 'react-icons/fa';
 
 const SummaryCard = ({ type, title, data, totalAmount }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   const handleDetailsClick = () => {
     setShowDetails(!showDetails);
+  };
+
+  // Handle Copy URL
+  const handleCopyUrl = (url) => {
+    navigator.clipboard.writeText(url).then(() => {
+      alert("URL copied to clipboard!");
+    }).catch(err => {
+      console.error("Failed to copy: ", err);
+    });
+  };
+
+  // Handle Delete (for now just log)
+  const handleDeleteUrl = (url) => {
+    console.log("Deleted URL: ", url);
+    // can implement further delete functionality as needed
   };
 
   // Determine the color based on the type
@@ -51,11 +66,13 @@ const SummaryCard = ({ type, title, data, totalAmount }) => {
                   <th className="px-4 py-2 text-sm font-semibold text-gray-600 border-b text-center">Buy Count</th>
                   <th className="px-4 py-2 text-sm font-semibold text-gray-600 border-b text-center">Price per Buy</th>
                   <th className="px-4 py-2 text-sm font-semibold text-gray-600 border-b text-center">Total</th>
+                  <th className="px-4 py-2 text-sm font-semibold text-gray-600 border-b text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {data.map((item) => (
                   <tr key={type === 'payable' ? item.productId : item.tId} className="border-t">
+                    {/* Product Details */}
                     <td className="px-4 py-2 text-gray-700">{item.productName}</td>
                     <td className="px-4 py-2 text-gray-700 text-center">{item.count}</td>
                     <td className="px-4 py-2 text-gray-700 text-center">${item.perClickPrice.toFixed(2)}</td>
@@ -63,6 +80,37 @@ const SummaryCard = ({ type, title, data, totalAmount }) => {
                     <td className="px-4 py-2 text-gray-700 text-center">${item.perBuyPrice.toFixed(2)}</td>
                     <td className="px-4 py-2 text-gray-700 text-center">
                       ${((item.count * item.perClickPrice) + (item.buyCount * item.perBuyPrice)).toFixed(2)}
+                    </td>
+                    {/* URL and Button Actions */}
+                    <td className="px-4 py-2 text-gray-700 text-center">
+                      <div className="flex items-center justify-between">
+                        <div className="text-blue-500 truncate max-w-[200px]" title={type === "payable" ? item.productBaseurl : item.productGeneratedUrl}>
+                          {type === "payable" ? (
+                            <a href={item.productBaseurl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                              {item.productBaseurl}
+                            </a>
+                          ) : (
+                            <a href={item.productGeneratedUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                              {item.productGeneratedUrl}
+                            </a>
+                          )}
+                        </div>
+
+                        <div className="flex space-x-2">
+                          <button 
+                            onClick={() => handleCopyUrl(type === "payable" ? item.productBaseurl : item.productGeneratedUrl)}
+                            className="text-green-600 hover:text-green-800"
+                          >
+                            <FaCopy />
+                          </button>
+                          <button 
+                            onClick={() => handleDeleteUrl(type === "payable" ? item.productBaseurl : item.productGeneratedUrl)}
+                            className="text-red-600 hover:text-red-800"
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                 ))}

@@ -36,7 +36,7 @@ public class DeactivationService {
         // Archive tracker to history table
         TrackerHistory trackerHistory = new TrackerHistory();
         trackerHistory.settId(tracker.getTId()); // Preserve original trackerId
-        trackerHistory.setProductGeneratedUrl(tracker.getProductGereratedurl());
+        trackerHistory.setProductGeneratedUrl(tracker.getProductGeneratedUrl());
         trackerHistory.setCount(tracker.getCount());
         trackerHistory.setBuyCount(tracker.getBuyCount());
         trackerHistory.setUserId(tracker.getUser().getId()); // Store original userId

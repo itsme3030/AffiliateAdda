@@ -15,7 +15,7 @@ public class Tracker {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long tId;
 
-    String productGereratedurl;
+    String productGeneratedUrl;
     Long count = 0L;
     Long buyCount = 0L;
 
@@ -29,18 +29,18 @@ public class Tracker {
 
     public Tracker() {}
 
-    public Tracker(Long tId, String productGereratedurl, Long count, Long buyCount, User user, Product product) {
+    public Tracker(Long tId, String productGeneratedUrl, Long count, Long buyCount, User user, Product product) {
         this.tId = tId;
-        this.productGereratedurl = productGereratedurl;
+        this.productGeneratedUrl = productGeneratedUrl;
         this.count = count;
         this.buyCount = buyCount;
         this.user = user;
         this.product = product;
     }
 
-    public Tracker(Long tId, String productGereratedurl, Long count, User user, Product product) {
+    public Tracker(Long tId, String productGeneratedUrl, Long count, User user, Product product) {
         this.tId = tId;
-        this.productGereratedurl = productGereratedurl;
+        this.productGeneratedUrl = productGeneratedUrl;
         this.count = count;
         this.user = user;
         this.product = product;
@@ -54,12 +54,12 @@ public class Tracker {
         this.tId = t_id;
     }
 
-    public String getProductGereratedurl() {
-        return productGereratedurl;
+    public String getProductGeneratedUrl() {
+        return productGeneratedUrl;
     }
 
-    public void setProductGereratedurl(String product_gereratedurl) {
-        this.productGereratedurl = product_gereratedurl;
+    public void setProductGeneratedUrl(String product_gereratedurl) {
+        this.productGeneratedUrl = product_gereratedurl;
     }
 
     public Long getCount() {

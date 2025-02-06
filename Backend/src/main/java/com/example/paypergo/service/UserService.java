@@ -49,12 +49,18 @@ public class UserService {
             long count = tracker.getCount();
             long buyCount = tracker.getBuyCount();
             long tId = tracker.getTId();
+            String productGeneratedUrl = tracker.getProductGeneratedUrl();
+
+            //debug
+//            System.out.println("------------------------productGeneratedUrl--------------------------->"+productGeneratedUrl);
+//            System.out.println(tracker.getProductGeneratedUrl());
 
             double earningForProduct = product.getPerClickPrice() * commission * count;
             double earningForProductBuy = product.getPerBuyPrice() * commission * buyCount;
 
             ProfileResponseDTO.EarningDTO earningDTO = new ProfileResponseDTO.EarningDTO();
             earningDTO.settId(tId);
+            earningDTO.setProductGeneratedUrl(productGeneratedUrl);
             earningDTO.setProductName(product.getProductName());
             earningDTO.setPerClickPrice(product.getPerClickPrice());
             earningDTO.setCount(count);
@@ -77,6 +83,7 @@ public class UserService {
             // Count the number of clicks for each product based on trackers
 
             long productId = product.getProductId();
+            String productBaseurl = product.getProductBaseurl();
             long totalCountForProduct = trackerRepository.sumCountByProductId(product.getProductId());
             long totalCountForProductBuy = trackerRepository.sumBuyCountByProductId(product.getProductId());
 
@@ -85,6 +92,7 @@ public class UserService {
 
             ProfileResponseDTO.PayableDTO payableDTO = new ProfileResponseDTO.PayableDTO();
             payableDTO.setProductId(productId);
+            payableDTO.setProductBaseurl(productBaseurl);
             payableDTO.setProductName(product.getProductName());
             payableDTO.setPerClickPrice(product.getPerClickPrice());
             payableDTO.setCount(totalCountForProduct);
@@ -106,8 +114,4 @@ public class UserService {
         return profileResponseDTO;
     }
 
-
-//    public void deleteUser(Long userId) {
-//
-//    }
 }

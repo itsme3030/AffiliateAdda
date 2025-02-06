@@ -26,6 +26,7 @@ public class UserController {
     public ResponseEntity<ProfileResponseDTO> getUserProfile(Principal principal) {
         //get user
         String username = principal.getName();
+        //String username = "yash.sojitra.2020@gmail.com"; //testing purpose
         Optional<User> user = userRepository.findByUsername(username);
         Long userId = user.map(User::getId).orElse(null);
 

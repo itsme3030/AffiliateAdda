@@ -32,12 +32,17 @@ public class AdminService {
         List<AdminHomeResponseDTO.UserDataDTO> userList = new ArrayList<>();
 
         for (User user : users) {
+            if(user.getRole().equals("ADMIN")) {
+                totalUsers--;
+                continue;
+            }
             ProfileResponseDTO profile = userService.getUserProfile(user.getId());
 
             totalEarnings += profile.getTotalEarnings();
             totalPayableAmount += profile.getTotalPayableAmount();
 
             AdminHomeResponseDTO.UserDataDTO userData = new AdminHomeResponseDTO.UserDataDTO();
+            userData.setUserId(user.getId());
             userData.setUsername(user.getUsername());
             userData.setTotalEarnings(profile.getTotalEarnings());
             userData.setTotalPayableAmount(profile.getTotalPayableAmount());

@@ -44,11 +44,20 @@ public class AdminHomeResponseDTO {
     }
 
     public static class UserDataDTO {
+        private long userId;
         private String username;
         private double totalEarnings;
         private double totalPayableAmount;
 
         // Getters and setters
+
+        public long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(long userId) {
+            this.userId = userId;
+        }
 
         public String getUsername() {
             return username;

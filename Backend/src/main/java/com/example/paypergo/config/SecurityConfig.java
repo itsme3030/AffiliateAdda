@@ -55,6 +55,8 @@ public class SecurityConfig {
                         .requestMatchers("/product/list").permitAll()
                         .requestMatchers("/link/track").permitAll()
                         .requestMatchers("/link/track-buy").permitAll()
+                        //testing purpose
+                        //.requestMatchers("/user/profile").permitAll()
                         // Allow access to admin-only endpoints to users with the "ROLE_ADMIN"
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())

@@ -43,7 +43,7 @@ public class TrackerService {
         Optional<Tracker> linkTracker = Optional.ofNullable(trackerRepository.findByUserAndProduct(user.get(), product.get()));
         if(linkTracker.isPresent()) {
             Tracker tracker = linkTracker.get();
-            return tracker.getProductGereratedurl();
+            return tracker.getProductGeneratedUrl();
         }
 
         // Construct the query string with the parameters
@@ -62,7 +62,7 @@ public class TrackerService {
         }
 
         Tracker tracker = new Tracker();
-        tracker.setProductGereratedurl(url); // Save the full URL with encoded query params
+        tracker.setProductGeneratedUrl(url); // Save the full URL with encoded query params
 
         // Set the user and product associations
         tracker.setUser(user.get());
