@@ -4,10 +4,7 @@ import com.example.paypergo.dto.LinkDto;
 import com.example.paypergo.model.Product;
 import com.example.paypergo.model.User;
 import com.example.paypergo.repository.UserRepository;
-import com.example.paypergo.service.DeactivationService;
-import com.example.paypergo.service.ProductService;
-import com.example.paypergo.service.TrackerService;
-import com.example.paypergo.service.UserService;
+import com.example.paypergo.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +34,9 @@ public class TrackerController {
 
     @Autowired
     private DeactivationService deactivationService;
+
+    @Autowired
+    private ActivationService activationService;
 
     @PostMapping("/generate")
     public ResponseEntity<String> generateLink(@RequestBody LinkDto linkDto, Principal principal) {
@@ -74,7 +74,18 @@ public class TrackerController {
             deactivationService.deactivateTracker(trackerId, "Link deactivated");
             return new ResponseEntity<>("link deactivated successfully", HttpStatus.OK);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>("Error deactivating tracker: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Error deactivating link: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // activate a tracker (generated link)
+    @PostMapping("/activateTracker/{trackerId}")
+    public ResponseEntity<String> activateTracker(@PathVariable Long trackerId) {
+        try {
+            activationService.activateTracker(trackerId, "Link activated");
+            return new ResponseEntity<>("link activated successfully", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Error activating link: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

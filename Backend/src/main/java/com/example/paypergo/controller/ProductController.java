@@ -4,6 +4,7 @@ import com.example.paypergo.dto.ProductDTO;
 import com.example.paypergo.model.Product;
 import com.example.paypergo.model.User;
 import com.example.paypergo.repository.UserRepository;
+import com.example.paypergo.service.ActivationService;
 import com.example.paypergo.service.DeactivationService;
 import com.example.paypergo.service.ProductService;
 
@@ -29,6 +30,9 @@ public class ProductController {
 
     @Autowired
     private DeactivationService deactivationService;
+
+    @Autowired
+    private ActivationService activationService;
 
     // Endpoint to add a new product
     @PostMapping("/add")
@@ -64,6 +68,17 @@ public class ProductController {
             return new ResponseEntity<>("Product deactivated successfully", HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>("Error deactivating product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // activate a product
+    @PostMapping("/activateProduct/{productId}")
+    public ResponseEntity<String> activateProduct(@PathVariable Long productId) {
+        try {
+            activationService.activateProduct(productId, "Product activated");
+            return new ResponseEntity<>("Product activated successfully", HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>("Error activating product: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
