@@ -57,9 +57,18 @@ public class ProfileResponseDTO {
         private long count;
         private double perBuyPrice;
         private long buyCount;
+        private boolean active;
 
         // Getters and setters
 
+
+        public boolean isActive() {
+            return active;
+        }
+
+        public void setActive(boolean active) {
+            this.active = active;
+        }
 
         public String getProductGeneratedUrl() {
             return productGeneratedUrl;
@@ -126,9 +135,18 @@ public class ProfileResponseDTO {
         private long count;
         private double perBuyPrice;
         private long buyCount;
+        private boolean active;
 
         // Getters and setters
 
+
+        public boolean isActive() {
+            return active;
+        }
+
+        public void setActive(boolean active) {
+            this.active = active;
+        }
 
         public String getProductBaseurl() {
             return productBaseurl;
