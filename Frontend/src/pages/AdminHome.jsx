@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AdminSummaryCard from '../components/AdminSummaryCard';
-import { FaSpinner , FaTrash } from 'react-icons/fa'; // Loading spinner
+import { FaSpinner , FaTrash , FaTimesCircle } from 'react-icons/fa'; // Loading spinner
 
 const AdminHome = () => {
   const [adminData, setAdminData] = useState(null);
@@ -51,10 +51,16 @@ const AdminHome = () => {
     );
   }
 
-  // Handle Delete User (For now just log the userId)
-  const handleDeleteUser = (userId) => {
-    console.log("User deleted with ID:", userId);
-    // You can add the delete logic here
+  // Handle Deactivate User (For now just log the userId)
+  const handleDeactivateUser = (userId) => {
+    console.log("User Deactivated with ID:", userId);
+    // You can add the Deactivate logic here
+  };
+
+  // Handle Activate User (For now just log the userId)
+  const handleActivateUser = (userId) => {
+    console.log("User Activated with ID:", userId);
+    // You can add the Activate logic here
   };
 
   return (
@@ -108,13 +114,22 @@ const AdminHome = () => {
                 <td className="py-3 px-6">{user.totalEarnings.toFixed(2)}</td>
                 <td className="py-3 px-6">{user.totalPayableAmount.toFixed(2)}</td>
                 <td className="py-3 px-6 text-center">
+                {user.active ? (
                   <button 
-                    onClick={() => handleDeleteUser(user.userId)} 
+                    onClick={() => handleDeactivateUser(user.userId)} 
                     className="text-red-600 hover:text-red-800"
                   >
-                    <FaTrash />
+                    <FaTrash /> Deactivate
                   </button>
-                </td>
+                ) : (
+                  <button 
+                    onClick={() => handleActivateUser(user.userId)} 
+                    className="text-blue-600 hover:text-blue-800"
+                  >
+                    <FaCheckCircle /> Activate
+                  </button>
+                )}
+              </td>
               </tr>
             ))}
           </tbody>

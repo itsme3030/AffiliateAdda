@@ -48,8 +48,18 @@ public class AdminHomeResponseDTO {
         private String username;
         private double totalEarnings;
         private double totalPayableAmount;
+        private boolean active;
 
         // Getters and setters
+
+
+        public boolean isActive() {
+            return active;
+        }
+
+        public void setActive(boolean active) {
+            this.active = active;
+        }
 
         public long getUserId() {
             return userId;

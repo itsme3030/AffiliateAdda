@@ -3,6 +3,8 @@ package com.example.paypergo.service;
 import com.example.paypergo.dto.AdminHomeResponseDTO;
 import com.example.paypergo.dto.ProfileResponseDTO;
 import com.example.paypergo.model.User;
+import com.example.paypergo.model.UserHistory;
+import com.example.paypergo.repository.UserHistoryRepository;
 import com.example.paypergo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,10 +20,12 @@ public class AdminService {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
 
     public AdminHomeResponseDTO getAdminHomeData() {
         // 1. Total number of users
-        long totalUsers = userRepository.count();
+        long totalUsers = userRepository.count() + userHistoryRepository.count();
 
         // 2. Get total earnings and payable amounts for all users
         double totalEarnings = 0;
@@ -29,6 +33,7 @@ public class AdminService {
 
         // 3. Get the list of users along with their earnings and payable amounts
         List<User> users = userRepository.findAll();
+        List<UserHistory> userHistories = userHistoryRepository.findAll();
         List<AdminHomeResponseDTO.UserDataDTO> userList = new ArrayList<>();
 
         for (User user : users) {
@@ -46,6 +51,26 @@ public class AdminService {
             userData.setUsername(user.getUsername());
             userData.setTotalEarnings(profile.getTotalEarnings());
             userData.setTotalPayableAmount(profile.getTotalPayableAmount());
+            userData.setActive(true);
+
+            userList.add(userData);
+        }
+
+        for (UserHistory userHistory : userHistories) {
+            if(userHistory.getRole().equals("ADMIN")) {
+                totalUsers--;
+                continue;
+            }
+            ProfileResponseDTO profile = userService.getUserProfile(userHistory.getUserId());
+            totalEarnings += profile.getTotalEarnings();
+            totalPayableAmount += profile.getTotalPayableAmount();
+
+            AdminHomeResponseDTO.UserDataDTO userData = new AdminHomeResponseDTO.UserDataDTO();
+            userData.setUserId(userHistory.getUserId());
+            userData.setUsername(userHistory.getUsername());
+            userData.setTotalEarnings(profile.getTotalEarnings());
+            userData.setTotalPayableAmount(profile.getTotalPayableAmount());
+            userData.setActive(false);
 
             userList.add(userData);
         }
