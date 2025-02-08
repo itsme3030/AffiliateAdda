@@ -12,6 +12,7 @@ function Product() {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const data = params.get('data');
+    console.log("data : ",data);
   
     if (data) {
       // Decode the Base64 encoded 'data'
@@ -19,8 +20,8 @@ function Product() {
       
       // Split by ':' to get userId and productId
       const paramsArray = decodedData.split(':');
-      const userIdParam = paramsArray[0];  // "-37"
-      const productIdParam = paramsArray[1]; // "23"
+      const userIdParam = paramsArray[0]; 
+      const productIdParam = paramsArray[1];
   
       // Set the extracted values into state
       setUserId(userIdParam);
@@ -33,6 +34,7 @@ function Product() {
     try {
       // Prepare the data to send to Paypergo backend
       const dataToSend = `userId=${userId}&productId=${productId}&buyCount=${productCount}`;
+      console.log("dataToSend : ",dataToSend);
       const encodedData = btoa(dataToSend); // Base64 encode the data
 
       // Send the data to the Paypergo backend to update the buy count
@@ -60,7 +62,7 @@ function Product() {
         type="number"
         id="productCount"
         value={productCount}
-        onChange={(e) => setProductCount(e.target.value)}
+        onChange={(e) => setProductCount(Number(e.target.value))}
         min="1"
       />
 

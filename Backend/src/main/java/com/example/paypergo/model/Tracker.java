@@ -18,6 +18,7 @@ public class Tracker {
     String productGeneratedUrl;
     Long count = 0L;
     Long buyCount = 0L;
+    boolean active = true;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -28,6 +29,16 @@ public class Tracker {
     private Product product;
 
     public Tracker() {}
+
+    public Tracker(Long tId, String productGeneratedUrl, Long count, Long buyCount, boolean active, User user, Product product) {
+        this.tId = tId;
+        this.productGeneratedUrl = productGeneratedUrl;
+        this.count = count;
+        this.buyCount = buyCount;
+        this.active = active;
+        this.user = user;
+        this.product = product;
+    }
 
     public Tracker(Long tId, String productGeneratedUrl, Long count, Long buyCount, User user, Product product) {
         this.tId = tId;
@@ -44,6 +55,14 @@ public class Tracker {
         this.count = count;
         this.user = user;
         this.product = product;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Long getTId() {

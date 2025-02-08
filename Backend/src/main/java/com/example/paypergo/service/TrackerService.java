@@ -42,6 +42,9 @@ public class TrackerService {
         // Find the LinkTrackerTable entry based on the user and product associations
         Optional<Tracker> linkTracker = Optional.ofNullable(trackerRepository.findByUserAndProduct(user.get(), product.get()));
         if(linkTracker.isPresent()) {
+            if(!linkTracker.get().isActive()){
+                return "Product not active";
+            }
             Tracker tracker = linkTracker.get();
             return tracker.getProductGeneratedUrl();
         }
@@ -101,12 +104,19 @@ public class TrackerService {
 
         if (linkTracker.isPresent()) {
             Tracker tracker = linkTracker.get();
+            if(!tracker.isActive()){
+                return "Tracker not active";
+            }
             tracker.setCount(tracker.getCount() + 1); // Increment click count
             trackerRepository.save(tracker); // Save the updated tracker
         }
 
+        //debug
+        System.out.println("productBaseUrl: " + productBaseUrl);
         // Check if the base URL is of Dummy server
-        if (productBaseUrl.startsWith("http://localhost:5174/product")) {
+        if (productBaseUrl.trim().toLowerCase().startsWith("http://localhost:5174/product")) {
+            System.out.println("Dummy server Product--------------->"+productBaseUrl);
+            System.out.println("Adding userId : "+userId+"\nAdding productId : "+productId);
             // Append userId and productId as query parameters
             productBaseUrl = productBaseUrl + "?data=" + encodeParams(userId, productId);
         }
@@ -123,6 +133,8 @@ public class TrackerService {
 
     public ResponseEntity<String> trackBuy(String data) {
         try {
+            //debug
+            System.out.println("inside trackBuy - service : "+data);
             // Decode the encoded data (Base64)
             String decodedData = new String(Base64.getDecoder().decode(data));
 
@@ -148,6 +160,9 @@ public class TrackerService {
 
             if (linkTracker.isPresent()) {
                 Tracker tracker = linkTracker.get();
+                if(!tracker.isActive()){
+                    return new ResponseEntity<>("Tracker not active", HttpStatus.NOT_FOUND);
+                }
                 tracker.setBuyCount(tracker.getBuyCount() + buyCount); // Increment the buy count
                 trackerRepository.save(tracker);
             }

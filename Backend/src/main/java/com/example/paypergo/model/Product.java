@@ -20,6 +20,7 @@ public class Product {
     String productType;
     double perClickPrice;
     double perBuyPrice;
+    boolean active = true;
 
     @OneToMany(mappedBy = "product")
     private List<Tracker> trackers;
@@ -49,6 +50,26 @@ public class Product {
         this.productType = productType;
         this.trackers = trackers;
         this.user = user;
+    }
+
+    public Product(Long productId, String productName, String productBaseurl, String productType, double perClickPrice, double perBuyPrice, boolean active, List<Tracker> trackers, User user) {
+        this.productId = productId;
+        this.productName = productName;
+        this.productBaseurl = productBaseurl;
+        this.productType = productType;
+        this.perClickPrice = perClickPrice;
+        this.perBuyPrice = perBuyPrice;
+        this.active = active;
+        this.trackers = trackers;
+        this.user = user;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public double getPerClickPrice() {

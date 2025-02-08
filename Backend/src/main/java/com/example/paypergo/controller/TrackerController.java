@@ -70,6 +70,8 @@ public class TrackerController {
     // deactivate a tracker (generated link)
     @PostMapping("/deactivateTracker/{trackerId}")
     public ResponseEntity<String> deactivateTracker(@PathVariable Long trackerId) {
+        //debug
+        System.out.println("inside deactivateTracker - controller...................................................");
         try {
             deactivationService.deactivateTracker(trackerId, "Link deactivated");
             return new ResponseEntity<>("link deactivated successfully", HttpStatus.OK);

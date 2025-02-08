@@ -23,6 +23,9 @@ public class User {
     @Column(nullable = false)
     private String role = "USER";
 
+    @Column(nullable = false)
+    private boolean active = true;
+
     @OneToMany(mappedBy = "user")
     private List<Tracker> trackers;
 
@@ -46,6 +49,24 @@ public class User {
         this.password = password;
         this.trackers = trackers;
         this.products = products;
+    }
+
+    public User(Long id, String username, String password, String role, boolean active, List<Tracker> trackers, List<Product> products) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.active = active;
+        this.trackers = trackers;
+        this.products = products;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Long getId() {

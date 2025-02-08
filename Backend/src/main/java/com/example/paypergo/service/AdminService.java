@@ -33,7 +33,7 @@ public class AdminService {
 
         // 3. Get the list of users along with their earnings and payable amounts
         List<User> users = userRepository.findAll();
-        List<UserHistory> userHistories = userHistoryRepository.findAll();
+//        List<UserHistory> userHistories = userHistoryRepository.findAll();
         List<AdminHomeResponseDTO.UserDataDTO> userList = new ArrayList<>();
 
         for (User user : users) {
@@ -51,29 +51,29 @@ public class AdminService {
             userData.setUsername(user.getUsername());
             userData.setTotalEarnings(profile.getTotalEarnings());
             userData.setTotalPayableAmount(profile.getTotalPayableAmount());
-            userData.setActive(true);
+            userData.setActive(user.isActive());
 
             userList.add(userData);
         }
 
-        for (UserHistory userHistory : userHistories) {
-            if(userHistory.getRole().equals("ADMIN")) {
-                totalUsers--;
-                continue;
-            }
-            ProfileResponseDTO profile = userService.getUserProfile(userHistory.getUserId());
-            totalEarnings += profile.getTotalEarnings();
-            totalPayableAmount += profile.getTotalPayableAmount();
-
-            AdminHomeResponseDTO.UserDataDTO userData = new AdminHomeResponseDTO.UserDataDTO();
-            userData.setUserId(userHistory.getUserId());
-            userData.setUsername(userHistory.getUsername());
-            userData.setTotalEarnings(profile.getTotalEarnings());
-            userData.setTotalPayableAmount(profile.getTotalPayableAmount());
-            userData.setActive(false);
-
-            userList.add(userData);
-        }
+//        for (UserHistory userHistory : userHistories) {
+//            if(userHistory.getRole().equals("ADMIN")) {
+//                totalUsers--;
+//                continue;
+//            }
+//            ProfileResponseDTO profile = userService.getUserProfile(userHistory.getUserId());
+//            totalEarnings += profile.getTotalEarnings();
+//            totalPayableAmount += profile.getTotalPayableAmount();
+//
+//            AdminHomeResponseDTO.UserDataDTO userData = new AdminHomeResponseDTO.UserDataDTO();
+//            userData.setUserId(userHistory.getUserId());
+//            userData.setUsername(userHistory.getUsername());
+//            userData.setTotalEarnings(profile.getTotalEarnings());
+//            userData.setTotalPayableAmount(profile.getTotalPayableAmount());
+//            userData.setActive(false);
+//
+//            userList.add(userData);
+//        }
 
         // Create and return the response DTO
         AdminHomeResponseDTO response = new AdminHomeResponseDTO();

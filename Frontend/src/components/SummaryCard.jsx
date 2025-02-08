@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
-import { FaArrowDown, FaArrowUp, FaCopy, FaTrash } from 'react-icons/fa';
+import React, { useState , useEffect } from 'react';
+import { FaArrowDown, FaArrowUp, FaCopy, FaTrash , FaCheckCircle } from 'react-icons/fa';
+import axios from 'axios';
 
 const SummaryCard = ({ type, title, data, totalAmount }) => {
   const [showDetails, setShowDetails] = useState(false);
+  const [token, setToken] = useState(null);
+
+  useEffect(() => {
+      const storedToken = localStorage.getItem("token");
+      if (!storedToken) {
+        navigate("/Authenticate");
+        return;
+      }
+      setToken(storedToken);
+  },[])
 
   const handleDetailsClick = () => {
     setShowDetails(!showDetails);
@@ -17,16 +28,75 @@ const SummaryCard = ({ type, title, data, totalAmount }) => {
     });
   };
 
-  // Handle Delete (for now just log)
+  // Handle Deactivate  (for now just log)
   const handleDeactivate = (ID) => {
-    console.log("Deleted ID: ", ID);
-    // can implement further delete functionality as needed
+    console.log("Deactivate  ID: ", ID);
+    console.log("Token : ", token);
+    // type = earnings ? http://localhost:8080/deactivateTracker/ID : http://localhost:8080/deactivateProduct/ID
+
+    if (!token) {
+      navigate("/Authenticate");
+      return;
+    }
+
+    // Determine the appropriate endpoint based on the type
+    const url = type === 'earnings' 
+    ? `http://localhost:8080/link/deactivateTracker/${ID}` 
+    : `http://localhost:8080/product/deactivateProduct/${ID}`;
+
+    axios
+    .post(url, {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => {
+      console.log('Deactivate response:', response.data);
+    })
+    .catch(error => {
+      console.error('Error Deactivate:', error);
+      if (error.response) {
+        // If response from server, log response status and data
+        console.error('Error response:', error.response.status, error.response.data);
+      }
+    });
+
   };
 
-  // Handle Active (for now just log)
+  // Handle Activete (for now just log)
   const handleActivate = (ID) => {
     console.log("Activeted ID: ", ID);
-    // can implement further Active functionality as needed
+    // type = earnings ? http://localhost:8080/activateTracker/ID : http://localhost:8080/activateProduct/ID
+
+    if (!token) {
+      navigate("/Authenticate");
+      return;
+    }
+
+    // Determine the appropriate endpoint based on the type
+    const url = type === 'earnings' 
+    ? `http://localhost:8080/link/activateTracker/${ID}` 
+    : `http://localhost:8080/product/activateProduct/${ID}`;
+
+    axios
+    .post(url, {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => {
+      console.log('Activation response:', response.data);
+    })
+    .catch(error => {
+      console.error('Error activating:', error);
+      if (error.response) {
+        // If response from server, log response status and data
+        console.error('Error response:', error.response.status, error.response.data);
+      }
+    });
+  
   };
 
   // Determine the color based on the type

@@ -2,20 +2,22 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AdminSummaryCard from '../components/AdminSummaryCard';
-import { FaSpinner , FaTrash , FaTimesCircle } from 'react-icons/fa'; // Loading spinner
+import { FaSpinner , FaTrash , FaTimesCircle , FaCheckCircle  } from 'react-icons/fa'; // Loading spinner
 
 const AdminHome = () => {
   const [adminData, setAdminData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [token, setToken] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    const storedToken = localStorage.getItem("token");
+    if (!storedToken) {
       navigate("/Authenticate");
       return;
     }
+    setToken(storedToken);
 
     axios
       .get(`http://localhost:8080/admin/home`, {
@@ -54,13 +56,59 @@ const AdminHome = () => {
   // Handle Deactivate User (For now just log the userId)
   const handleDeactivateUser = (userId) => {
     console.log("User Deactivated with ID:", userId);
-    // You can add the Deactivate logic here
+    if (!token) {
+      navigate("/Authenticate");
+      return;
+    }
+    const url = `http://localhost:8080/admin/deactivateUser/${userId}`;
+    // deactivating user
+    axios
+    .post(url, {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => {
+      console.log('Deactivation response:', response.data);
+    })
+    .catch(error => {
+      console.error('Error deactivating:', error);
+      if (error.response) {
+        // If response from server, log response status and data
+        console.error('Error response:', error.response.status, error.response.data);
+      }
+    });
   };
 
   // Handle Activate User (For now just log the userId)
   const handleActivateUser = (userId) => {
     console.log("User Activated with ID:", userId);
-    // You can add the Activate logic here
+    
+    if (!token) {
+      navigate("/Authenticate");
+      return;
+    }
+    const url = `http://localhost:8080/admin/activateUser/${userId}`;
+
+    // activating user
+    axios
+    .post(url, {}, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response => {
+      console.log('Activation response:', response.data);
+    })
+    .catch(error => {
+      console.error('Error activating:', error);
+      if (error.response) {
+        // If response from server, log response status and data
+        console.error('Error response:', error.response.status, error.response.data);
+      }
+    });
   };
 
   return (
