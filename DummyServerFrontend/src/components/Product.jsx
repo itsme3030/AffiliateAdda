@@ -37,6 +37,8 @@ function Product() {
       console.log("dataToSend : ",dataToSend);
       const encodedData = btoa(dataToSend); // Base64 encode the data
 
+      // Remaining task : Send data to the backend of dummy server
+
       // Send the data to the Paypergo backend to update the buy count
       const response = await axios.post(`http://localhost:8080/link/track-buy?data=${encodedData}`);
 
