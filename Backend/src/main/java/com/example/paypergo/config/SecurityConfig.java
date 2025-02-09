@@ -57,6 +57,8 @@ public class SecurityConfig {
                         .requestMatchers("/link/track-buy").permitAll()
                         // Allow access to admin-only endpoints to users with the "ROLE_ADMIN"
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        //testing
+                        //.requestMatchers("/admin/**").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
