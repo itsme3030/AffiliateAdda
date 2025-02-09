@@ -44,10 +44,17 @@ public class ActivationService {
             //System.out.println("------------------------------------------------------------------>User not found");
             throw new RuntimeException("User not found");
         }
+        if(!user.isActive()){
+            throw new RuntimeException("User is not active");
+        }
+
         Product product = productRepository.findById(tracker.getProduct().getProductId()).orElse(null);
         if (product == null) {
             //System.out.println("------------------------------------------------------------------>User not found");
             throw new RuntimeException("Product not found");
+        }
+        if(!product.isActive()){
+            throw new RuntimeException("Product is not active");
         }
 
         tracker.setActive(true);
@@ -107,13 +114,16 @@ public class ActivationService {
         if (user == null) {
             throw new RuntimeException("User not found");
         }
+        if(!user.isActive()){
+            throw new RuntimeException("User is not active");
+        }
         product.setActive(true);
         productRepository.save(product);
 
         List<Tracker> trackers = trackerRepository.findByProduct(product);
         for (Tracker tracker : trackers) {
             User user1 = userRepository.findById(tracker.getUser().getId()).orElse(null);
-            if (user1 == null) {
+            if (user1 == null || !user1.isActive()) {
                 continue;
             }
             tracker.setActive(true);
@@ -162,7 +172,7 @@ public class ActivationService {
         List<Tracker> trackers = trackerRepository.findByUser(user);
         for (Tracker tracker : trackers) {
            Product product = productRepository.findById(tracker.getProduct().getProductId()).orElse(null);
-           if (product == null) {
+           if (product == null || !product.isActive()) {
                continue;
            }
            tracker.setActive(true);

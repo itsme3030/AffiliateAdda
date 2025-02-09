@@ -13,6 +13,7 @@ const AdminHome = () => {
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
+    console.log("Local storage token : ",storedToken);
     if (!storedToken) {
       navigate("/Authenticate");
       return;

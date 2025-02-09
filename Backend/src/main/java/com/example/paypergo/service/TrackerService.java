@@ -95,8 +95,12 @@ public class TrackerService {
         Optional<Product> product = productService.findByProductId(productId);
 
         // Check if user and product exist
-        if (!user.isPresent() || !product.isPresent()) {
+        if (user.isEmpty() || product.isEmpty()) {
             return null; // Return null if user or product not found
+        }
+        // Check if user and product is inactive
+        if(!user.get().isActive() || !product.get().isActive()) {
+            return null;
         }
 
         // Find the LinkTrackerTable entry based on the user and product associations
@@ -150,8 +154,11 @@ public class TrackerService {
             Optional<User> user = userService.findByUserId(userId);
             Optional<Product> product = productService.findByProductId(productId);
 
-            if (!user.isPresent() || !product.isPresent()) {
+            if (user.isEmpty() || product.isEmpty()) {
                 return new ResponseEntity<>("User or Product not found", HttpStatus.NOT_FOUND);
+            }
+            if(!user.get().isActive() || !product.get().isActive()) {
+                return new ResponseEntity<>("User or Product not active", HttpStatus.FORBIDDEN);
             }
 
             // Find the LinkTrackerTable entry based on the user and product associations

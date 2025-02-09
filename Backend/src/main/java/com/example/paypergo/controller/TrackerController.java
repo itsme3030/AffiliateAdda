@@ -3,6 +3,7 @@ package com.example.paypergo.controller;
 import com.example.paypergo.dto.LinkDto;
 import com.example.paypergo.model.Product;
 import com.example.paypergo.model.User;
+import com.example.paypergo.repository.ProductRepository;
 import com.example.paypergo.repository.UserRepository;
 import com.example.paypergo.service.*;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,6 +38,8 @@ public class TrackerController {
 
     @Autowired
     private ActivationService activationService;
+    @Autowired
+    private ProductRepository productRepository;
 
     @PostMapping("/generate")
     public ResponseEntity<String> generateLink(@RequestBody LinkDto linkDto, Principal principal) {
@@ -46,6 +49,11 @@ public class TrackerController {
         //get user
         String username = principal.getName();
         Optional<User> user = userRepository.findByUsername(username);
+        if(user.isPresent()){
+            if(!user.get().isActive()){
+                return new ResponseEntity<>("User is not active", HttpStatus.FORBIDDEN);
+            }
+        }
         Long userId = user.map(User::getId).orElse(null);
         System.out.println("username " + username + " : id " + userId);
 
@@ -56,9 +64,16 @@ public class TrackerController {
         if (product.isEmpty()) {
             return new ResponseEntity<>("Product not found", HttpStatus.NOT_FOUND);
         }
-        String productBaseurl = product.get().getProductBaseurl();
+        if(!product.get().isActive()){
+            return new ResponseEntity<>("Product is not active", HttpStatus.FORBIDDEN);
+        }
+        if(product.get().getUser().getId().equals(userId)) {
+            return new ResponseEntity<>("Product owner can not generate the link", HttpStatus.FORBIDDEN);
+        }
 
-        System.out.println("productBaseurl " + productBaseurl);
+        // Get Baseurl
+        String productBaseurl = product.get().getProductBaseurl();
+        //System.out.println("productBaseurl " + productBaseurl);
 
         //encode url
         String encodedUrl = trackerService.generateLink(userId, productId, productBaseurl);

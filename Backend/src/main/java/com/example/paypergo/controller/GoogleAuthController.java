@@ -72,14 +72,21 @@ public class GoogleAuthController {
                 }
 
                 // Check if the user exists in the database
-                User user = userRepository.findByUsername(email).orElseGet(() -> {
+                User user = userRepository.findByUsername(email).orElse(null);
+                if (user == null) {
                     // Create a new user if not found
                     User newUser = new User();
                     newUser.setUsername(email);
                     newUser.setPassword(new BCryptPasswordEncoder().encode(generateRandomPassword()));
                     userRepository.save(newUser);
-                    return newUser;
-                });
+                    user = newUser;
+                }else{
+                    // Existing user
+                    // Check if the user is active or not
+                    if(!user.isActive()){
+                        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not active");
+                    }
+                }
 
                 // Generate a JWT token for the user
                 String role="USER";
