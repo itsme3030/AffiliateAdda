@@ -1,86 +1,105 @@
-import React, { useState } from "react";
-import ProductList from "../components/ProductList";
+import React from 'react';
+import { FaHandshake, FaLink, FaDollarSign, FaStar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedType, setSelectedType] = useState('');
-
-  // Handle search input change
-  const handleSearchChange = (e) => setSearchTerm(e.target.value);
-
-  // Handle category button click
-  const handleCategoryClick = (type) => {
-    if (type === 'All Products') {
-      setSelectedType(''); // If "All Products" is clicked, reset the type to show all products
-    } else {
-      setSelectedType(type);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      {/* Category buttons */}
-      <div className="flex justify-center space-x-4 mb-8">
-        <button
-          className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
-          onClick={() => handleCategoryClick('All Products')} // Button for All Products
-        >
-          All Products
-        </button>
-        <button
-          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-          onClick={() => handleCategoryClick('Product - Amazon')}
-        >
-          Amazon Products
-        </button>
-        <button
-          className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-          onClick={() => handleCategoryClick('Product - Flipkart')}
-        >
-          Flipkart Products
-        </button>
-        <button
-          className="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
-          onClick={() => handleCategoryClick('YouTube Video')}
-        >
-          YouTube
-        </button>
-        <button
-          className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
-          onClick={() => handleCategoryClick('Landing Page')}
-        >
-          Landing Pages
-        </button>
-        <button
-          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-          onClick={() => handleCategoryClick('Website')} // Button for Website
-        >
-          Website
-        </button>
-      </div>
+    <div>
+      {/* Hero Section */}
+      <section className="bg-gradient-to-r from-blue-500 to-purple-600 text-white text-center py-20">
+        <h1 className="text-5xl font-bold mb-4">Earn Money by Sharing Great Products!</h1>
+        <p className="text-xl mb-6">Join our Affiliate Marketing Program today and start earning commissions on every sale you refer.</p>
+        <Link to="/join" className="bg-yellow-500 text-black py-2 px-6 rounded-full text-xl font-semibold hover:bg-yellow-600">
+          Get Started
+        </Link>
+      </section>
 
-      {/* Search bar */}
-      <div className="flex justify-center mb-8">
-        <input
-          type="text"
-          className="p-3 w-1/2 sm:w-1/3 md:w-1/4 border border-gray-300 rounded-lg"
-          placeholder="Search by product name"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-        <button
-          className="ml-4 p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-          onClick={() => {
-            // Implement search functionality here
-            console.log(`Searching for: ${searchTerm}`);
-          }}
-        >
-          Search
-        </button>
-      </div>
+      {/* How It Works */}
+      <section className="py-16 bg-white">
+        <h2 className="text-4xl font-bold text-center mb-12">How It Works</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+          <div className="text-center">
+            <FaLink className="text-6xl text-blue-500 mb-4" />
+            <h3 className="text-2xl font-semibold mb-4">Share Your Link</h3>
+            <p>Share your unique affiliate link on social media, blogs, or websites.</p>
+          </div>
+          <div className="text-center">
+            <FaHandshake className="text-6xl text-green-500 mb-4" />
+            <h3 className="text-2xl font-semibold mb-4">Engage with Users</h3>
+            <p>Get your audience excited about the products and drive traffic to your affiliate link.</p>
+          </div>
+          <div className="text-center">
+            <FaDollarSign className="text-6xl text-yellow-500 mb-4" />
+            <h3 className="text-2xl font-semibold mb-4">Earn Commissions</h3>
+            <p>Earn money when someone clicks on your link and makes a purchase.</p>
+          </div>
+        </div>
+      </section>
 
-      {/* Product List */}
-      <ProductList searchTerm={searchTerm} selectedType={selectedType} />
+      {/* Benefits Section */}
+      <section className="py-16 bg-gray-100">
+        <h2 className="text-4xl font-bold text-center mb-12">Why Join Our Affiliate Program?</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-6">
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+            <FaDollarSign className="text-6xl text-green-500 mb-4" />
+            <h3 className="text-2xl font-semibold mb-4">High Commissions</h3>
+            <p>Earn up to 50% in commission on every sale generated from your affiliate link.</p>
+          </div>
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+            <FaHandshake className="text-6xl text-blue-500 mb-4" />
+            <h3 className="text-2xl font-semibold mb-4">Reliable Support</h3>
+            <p>Our dedicated affiliate support team will help you every step of the way.</p>
+          </div>
+          <div className="bg-white p-8 rounded-lg shadow-lg text-center">
+            <FaStar className="text-6xl text-yellow-500 mb-4" />
+            <h3 className="text-2xl font-semibold mb-4">Top-tier Products</h3>
+            <p>Promote high-quality products that your audience will love and trust.</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-16">
+        <h2 className="text-4xl font-bold text-center mb-12">What Our Affiliates Are Saying</h2>
+        <div className="flex flex-wrap justify-center space-x-6">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-80">
+            <p className="text-xl mb-4">"Joining this affiliate program has been a game-changer. I've made more money than I ever expected!"</p>
+            <p className="font-semibold">John D.</p>
+            <p className="text-gray-500">Affiliate Marketer</p>
+          </div>
+          <div className="bg-white p-8 rounded-lg shadow-lg w-80">
+            <p className="text-xl mb-4">"The support team is amazing, and the commissions are very generous. Highly recommend!"</p>
+            <p className="font-semibold">Sarah W.</p>
+            <p className="text-gray-500">Influencer</p>
+          </div>
+          <div className="bg-white p-8 rounded-lg shadow-lg w-80">
+            <p className="text-xl mb-4">"I love promoting products that my followers genuinely love. It’s a win-win!"</p>
+            <p className="font-semibold">Alex M.</p>
+            <p className="text-gray-500">Blogger</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action Section */}
+      <section className="bg-blue-500 text-white py-20 text-center">
+        <h2 className="text-4xl font-bold mb-6">Ready to Start Earning?</h2>
+        <p className="text-xl mb-8">Join our affiliate marketing program and start earning passive income by sharing great products today!</p>
+        <Link to="/join" className="bg-yellow-500 text-black py-3 px-8 rounded-full text-xl font-semibold hover:bg-yellow-600">
+          Join Now
+        </Link>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-white py-8">
+        <div className="container mx-auto text-center">
+          <p>&copy; 2025 Affiliate Marketing. All rights reserved.</p>
+          <p>Follow us on social media: 
+            <a href="#" className="text-blue-400 ml-2">Facebook</a> | 
+            <a href="#" className="text-blue-400 ml-2">Instagram</a> | 
+            <a href="#" className="text-blue-400 ml-2">Twitter</a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };

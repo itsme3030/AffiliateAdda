@@ -6,6 +6,7 @@ import AdminHome from "./pages/AdminHome";  // Admin-specific Home page
 import AddProduct from "./pages/AddProduct";
 import UserProfile from "./components/UserProfile";
 import Header from "./components/Header";
+import Affiliate from "./pages/Affiliate";
 import { useEffect, useState } from "react";
 // import * as jwt_decode from 'jwt-decode';
 // import jwt_decode from 'jsonwebtoken';
@@ -37,6 +38,7 @@ function App() {
                 {role === "USER" ? (
                     <>
                         <Route path="/" element={<Home />} />
+                        <Route path="/affiliate" element={<Affiliate />} />
                         <Route path="/Authenticate" element={<GoogleAuthentication setRole={setRole} />} />
                         <Route path="/logout" element={<Logout setRole={setRole}/>} />
                         <Route path="/add-product" element={<AddProduct />} />

@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaPlus, FaUserAlt, FaSignOutAlt, FaGoogle } from "react-icons/fa"; // Icon imports
+import { FaHome, FaPlus, FaUserAlt, FaSignOutAlt, FaGoogle , FaHandshake } from "react-icons/fa"; // Icon imports
 
 function Header({ role }) {
   return (
@@ -23,6 +23,14 @@ function Header({ role }) {
                   >
                     <FaHome />
                     <span>Home</span>
+                  </Link>
+
+                  <Link
+                    to="/affiliate"
+                    className="text-lg hover:text-teal-200 transition duration-300 flex items-center space-x-2"
+                  >
+                    <FaHandshake />
+                    <span>affiliate</span>
                   </Link>
 
                   <Link

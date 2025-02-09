@@ -23,7 +23,7 @@ const AdminHome = () => {
     axios
       .get(`http://localhost:8080/admin/home`, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization" : `Bearer ${storedToken}`,
         },
       })
       .then((response) => {
