@@ -11,6 +11,11 @@ function AddProduct() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const shouldShowPriceField = 
+    productType === "Product - Amazon" || 
+    productType === "Product - Flipkart" || 
+    productType === "Product";
+
   // This hook will check if the user is authenticated when the component mounts
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -87,38 +92,6 @@ function AddProduct() {
         </div>
 
         <div>
-          <label htmlFor="perClickPrice" className="block text-sm font-medium text-gray-700">
-            Price per Click
-          </label>
-          <input
-            type="number"
-            id="perClickPrice"
-            value={perClickPrice}
-            onChange={(e) => setPerClickPrice(e.target.value)}
-            required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter price per click"
-            step="0.01"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="perBuyPrice" className="block text-sm font-medium text-gray-700">
-            Price per Buy
-          </label>
-          <input
-            type="number"
-            id="perBuyPrice"
-            value={perBuyPrice}
-            onChange={(e) => setPerBuyPrice(e.target.value)}
-            required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter price per buy"
-            step="0.01"
-          />
-        </div>
-
-        <div>
           <label htmlFor="productType" className="block text-sm font-medium text-gray-700">
             Product Type
           </label>
@@ -131,13 +104,65 @@ function AddProduct() {
           >
             <option value="">Select Product Type</option>
             <option value="Product - Amazon">Product - Amazon</option>
-            <option value="Product - Flipkar">Product - Flipkart</option>
+            <option value="Product - Flipkart">Product - Flipkart</option>
             <option value="Product">Other Products</option>
             <option value="YouTube Video">YouTube Video</option>
             <option value="Website">Website</option>
             <option value="Landing Page">Landing Page</option>
           </select>
         </div>
+
+        <div>
+          <label htmlFor="perClickPrice" className="block text-sm font-medium text-gray-700">
+            Price per Click
+          </label>
+          <input
+            type="number"
+            id="perClickPrice"
+            value={perClickPrice}
+            onChange={(e) => 
+              {
+                // Ensure the input only allows up to two digits after the decimal point
+                const value = e.target.value;
+                const regex = /^\d+(\.\d{0,2})?$/; // Regex for up to 2 decimals
+                if (regex.test(value)) {
+                  setPerClickPrice(value);
+                }
+              }
+            }
+            required
+            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter price per click"
+            step="0.01"
+          />
+        </div>
+
+        {shouldShowPriceField && (
+          <div>
+            <label htmlFor="perBuyPrice" className="block text-sm font-medium text-gray-700">
+              Price per Buy
+            </label>
+            <input
+              type="number"
+              id="perBuyPrice"
+              value={perBuyPrice}
+              onChange={(e) => 
+                {
+                  // Ensure the input only allows up to two digits after the decimal point
+                  const value = e.target.value;
+                  const regex = /^\d+(\.\d{0,2})?$/; // Regex for up to 2 decimals
+                  if (regex.test(value)) {
+                    setPerBuyPrice(value);
+                  }
+                }
+              }
+              required
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter price per buy"
+              step="0.01"
+            />
+          </div>
+        )}
 
         <button
           type="submit"

@@ -51,14 +51,16 @@ public class ProductService {
         // Fetch all products from the repository
         List<Product> products = productRepository.findAll();
 
+        double commission = 0.5;
+
         // Map the Product list to ProductDTO
         return products.stream()
                 .map(product -> new ProductDTO(
                         product.getProductId(),           // productId
                         product.getProductName(),         // productName
-                        product.getPerClickPrice(),       // perClickPrice
+                        product.getPerClickPrice() * commission,       // perClickPrice
                         product.getProductType(),         // productType
-                        product.getPerBuyPrice()          // perBuyPrice
+                        product.getPerBuyPrice() * commission         // perBuyPrice
                 ))
                 .collect(Collectors.toList()); // Collect to list
     }

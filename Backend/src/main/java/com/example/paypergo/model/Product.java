@@ -18,8 +18,8 @@ public class Product {
     String productName;
     String productBaseurl;
     String productType;
-    double perClickPrice;
-    double perBuyPrice;
+    double perClickPrice = 0L;
+    double perBuyPrice = 0L;
     boolean active = true;
 
     @OneToMany(mappedBy = "product")
