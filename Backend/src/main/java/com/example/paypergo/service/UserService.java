@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,6 +34,46 @@ public class UserService {
     @Autowired
     private ProductHistoryRepository productHistoryRepository;
 
+//    public double findUserEarnings(Long userId) {
+//        List<Tracker> trackers = trackerRepository.findByUserId(userId);
+//
+//        double totalEarnings = 0;
+//        double commission = 0.5;
+//
+//        for (Tracker tracker : trackers) {
+//            Product product = tracker.getProduct();
+//            long count = tracker.getCount();
+//            long buyCount = tracker.getBuyCount();
+//
+//            double earningForProduct = product.getPerClickPrice() * commission * count;
+//            double earningForProductBuy = product.getPerBuyPrice() * commission * buyCount;
+//
+//            totalEarnings += earningForProduct + earningForProductBuy;
+//        }
+//        return new totalEarnings;
+//    }
+
+//    public double findUserPayableAmount(Long userId) {
+//        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+//
+//        double totalPayableAmount = 0;
+//
+//        // Fetch products uploaded by the user
+//        List<Product> products = productRepository.findByUserId(userId);
+//        for (Product product : products) {
+//
+//            // Count the number of clicks for each product based on trackers
+//            long totalCountForProduct = trackerRepository.sumCountByProductId(product.getProductId());
+//            long totalCountForProductBuy = trackerRepository.sumBuyCountByProductId(product.getProductId());
+//
+//            double payableForProduct = product.getPerClickPrice() * totalCountForProduct +
+//                    product.getPerBuyPrice() * totalCountForProductBuy;
+//
+//            totalPayableAmount += payableForProduct;
+//        }
+//        return totalPayableAmount;
+//    }
+
     public Optional<User> findByUserId(Long userId) {
         return userRepository.findById(userId);
     }
@@ -44,7 +85,7 @@ public class UserService {
         // Fetch all trackers for the user
         List<Tracker> trackers = trackerRepository.findByUserId(userId);
 
-        List<TrackerHistory> trackerHistories = trackerHistoryRepository.findByUserId(userId);
+        //List<TrackerHistory> trackerHistories = trackerHistoryRepository.findByUserId(userId);
 
         // Calculate earnings (for the user who is sharing the link)
         List<ProfileResponseDTO.EarningDTO> earnings = new ArrayList<>();
