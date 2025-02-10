@@ -66,9 +66,9 @@ public class UserService {
             earningDTO.settId(tId);
             earningDTO.setProductGeneratedUrl(productGeneratedUrl);
             earningDTO.setProductName(product.getProductName());
-            earningDTO.setPerClickPrice(product.getPerClickPrice());
+            earningDTO.setPerClickPrice(product.getPerClickPrice() * commission);
             earningDTO.setCount(count);
-            earningDTO.setPerBuyPrice(product.getPerBuyPrice());
+            earningDTO.setPerBuyPrice(product.getPerBuyPrice() * commission);
             earningDTO.setBuyCount(buyCount);
             earningDTO.setActive(tracker.isActive());
 

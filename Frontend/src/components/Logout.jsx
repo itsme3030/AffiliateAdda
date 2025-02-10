@@ -31,14 +31,15 @@ function Logout({ setRole }) {
     };
 
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <button
-            onClick={handleLogout}
-            className="p-3 bg-teal-600 text-white rounded-lg text-lg font-semibold hover:bg-teal-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
-        >
-            Logout
-        </button>
-    </div>
+    //   <div className="flex justify-center items-center min-h-screen">
+    //     <button
+    //         onClick={handleLogout}
+    //         className="p-3 bg-teal-600 text-white rounded-lg text-lg font-semibold hover:bg-teal-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
+    //     >
+    //         Logout
+    //     </button>
+    // </div>
+    <></>
     );
 }
 

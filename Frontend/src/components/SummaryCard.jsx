@@ -161,8 +161,14 @@ const SummaryCard = ({ type, title, data, totalAmount }) => {
                           <td className="px-4 py-2 text-gray-700">{item.productName}</td>
                           <td className="px-4 py-2 text-gray-700 text-center">{item.count}</td>
                           <td className="px-4 py-2 text-gray-700 text-center">${item.perClickPrice.toFixed(2)}</td>
-                          <td className="px-4 py-2 text-gray-700 text-center">{item.buyCount}</td>
-                          <td className="px-4 py-2 text-gray-700 text-center">${item.perBuyPrice.toFixed(2)}</td>
+
+                          <td className="px-4 py-2 text-gray-700 text-center">
+                            {item.buyCount}
+                          </td>
+                          <td className="px-4 py-2 text-gray-700 text-center">
+                            ${item.perBuyPrice.toFixed(2)}
+                          </td>
+
                           <td className="px-4 py-2 text-gray-700 text-center">
                             ${((item.count * item.perClickPrice) + (item.buyCount * item.perBuyPrice)).toFixed(2)}
                           </td>
@@ -229,8 +235,14 @@ const SummaryCard = ({ type, title, data, totalAmount }) => {
                           <td className="px-4 py-2 text-gray-700">{item.productName}</td>
                           <td className="px-4 py-2 text-gray-700 text-center">{item.count}</td>
                           <td className="px-4 py-2 text-gray-700 text-center">${item.perClickPrice.toFixed(2)}</td>
-                          <td className="px-4 py-2 text-gray-700 text-center">{item.buyCount}</td>
-                          <td className="px-4 py-2 text-gray-700 text-center">${item.perBuyPrice.toFixed(2)}</td>
+
+                          <td className="px-4 py-2 text-gray-700 text-center">
+                            {item.buyCount}
+                          </td>
+                          <td className="px-4 py-2 text-gray-700 text-center">
+                            ${item.perBuyPrice.toFixed(2)}
+                          </td>
+
                           <td className="px-4 py-2 text-gray-700 text-center">
                             ${((item.count * item.perClickPrice) + (item.buyCount * item.perBuyPrice)).toFixed(2)}
                           </td>
