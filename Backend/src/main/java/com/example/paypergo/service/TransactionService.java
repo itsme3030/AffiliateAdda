@@ -77,7 +77,7 @@ public class TransactionService {
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setUser(user.get());
-        transaction.setTransactionType(TransactionType.PAYMENT);
+        transaction.setTransactionType(TransactionType.WITHDRAWAL);
         transaction.setStatus(TransactionStatus.COMPLETED);
         transaction.setTransactionDate(LocalDateTime.now());
         transactionRepository.save(transaction);
@@ -109,7 +109,7 @@ public class TransactionService {
         List<Transaction> transactions = transactionRepository.findByUser(user);
         double totalWithdrawals = 0;
         for (Transaction transaction : transactions) {
-            if(transaction.getTransactionType().equals("WITHDRAWAL") && transaction.getStatus() == TransactionStatus.COMPLETED){
+            if(transaction.getTransactionType() == TransactionType.WITHDRAWAL && transaction.getStatus() == TransactionStatus.COMPLETED){
                 totalWithdrawals += transaction.getAmount();
             }
         }
@@ -141,7 +141,7 @@ public class TransactionService {
         List<Transaction> transactions = transactionRepository.findByUser(user);
         double totalPays = 0;
         for (Transaction transaction : transactions) {
-            if(transaction.getTransactionType().equals("PAYMENT") && transaction.getStatus() == TransactionStatus.COMPLETED){
+            if(transaction.getTransactionType() == TransactionType.PAYMENT && transaction.getStatus() == TransactionStatus.COMPLETED){
                 totalPays += transaction.getAmount();
             }
         }

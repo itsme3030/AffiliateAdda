@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 // import * as jwt_decode from 'jwt-decode';
 // import jwt_decode from 'jsonwebtoken';
 import { jwtDecode } from "jwt-decode";
+import Payments from "./pages/Payments";
 
 function App() {
     const [role, setRole] = useState(null);
@@ -43,6 +44,7 @@ function App() {
                         <Route path="/logout" element={<Logout setRole={setRole}/>} />
                         <Route path="/add-product" element={<AddProduct />} />
                         <Route path="/user-profile" element={<UserProfile />} />
+                        <Route path="/payments" element={<Payments />} />
                         <Route path="/admin-home" element={<Navigate to="/" />} />
                         {/* Optional: A route for handling 404 (not found) */}
                         {/* <Route path="*" element={<NotFound />} /> */}

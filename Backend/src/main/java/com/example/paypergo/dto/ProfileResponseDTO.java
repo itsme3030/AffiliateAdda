@@ -1,5 +1,9 @@
 package com.example.paypergo.dto;
 
+import com.example.paypergo.model.TransactionStatus;
+import com.example.paypergo.model.TransactionType;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ProfileResponseDTO {
@@ -8,6 +12,35 @@ public class ProfileResponseDTO {
     private double totalEarnings;
     private List<PayableDTO> payableAmounts;
     private double totalPayableAmount;
+
+    //payment
+    private double totalWithdrawals;
+    private double totalPays;
+    private List<PaymentsDTO> payments;
+
+    public List<PaymentsDTO> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<PaymentsDTO> payments) {
+        this.payments = payments;
+    }
+
+    public double getTotalWithdrawals() {
+        return totalWithdrawals;
+    }
+
+    public void setTotalWithdrawals(double totalWithdrawals) {
+        this.totalWithdrawals = totalWithdrawals;
+    }
+
+    public double getTotalPays() {
+        return totalPays;
+    }
+
+    public void setTotalPays(double totalPays) {
+        this.totalPays = totalPays;
+    }
 
     public String getUsername() {
         return username;
@@ -47,6 +80,57 @@ public class ProfileResponseDTO {
 
     public void setTotalPayableAmount(double totalPayableAmount) {
         this.totalPayableAmount = totalPayableAmount;
+    }
+
+    public static class PaymentsDTO {
+        private Long transactionId;
+        private double amount;
+        private TransactionType transactionType;
+        private LocalDateTime transactionDate;
+        private TransactionStatus status;
+
+        // Getters and Setters
+
+
+        public Long getTransactionId() {
+            return transactionId;
+        }
+
+        public void setTransactionId(Long transactionId) {
+            this.transactionId = transactionId;
+        }
+
+        public double getAmount() {
+            return amount;
+        }
+
+        public void setAmount(double amount) {
+            this.amount = amount;
+        }
+
+        public TransactionType getTransactionType() {
+            return transactionType;
+        }
+
+        public void setTransactionType(TransactionType transactionType) {
+            this.transactionType = transactionType;
+        }
+
+        public LocalDateTime getTransactionDate() {
+            return transactionDate;
+        }
+
+        public void setTransactionDate(LocalDateTime transactionDate) {
+            this.transactionDate = transactionDate;
+        }
+
+        public TransactionStatus getStatus() {
+            return status;
+        }
+
+        public void setStatus(TransactionStatus status) {
+            this.status = status;
+        }
     }
 
     public static class EarningDTO {

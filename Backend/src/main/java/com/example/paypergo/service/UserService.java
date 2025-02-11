@@ -29,6 +29,9 @@ public class UserService {
     private TrackerRepository trackerRepository;
 
     @Autowired
+    private TransactionRepository transactionRepository;
+
+    @Autowired
     private TrackerHistoryRepository trackerHistoryRepository;
 
     @Autowired
@@ -218,6 +221,33 @@ public class UserService {
 //            totalPayableAmount += payableForProduct;
 //        }
 
+        // Total Payments and Total Withdrawals
+        List<ProfileResponseDTO.PaymentsDTO> payments = new ArrayList<>();
+        List<Transaction> transactions = transactionRepository.findByUser(user);
+        double totalPays = 0L;
+        double totalWithdrawals = 0L;
+        for (Transaction transaction : transactions) {
+            if(transaction.getTransactionType() == TransactionType.PAYMENT || transaction.getTransactionType() == TransactionType.WITHDRAWAL){
+
+                // PaymentsDTO
+                ProfileResponseDTO.PaymentsDTO paymentsDTO = new ProfileResponseDTO.PaymentsDTO();
+                paymentsDTO.setTransactionId(transaction.getTransactionId());
+                paymentsDTO.setAmount(transaction.getAmount());
+                paymentsDTO.setTransactionType(transaction.getTransactionType());
+                paymentsDTO.setStatus(transaction.getStatus());
+                paymentsDTO.setTransactionDate(transaction.getTransactionDate());
+
+                payments.add(paymentsDTO);
+                if(transaction.getTransactionType() == TransactionType.PAYMENT && transaction.getStatus() == TransactionStatus.COMPLETED){
+                    totalPays += transaction.getAmount();
+                }else if(transaction.getTransactionType() == TransactionType.WITHDRAWAL && transaction.getStatus() == TransactionStatus.COMPLETED){
+                    totalWithdrawals += transaction.getAmount();
+                }
+            }
+        }
+
+//        System.out.println("Total withdrawals: --------------> " + totalWithdrawals);
+//        System.out.println("Total payments: ---------------> " + totalPays);
 
         // Build the response DTO
         ProfileResponseDTO profileResponseDTO = new ProfileResponseDTO();
@@ -226,6 +256,9 @@ public class UserService {
         profileResponseDTO.setTotalEarnings(totalEarnings);
         profileResponseDTO.setPayableAmounts(payableAmounts);
         profileResponseDTO.setTotalPayableAmount(totalPayableAmount);
+        profileResponseDTO.setTotalPays(totalPays);
+        profileResponseDTO.setTotalWithdrawals(totalWithdrawals);
+        profileResponseDTO.setPayments(payments);
 
         return profileResponseDTO;
     }
