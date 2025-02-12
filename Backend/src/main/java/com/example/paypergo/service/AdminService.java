@@ -2,8 +2,8 @@ package com.example.paypergo.service;
 
 import com.example.paypergo.dto.AdminHomeResponseDTO;
 import com.example.paypergo.dto.ProfileResponseDTO;
-import com.example.paypergo.model.User;
-import com.example.paypergo.model.UserHistory;
+import com.example.paypergo.model.*;
+import com.example.paypergo.repository.TransactionRepository;
 import com.example.paypergo.repository.UserHistoryRepository;
 import com.example.paypergo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +22,8 @@ public class AdminService {
     private UserService userService;
     @Autowired
     private UserHistoryRepository userHistoryRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
 
     public AdminHomeResponseDTO getAdminHomeData() {
         // 1. Total number of users
@@ -56,6 +58,15 @@ public class AdminService {
             userList.add(userData);
         }
 
+        // Total website earnings
+        double websiteEarnings = 0L;
+        List<Transaction> transactions = transactionRepository.findAll();
+        for (Transaction transaction : transactions) {
+            if(transaction.getTransactionType() == TransactionType.PAYMENT && transaction.getStatus() == TransactionStatus.COMPLETED) {
+                websiteEarnings += transaction.getAmount()/2; // 50% commission for each user
+            }
+        }
+
 //        for (UserHistory userHistory : userHistories) {
 //            if(userHistory.getRole().equals("ADMIN")) {
 //                totalUsers--;
@@ -80,6 +91,7 @@ public class AdminService {
         response.setTotalUsers(totalUsers);
         response.setTotalEarnings(totalEarnings);
         response.setTotalPayableAmount(totalPayableAmount);
+        response.setWebsiteEarnings(websiteEarnings);
         response.setUsers(userList);
 
         return response;

@@ -7,9 +7,19 @@ public class AdminHomeResponseDTO {
     private long totalUsers;
     private double totalEarnings;
     private double totalPayableAmount;
+    private  double websiteEarnings;
     private List<UserDataDTO> users;
 
     // Getters and setters
+
+
+    public double getWebsiteEarnings() {
+        return websiteEarnings;
+    }
+
+    public void setWebsiteEarnings(double websiteEarnings) {
+        this.websiteEarnings = websiteEarnings;
+    }
 
     public long getTotalUsers() {
         return totalUsers;
