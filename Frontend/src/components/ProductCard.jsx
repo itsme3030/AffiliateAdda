@@ -3,6 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { FaClipboard } from "react-icons/fa"; // Import the clipboard icon
 
+// Images
+import amazon from "../images/amazon.png"
+import flipkart from "../images/flipkart.jpg"
+import Youtube from "../images/Youtube.png"
+import website from "../images/website.png"
+import Dummy from "../images/Dummy.png"
+import LandingPage from "../images/LandingPage.png"
+
 function ProductCard({ product }) {
   const [generatedLink, setGeneratedLink] = useState('');
   const [error, setError] = useState('');
@@ -16,7 +24,8 @@ function ProductCard({ product }) {
     setError(''); // Clear any error message
     setLoading(true); // Start loading
 
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (!token) {
       navigate("/Authenticate");
       setLoading(false); // Stop loading as we are redirecting
@@ -55,25 +64,58 @@ function ProductCard({ product }) {
     }
   };
 
+  // Conditionally set the image based on product type
+  let productImage;
+  switch (product.productType) {
+    case "Product - Amazon":
+      productImage = amazon;
+      break;
+    case "Product - Flipkart":
+      productImage = flipkart;
+      break;
+    case "YouTube Video":
+      productImage = Youtube;
+      break;
+    case "Website":
+      productImage = website;
+      break;
+    case "Landing Page":
+      productImage = LandingPage;
+      break;
+    case "Product":
+    default:
+      productImage = Dummy; // Default image
+      break;
+  }
+
   return (
     <div className="max-w-sm rounded-lg shadow-lg bg-white overflow-hidden border border-gray-200 p-6 space-y-4">
+      {/* Image at the top */}
+      <div className="w-full h-48 bg-gray-300 rounded-lg mb-4">
+        {/* Placeholder image */}
+        <img
+          src={productImage} // Placeholder image URL
+          alt={product.productName}
+          className="w-full h-full object-cover rounded-lg shadow-md hover:shadow-xl"
+        />
+      </div>
+
       {/* Product details */}
-      <h3 className="text-2xl font-semibold text-gray-800 truncate">
+      <h3 className="text-md font-semibold text-gray-800 truncate">
         {product.productName}
       </h3>
       <p className="text-sm text-gray-600">Price per click: ${product.perClickPrice}</p>
-      <p className="text-sm text-gray-600">Product Type: {product.productType}</p>
+      {/* <p className="text-sm text-gray-600">Product Type: {product.productType}</p> */}
       <p className="text-sm text-gray-600">Price per buy: ${product.perBuyPrice}</p>
 
       {/* Button to generate link */}
       <button
         onClick={handleGenerateLink}
         disabled={loading} // Disable button while loading
-        className={`w-full py-2 font-semibold rounded-lg focus:outline-none focus:ring-2 ${
-          loading
+        className={`w-full py-2 font-semibold rounded-lg focus:outline-none focus:ring-2 ${loading
             ? "bg-gray-400 text-white cursor-not-allowed"
             : "bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500"
-        }`}
+          }`}
       >
         {loading ? "Generating..." : "Generate Link"}
       </button>
