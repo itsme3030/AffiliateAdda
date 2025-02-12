@@ -36,14 +36,16 @@ public class TransactionService {
             return false;
         }
 
+        //debug
+        System.out.println("User " + username);
+
         boolean success = false;
 
-        double userEarnings = findUserEarnings(user.get().getId());
-        double userWithdrawals = findUserWithdrawals(user.get());
-        double remainingEarnings = userEarnings - userWithdrawals;
-        if(remainingEarnings < amount){
-            return false;
-        }
+
+//        // We will use it for per month pay : Mail to user for remaining payment...
+//        double userPayableAmount = findUserPayableAmount(user.get().getId());
+//        double userPays = findUserPays(user.get());
+//        double remainingPays = userPayableAmount - userPays;
 
         // Create a transaction record
         Transaction transaction = new Transaction();
@@ -53,6 +55,9 @@ public class TransactionService {
         transaction.setStatus(TransactionStatus.COMPLETED);
         transaction.setTransactionDate(LocalDateTime.now());
         transactionRepository.save(transaction);
+
+        //debug
+        System.out.println("Transaction " + transaction.getTransactionId());
 
         success = true;
         return success;
@@ -68,10 +73,15 @@ public class TransactionService {
 
         boolean success = false;
 
-//        // We will use it for per month pay : Mail to user for remaining payment...
-//        double userPayableAmount = findUserPayableAmount(user.get().getId());
-//        double userPays = findUserPays(user.get());
-//        double remainingPays = userPayableAmount - userPays;
+        double userEarnings = findUserEarnings(user.get().getId());
+        System.out.println("UserEarnings " + userEarnings);
+        double userWithdrawals = findUserWithdrawals(user.get());
+        System.out.println("UserWithdrawals " + userWithdrawals);
+        double remainingEarnings = userEarnings - userWithdrawals;
+        System.out.println("Remaining Earnings " + remainingEarnings);
+        if(remainingEarnings < amount){
+            return false;
+        }
 
         // Create a transaction record
         Transaction transaction = new Transaction();

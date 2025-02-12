@@ -26,6 +26,9 @@ public class TransactionController {
     // Payment Endpoint
     @PostMapping("/pay")
     public ResponseEntity<String> processPayment(Principal principal, @RequestBody TransactionDTO transactionDTO) {
+
+        //debug
+        System.out.println("----------------------------------------->inside processPayment : Pay : " + transactionDTO.getAmount());
         try {
             boolean paymentSuccess = transactionService.processPayment(principal, transactionDTO.getAmount());
             if (paymentSuccess) {
