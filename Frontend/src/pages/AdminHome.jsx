@@ -12,8 +12,10 @@ const AdminHome = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    console.log("Local storage token : ",storedToken);
+    // const storedToken = localStorage.getItem("token");
+    const storedToken = sessionStorage.getItem("token");
+    // console.log("Local storage token : ",storedToken);
+    console.log("sessionStorage token : ",storedToken);
     if (!storedToken) {
       navigate("/Authenticate");
       return;
@@ -117,6 +119,15 @@ const AdminHome = () => {
       <h2 className="text-4xl font-semibold mb-8 text-center text-gray-800 tracking-wide">
         Admin Dashboard
       </h2>
+
+      <div className="grid gap-6 mb-8">
+        {/* Website Earnings */}
+        <AdminSummaryCard
+          type="website"
+          title="Total Website Earnings"
+          totalAmount={adminData.websiteEarnings}
+        />
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
         {/* Total Users Card */}

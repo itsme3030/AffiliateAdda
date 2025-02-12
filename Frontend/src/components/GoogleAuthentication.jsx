@@ -29,7 +29,8 @@ const GoogleAuthentication = ({ setRole }) => {
             }
 
             const data = await res.json();
-            localStorage.setItem("token", data.token);
+            // localStorage.setItem("token", data.token);
+            sessionStorage.setItem("token", data.token);
             console.log("JWT Token:", data.token);
 
             // Decode the JWT token

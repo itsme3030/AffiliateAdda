@@ -18,7 +18,8 @@ function AddProduct() {
 
   // This hook will check if the user is authenticated when the component mounts
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
     if (!token) {
       // If no token is found, redirect to the authentication page
       navigate("/Authenticate");
@@ -38,7 +39,8 @@ function AddProduct() {
     };
 
     try {
-      const token = localStorage.getItem("token");
+      // const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       const response = await axios.post("http://localhost:8080/product/add", productData, {
         headers: {
           "Authorization": `Bearer ${token}`,

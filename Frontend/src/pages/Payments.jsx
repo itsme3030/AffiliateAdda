@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation , useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Payments() {
+  const navigate = useNavigate();
   const location = useLocation();
   const { Allpayments } = location.state || {}; // Extract payments from the state
 
@@ -44,7 +45,8 @@ function Payments() {
       setError("");
       setLoading(true);
       try {
-        const token = localStorage.getItem("token"); // Get token from localStorage
+        // const token = localStorage.getItem("token"); // Get token from localStorage
+        const token = sessionStorage.getItem("token"); // Get token from sessionStorage
         const response = await axios.post(
           'http://localhost:8080/transactions/pay',
           { amount: parseFloat(amount) },
@@ -56,6 +58,7 @@ function Payments() {
         );
         setSuccessMessage(response.data); // "Payment Successful"
         setAmount("");
+        navigate("/user-profile");
       } catch (err) {
         setError(err.response?.data || "An error occurred while processing payment.");
       } finally {
@@ -73,7 +76,8 @@ function Payments() {
       setError("");
       setLoading(true);
       try {
-        const token = localStorage.getItem("token"); // Get token from localStorage
+        // const token = localStorage.getItem("token"); // Get token from localStorage
+        const token = sessionStorage.getItem("token"); // Get token from sessionStorage
         const response = await axios.post(
           'http://localhost:8080/transactions/withdraw',
           { amount: parseFloat(amount) },
@@ -85,6 +89,7 @@ function Payments() {
         );
         setSuccessMessage(response.data); // "Withdrawal Successful"
         setAmount("");
+        navigate("/user-profile");
       } catch (err) {
         setError(err.response?.data || "An error occurred while processing withdrawal.");
       } finally {

@@ -14,7 +14,8 @@ function Logout({ setRole }) {
             const response = await axios.post("http://localhost:8080/auth/logout");
             console.log(response.data); // Success message
             // Clear any stored tokens or user data
-            localStorage.removeItem("token");
+            // localStorage.removeItem("token");
+            sessionStorage.removeItem("token");
             sessionStorage.clear();
 
             // Optional: Force a reload to clear cached pages

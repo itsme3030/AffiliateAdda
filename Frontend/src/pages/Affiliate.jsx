@@ -34,13 +34,13 @@ function Affiliate() {
           Amazon Products
         </button>
         <button
-          className="px-6 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+          className="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
           onClick={() => handleCategoryClick('Product - Flipkart')}
         >
           Flipkart Products
         </button>
         <button
-          className="px-6 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition-colors"
+          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
           onClick={() => handleCategoryClick('YouTube Video')}
         >
           YouTube

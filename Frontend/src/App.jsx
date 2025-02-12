@@ -18,7 +18,7 @@ function App() {
 
     // Check for role or JWT token in local storage 
     useEffect(() => {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (token) {
             const decodedToken = jwtDecode(token);
             setRole(decodedToken.role);

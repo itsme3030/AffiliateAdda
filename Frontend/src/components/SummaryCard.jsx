@@ -7,7 +7,8 @@ const SummaryCard = ({ type, title, data, totalAmount }) => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-      const storedToken = localStorage.getItem("token");
+      // const storedToken = localStorage.getItem("token");
+      const storedToken = sessionStorage.getItem("token");
       if (!storedToken) {
         navigate("/Authenticate");
         return;
