@@ -38,7 +38,7 @@ function Header({ role }) {
                     className="text-lg hover:text-teal-200 transition duration-300 flex items-center space-x-2"
                   >
                     <FaPlus />
-                    <span>Add Product</span>
+                    <span>Promote Product</span>
                   </Link>
                 </nav>
 
