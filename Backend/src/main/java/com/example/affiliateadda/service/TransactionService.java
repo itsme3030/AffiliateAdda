@@ -1,14 +1,13 @@
-package com.example.paypergo.service;
+package com.example.affiliateadda.service;
 
-import com.example.paypergo.model.*;
-import com.example.paypergo.repository.ProductRepository;
-import com.example.paypergo.repository.TrackerRepository;
-import com.example.paypergo.repository.TransactionRepository;
-import com.example.paypergo.repository.UserRepository;
+import com.example.affiliateadda.model.*;
+import com.example.affiliateadda.repository.ProductRepository;
+import com.example.affiliateadda.repository.TrackerRepository;
+import com.example.affiliateadda.repository.TransactionRepository;
+import com.example.affiliateadda.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,6 +1,4 @@
-package com.example.paypergo.dto;
-
-import org.springframework.stereotype.Component;
+package com.example.affiliateadda.dto;
 
 //@Data
 //@AllArgsConstructor

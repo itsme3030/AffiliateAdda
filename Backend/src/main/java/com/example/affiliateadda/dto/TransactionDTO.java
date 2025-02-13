@@ -1,6 +1,4 @@
-package com.example.paypergo.dto;
-
-import java.math.BigDecimal;
+package com.example.affiliateadda.dto;
 
 public class TransactionDTO {
     private double amount;

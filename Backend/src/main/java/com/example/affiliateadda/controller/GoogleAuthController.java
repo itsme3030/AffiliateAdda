@@ -1,8 +1,8 @@
-package com.example.paypergo.controller;
+package com.example.affiliateadda.controller;
 
-import com.example.paypergo.model.User;
-import com.example.paypergo.repository.UserRepository;
-import com.example.paypergo.util.JwtUtil;
+import com.example.affiliateadda.model.User;
+import com.example.affiliateadda.repository.UserRepository;
+import com.example.affiliateadda.util.JwtUtil;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;

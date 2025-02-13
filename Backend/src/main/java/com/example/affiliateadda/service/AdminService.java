@@ -1,11 +1,11 @@
-package com.example.paypergo.service;
+package com.example.affiliateadda.service;
 
-import com.example.paypergo.dto.AdminHomeResponseDTO;
-import com.example.paypergo.dto.ProfileResponseDTO;
-import com.example.paypergo.model.*;
-import com.example.paypergo.repository.TransactionRepository;
-import com.example.paypergo.repository.UserHistoryRepository;
-import com.example.paypergo.repository.UserRepository;
+import com.example.affiliateadda.dto.AdminHomeResponseDTO;
+import com.example.affiliateadda.dto.ProfileResponseDTO;
+import com.example.affiliateadda.model.*;
+import com.example.affiliateadda.repository.TransactionRepository;
+import com.example.affiliateadda.repository.UserHistoryRepository;
+import com.example.affiliateadda.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

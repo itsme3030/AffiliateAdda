@@ -1,7 +1,7 @@
-package com.example.paypergo.dto;
+package com.example.affiliateadda.dto;
 
-import com.example.paypergo.model.TransactionStatus;
-import com.example.paypergo.model.TransactionType;
+import com.example.affiliateadda.model.TransactionStatus;
+import com.example.affiliateadda.model.TransactionType;
 
 import java.time.LocalDateTime;
 import java.util.List;

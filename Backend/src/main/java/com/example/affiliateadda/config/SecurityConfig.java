@@ -1,6 +1,6 @@
-package com.example.paypergo.config;
+package com.example.affiliateadda.config;
 
-import com.example.paypergo.service.CustomUserDetailsService;
+import com.example.affiliateadda.service.CustomUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

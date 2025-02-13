@@ -1,9 +1,8 @@
-package com.example.paypergo.model;
+package com.example.affiliateadda.model;
 
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity

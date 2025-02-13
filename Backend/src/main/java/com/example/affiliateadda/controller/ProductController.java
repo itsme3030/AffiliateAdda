@@ -1,12 +1,12 @@
-package com.example.paypergo.controller;
+package com.example.affiliateadda.controller;
 
-import com.example.paypergo.dto.ProductDTO;
-import com.example.paypergo.model.Product;
-import com.example.paypergo.model.User;
-import com.example.paypergo.repository.UserRepository;
-import com.example.paypergo.service.ActivationService;
-import com.example.paypergo.service.DeactivationService;
-import com.example.paypergo.service.ProductService;
+import com.example.affiliateadda.dto.ProductDTO;
+import com.example.affiliateadda.model.Product;
+import com.example.affiliateadda.model.User;
+import com.example.affiliateadda.repository.UserRepository;
+import com.example.affiliateadda.service.ActivationService;
+import com.example.affiliateadda.service.DeactivationService;
+import com.example.affiliateadda.service.ProductService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;

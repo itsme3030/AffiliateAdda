@@ -1,4 +1,4 @@
-package com.example.paypergo.dto;
+package com.example.affiliateadda.dto;
 
 public class ProductDTO {
 

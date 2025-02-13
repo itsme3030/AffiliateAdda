@@ -1,10 +1,10 @@
-package com.example.paypergo;
+package com.example.affiliateadda;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PayPerGoApplicationTests {
+class AffiliateAddaApplicationTests {
 
 	@Test
 	void contextLoads() {

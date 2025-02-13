@@ -12,7 +12,7 @@ function Header({ role }) {
               <div className="max-w-7xl mx-auto flex justify-between items-center px-6">
                 {/* Left side - Website Name */}
                 <h1 className="text-3xl font-bold flex items-center space-x-2">
-                  <span>Pay Per Go</span>
+                  <span>AffiliateAdda</span>
                 </h1>
 
                 {/* Centered Navigation */}

@@ -1,9 +1,9 @@
-package com.example.paypergo.service;
+package com.example.affiliateadda.service;
 
-import com.example.paypergo.model.Product;
-import com.example.paypergo.model.Tracker;
-import com.example.paypergo.model.User;
-import com.example.paypergo.repository.TrackerRepository;
+import com.example.affiliateadda.model.Product;
+import com.example.affiliateadda.model.Tracker;
+import com.example.affiliateadda.model.User;
+import com.example.affiliateadda.repository.TrackerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

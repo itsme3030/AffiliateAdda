@@ -1,8 +1,8 @@
-package com.example.paypergo.service;
+package com.example.affiliateadda.service;
 
-import com.example.paypergo.dto.ProductDTO;
-import com.example.paypergo.model.Product;
-import com.example.paypergo.repository.ProductRepository;
+import com.example.affiliateadda.dto.ProductDTO;
+import com.example.affiliateadda.model.Product;
+import com.example.affiliateadda.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

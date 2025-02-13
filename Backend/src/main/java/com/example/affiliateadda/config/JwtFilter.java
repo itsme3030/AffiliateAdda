@@ -1,8 +1,8 @@
-package com.example.paypergo.config;
+package com.example.affiliateadda.config;
 
-import com.example.paypergo.model.CustomUserDetails;
-import com.example.paypergo.service.CustomUserDetailsService;
-import com.example.paypergo.util.JwtUtil;
+import com.example.affiliateadda.model.CustomUserDetails;
+import com.example.affiliateadda.service.CustomUserDetailsService;
+import com.example.affiliateadda.util.JwtUtil;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

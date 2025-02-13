@@ -1,6 +1,6 @@
-package com.example.paypergo.repository;
+package com.example.affiliateadda.repository;
 
-import com.example.paypergo.model.UserHistory;
+import com.example.affiliateadda.model.UserHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

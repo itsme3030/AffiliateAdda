@@ -1,8 +1,8 @@
-package com.example.paypergo.service;
+package com.example.affiliateadda.service;
 
-import com.example.paypergo.model.CustomUserDetails;
-import com.example.paypergo.model.User;
-import com.example.paypergo.repository.UserRepository;
+import com.example.affiliateadda.model.CustomUserDetails;
+import com.example.affiliateadda.model.User;
+import com.example.affiliateadda.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

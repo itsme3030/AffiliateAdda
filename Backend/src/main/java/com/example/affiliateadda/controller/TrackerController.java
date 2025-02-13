@@ -1,19 +1,16 @@
-package com.example.paypergo.controller;
+package com.example.affiliateadda.controller;
 
-import com.example.paypergo.dto.LinkDto;
-import com.example.paypergo.model.Product;
-import com.example.paypergo.model.User;
-import com.example.paypergo.repository.ProductRepository;
-import com.example.paypergo.repository.UserRepository;
-import com.example.paypergo.service.*;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+import com.example.affiliateadda.dto.LinkDto;
+import com.example.affiliateadda.model.Product;
+import com.example.affiliateadda.model.User;
+import com.example.affiliateadda.repository.ProductRepository;
+import com.example.affiliateadda.repository.UserRepository;
+import com.example.affiliateadda.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;

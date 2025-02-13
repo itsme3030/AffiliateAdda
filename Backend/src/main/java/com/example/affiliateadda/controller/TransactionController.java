@@ -1,9 +1,9 @@
-package com.example.paypergo.controller;
+package com.example.affiliateadda.controller;
 
-import com.example.paypergo.dto.TransactionDTO;
+import com.example.affiliateadda.dto.TransactionDTO;
 
-import com.example.paypergo.repository.UserRepository;
-import com.example.paypergo.service.TransactionService;
+import com.example.affiliateadda.repository.UserRepository;
+import com.example.affiliateadda.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

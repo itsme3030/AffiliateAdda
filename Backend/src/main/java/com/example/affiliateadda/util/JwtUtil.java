@@ -1,4 +1,4 @@
-package com.example.paypergo.util;
+package com.example.affiliateadda.util;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

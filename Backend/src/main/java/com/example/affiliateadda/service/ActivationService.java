@@ -1,7 +1,7 @@
-package com.example.paypergo.service;
+package com.example.affiliateadda.service;
 
-import com.example.paypergo.model.*;
-import com.example.paypergo.repository.*;
+import com.example.affiliateadda.model.*;
+import com.example.affiliateadda.repository.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;

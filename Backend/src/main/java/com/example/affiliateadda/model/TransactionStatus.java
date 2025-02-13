@@ -1,4 +1,4 @@
-package com.example.paypergo.model;
+package com.example.affiliateadda.model;
 
 public enum TransactionStatus {
     COMPLETED,
