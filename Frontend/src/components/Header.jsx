@@ -1,96 +1,68 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaPlus, FaUserAlt, FaSignOutAlt, FaGoogle , FaHandshake } from "react-icons/fa"; // Icon imports
+import { FaHome, FaPlus, FaUserAlt, FaSignOutAlt, FaGoogle, FaHandshake } from "react-icons/fa";
 
 function Header({ role }) {
   return (
-    <>
-      {
-        role === "USER" ? (
-          <>
-            <header className="bg-teal-600 text-white py-4 shadow-md">
-              <div className="max-w-7xl mx-auto flex justify-between items-center px-6">
-                {/* Left side - Website Name */}
-                <h1 className="text-3xl font-bold flex items-center space-x-2">
-                  <span>AffiliateAdda</span>
-                </h1>
+    <header className="bg-white text-gray-800 py-4 shadow-xl sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-6">
+        {/* Left Side - Website Name */}
+        <h1 className="text-3xl font-bold tracking-wide hover:scale-105 transition-transform">
+          AffiliateAdda
+        </h1>
 
-                {/* Centered Navigation */}
-                <nav className="flex-grow flex justify-center space-x-8">
-                  <Link
-                    to="/"
-                    className="text-lg hover:text-teal-200 transition duration-300 flex items-center space-x-2"
-                  >
-                    <FaHome />
-                    <span>Home</span>
-                  </Link>
+        {/* Centered Navigation */}
+        {role === "USER" && (
+          <nav className="hidden md:flex gap-6 text-md">
+            {[
+              { to: "/", icon: <FaHome />, label: "Home" },
+              { to: "/affiliate", icon: <FaHandshake />, label: "Affiliate" },
+              { to: "/add-product", icon: <FaPlus />, label: "Promote Product" },
+            ].map(({ to, icon, label }) => (
+              <Link
+                key={to}
+                to={to}
+                className="flex items-center gap-0.5 px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-all"
+              >
+                {icon} <span>{label}</span>
+              </Link>
+            ))}
+          </nav>
+        )}
 
-                  <Link
-                    to="/affiliate"
-                    className="text-lg hover:text-teal-200 transition duration-300 flex items-center space-x-2"
-                  >
-                    <FaHandshake />
-                    <span>affiliate</span>
-                  </Link>
-
-                  <Link
-                    to="/add-product"
-                    className="text-lg hover:text-teal-200 transition duration-300 flex items-center space-x-2"
-                  >
-                    <FaPlus />
-                    <span>Promote Product</span>
-                  </Link>
-                </nav>
-
-                {/* Right side - Authentication/Profile/Logout */}
-                <nav className="flex space-x-6">
-                  <Link
-                    to="/Authenticate"
-                    className="text-lg hover:text-teal-200 transition duration-300 flex items-center space-x-2"
-                  >
-                    <FaGoogle />
-                    <span>GoogleAuth</span>
-                  </Link>
-
-                  <Link
-                    to="/user-profile"
-                    className="text-lg hover:text-teal-200 transition duration-300 flex items-center space-x-2"
-                  >
-                    <FaUserAlt />
-                    <span>Profile</span>
-                  </Link>
-
-                  <Link
-                    to="/logout"
-                    className="text-lg hover:text-teal-200 transition duration-300 flex items-center space-x-2"
-                  >
-                    <FaSignOutAlt />
-                    <span>Logout</span>
-                  </Link>
-                </nav>
-              </div>
-            </header>
-          </>
-        ) :
-        (
-          <>
-            <header className="bg-teal-600 text-white py-4 shadow-md">
-              <div className="max-w-7xl mx-auto flex justify-between items-center px-6">
-                <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-                <nav className="flex space-x-6">
-                  <Link to="/admin-home" className="flex items-center space-x-2">
-                    <FaHome /> <span>Home</span>
-                  </Link>
-                  <Link to="/logout" className="flex items-center space-x-2">
-                    <FaSignOutAlt /> <span>Logout</span>
-                  </Link>
-                </nav>
-              </div>
-            </header>
-          </>
-        )
-      }
-    </>
+        {/* Right Side - Authentication/Profile/Logout */}
+        <nav className="flex items-center gap-4">
+          {role === "USER" ? (
+            [
+              { to: "/Authenticate", icon: <FaGoogle />, label: "GoogleAuth" },
+              { to: "/user-profile", icon: <FaUserAlt />, label: "Profile" },
+              { to: "/logout", icon: <FaSignOutAlt />, label: "Logout" },
+            ].map(({ to, icon, label }) => (
+              <Link
+                key={to}
+                to={to}
+                className="flex items-center gap-0.5 px-3 py-2 rounded-lg bg-gray-100 hover:bg-gray-200 transition-all"
+              >
+                {icon} <span>{label}</span>
+              </Link>
+            ))
+          ) : (
+            [
+              { to: "/admin-home", icon: <FaHome />, label: "Home" },
+              { to: "/logout", icon: <FaSignOutAlt />, label: "Logout" },
+            ].map(({ to, icon, label }) => (
+              <Link
+                key={to}
+                to={to}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 transition-all"
+              >
+                {icon} <span>{label}</span>
+              </Link>
+            ))
+          )}
+        </nav>
+      </div>
+    </header>
   );
 }
 
