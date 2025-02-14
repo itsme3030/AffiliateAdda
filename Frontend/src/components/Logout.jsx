@@ -11,7 +11,7 @@ function Logout({ setRole }) {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post("http://localhost:8080/auth/logout");
+            const response = await axios.post(`${import.meta.env.VITE_API}/auth/logout`);
             console.log(response.data); // Success message
             // Clear any stored tokens or user data
             // localStorage.removeItem("token");

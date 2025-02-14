@@ -23,7 +23,7 @@ const AdminHome = () => {
     setToken(storedToken);
 
     axios
-      .get(`http://localhost:8080/admin/home`, {
+      .get(`${import.meta.env.VITE_API}/admin/home`, {
         headers: {
           "Authorization" : `Bearer ${storedToken}`,
         },
@@ -63,7 +63,7 @@ const AdminHome = () => {
       navigate("/Authenticate");
       return;
     }
-    const url = `http://localhost:8080/admin/deactivateUser/${userId}`;
+    const url = `${import.meta.env.VITE_API}/admin/deactivateUser/${userId}`;
     // deactivating user
     axios
     .post(url, {}, {
@@ -92,7 +92,7 @@ const AdminHome = () => {
       navigate("/Authenticate");
       return;
     }
-    const url = `http://localhost:8080/admin/activateUser/${userId}`;
+    const url = `${import.meta.env.VITE_API}/admin/activateUser/${userId}`;
 
     // activating user
     axios

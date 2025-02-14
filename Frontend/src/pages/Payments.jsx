@@ -48,7 +48,7 @@ function Payments() {
         // const token = localStorage.getItem("token"); // Get token from localStorage
         const token = sessionStorage.getItem("token"); // Get token from sessionStorage
         const response = await axios.post(
-          'http://localhost:8080/transactions/pay',
+          `${import.meta.env.VITE_API}/transactions/pay`,
           { amount: parseFloat(amount) },
           {
             headers: {
@@ -79,7 +79,7 @@ function Payments() {
         // const token = localStorage.getItem("token"); // Get token from localStorage
         const token = sessionStorage.getItem("token"); // Get token from sessionStorage
         const response = await axios.post(
-          'http://localhost:8080/transactions/withdraw',
+          `${import.meta.env.VITE_API}/transactions/withdraw`,
           { amount: parseFloat(amount) },
           {
             headers: {

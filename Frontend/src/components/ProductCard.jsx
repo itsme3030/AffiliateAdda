@@ -37,7 +37,7 @@ function ProductCard({ product }) {
       console.log("Product:", product);
 
       const response = await axios.post(
-        "http://localhost:8080/link/generate",
+        `${import.meta.env.VITE_API}/link/generate`,
         { productId: product.productId },
         {
           headers: {

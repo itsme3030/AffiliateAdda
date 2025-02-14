@@ -41,7 +41,7 @@ function AddProduct() {
     try {
       // const token = localStorage.getItem("token");
       const token = sessionStorage.getItem("token");
-      const response = await axios.post("http://localhost:8080/product/add", productData, {
+      const response = await axios.post(`${import.meta.env.VITE_API}/product/add`, productData, {
         headers: {
           "Authorization": `Bearer ${token}`,
         },

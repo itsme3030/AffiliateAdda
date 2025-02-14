@@ -18,7 +18,7 @@ const GoogleAuthentication = ({ setRole }) => {
         const token = response.credential;
 
         try {
-            const res = await fetch("http://localhost:8080/auth/google", {
+            const res = await fetch(`${import.meta.env.VITE_API}/auth/google`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token }),

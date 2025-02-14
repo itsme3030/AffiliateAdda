@@ -11,7 +11,7 @@ function ProductList({ searchTerm, selectedType }) {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/product/list");
+        const response = await axios.get(`${import.meta.env.VITE_API}/product/list`);
         console.log('Fetching the list of products');
         setProducts(response.data);
       } catch (err) {

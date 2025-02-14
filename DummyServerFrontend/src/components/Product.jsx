@@ -40,7 +40,7 @@ function Product() {
       // Remaining task : Send data to the backend of dummy server
 
       // Send the data to the Paypergo backend to update the buy count
-      const response = await axios.post(`http://localhost:8080/link/track-buy?data=${encodedData}`);
+      const response = await axios.post(`${import.meta.env.VITE_API}/link/track-buy?data=${encodedData}`);
 
       if (response.status === 200) {
         alert('Buy count updated successfully');

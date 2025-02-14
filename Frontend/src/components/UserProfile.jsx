@@ -21,7 +21,7 @@ const UserProfile = () => {
     }
 
     axios
-      .get(`http://localhost:8080/user/profile`, {
+      .get(`${import.meta.env.VITE_API}/user/profile`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

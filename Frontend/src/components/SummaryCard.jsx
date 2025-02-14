@@ -42,8 +42,8 @@ const SummaryCard = ({ type, title, data, totalAmount }) => {
 
     // Determine the appropriate endpoint based on the type
     const url = type === 'earnings' 
-    ? `http://localhost:8080/link/deactivateTracker/${ID}` 
-    : `http://localhost:8080/product/deactivateProduct/${ID}`;
+    ? `${import.meta.env.VITE_API}/link/deactivateTracker/${ID}` 
+    : `${import.meta.env.VITE_API}/product/deactivateProduct/${ID}`;
 
     axios
     .post(url, {}, {
@@ -77,8 +77,8 @@ const SummaryCard = ({ type, title, data, totalAmount }) => {
 
     // Determine the appropriate endpoint based on the type
     const url = type === 'earnings' 
-    ? `http://localhost:8080/link/activateTracker/${ID}` 
-    : `http://localhost:8080/product/activateProduct/${ID}`;
+    ? `${import.meta.env.VITE_API}/link/activateTracker/${ID}` 
+    : `${import.meta.env.VITE_API}/product/activateProduct/${ID}`;
 
     axios
     .post(url, {}, {

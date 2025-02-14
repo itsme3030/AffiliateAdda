@@ -3,6 +3,7 @@ package com.example.affiliateadda.config;
 import com.example.affiliateadda.service.CustomUserDetailsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -32,6 +33,12 @@ public class SecurityConfig {
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
+    @Value("${dummy.frontend.url}")
+    private String dummyFrontendUrl;
+
     @Bean
     public AuthenticationProvider authProvider() {
         DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
@@ -44,7 +51,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost:5174"));
+                    config.setAllowedOrigins(List.of(frontendUrl, dummyFrontendUrl));
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
                     config.setAllowedHeaders(List.of("*"));
                     return config;

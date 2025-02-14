@@ -18,7 +18,6 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/link")
-@CrossOrigin("http://localhost:5173")
 public class TrackerController {
 
     @Autowired

@@ -5,6 +5,7 @@ import com.example.affiliateadda.model.Tracker;
 import com.example.affiliateadda.model.User;
 import com.example.affiliateadda.repository.TrackerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,12 @@ import java.util.Optional;
 
 @Service
 public class TrackerService {
+
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
+    @Value("${dummy.frontend.url}")
+    private String dummyFrontendUrl;
 
     @Autowired
     private TrackerRepository trackerRepository;
@@ -118,7 +125,7 @@ public class TrackerService {
         //debug
         System.out.println("productBaseUrl: " + productBaseUrl);
         // Check if the base URL is of Dummy server
-        if (productBaseUrl.trim().toLowerCase().startsWith("http://localhost:5174/product")) {
+        if (productBaseUrl.trim().toLowerCase().startsWith(dummyFrontendUrl+"/product")) {
             System.out.println("Dummy server Product--------------->"+productBaseUrl);
             System.out.println("Adding userId : "+userId+"\nAdding productId : "+productId);
             // Append userId and productId as query parameters

@@ -107,6 +107,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>AffiliateAdda</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

@@ -29,7 +29,6 @@ import java.util.Collections;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin("http://localhost:5173")
 public class GoogleAuthController {
 
     @Value("${spring.security.oauth2.client.registration.google.client-id}")
