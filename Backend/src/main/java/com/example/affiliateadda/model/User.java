@@ -32,6 +32,12 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Product> products;
 
+    @OneToOne(mappedBy = "user")
+    private UserDetail userDetail;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
+
     public User() {}
 
     public User(Long id, String username, String password, String role, List<Tracker> trackers, List<Product> products) {
@@ -59,6 +65,22 @@ public class User {
         this.active = active;
         this.trackers = trackers;
         this.products = products;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public UserDetail getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetail userDetail) {
+        this.userDetail = userDetail;
     }
 
     public boolean isActive() {

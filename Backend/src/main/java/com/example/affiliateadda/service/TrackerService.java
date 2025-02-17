@@ -3,6 +3,7 @@ package com.example.affiliateadda.service;
 import com.example.affiliateadda.model.Product;
 import com.example.affiliateadda.model.Tracker;
 import com.example.affiliateadda.model.User;
+import com.example.affiliateadda.repository.ProductRepository;
 import com.example.affiliateadda.repository.TrackerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,9 @@ public class TrackerService {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductRepository productRepository;
 
 
     public String generateLink(Long userId, Long productId, String productBaseurl) {
@@ -109,6 +113,10 @@ public class TrackerService {
         if(!user.get().isActive() || !product.get().isActive()) {
             return null;
         }
+        // Check if product clickCount or BuyCount > 0
+        if(product.get().getClickCount()<=0 || product.get().getBuyCount()<=0){
+            return null;
+        }
 
         // Find the LinkTrackerTable entry based on the user and product associations
         Optional<Tracker> linkTracker = Optional.ofNullable(trackerRepository.findByUserAndProduct(user.get(), product.get()));
@@ -118,6 +126,11 @@ public class TrackerService {
             if(!tracker.isActive()){
                 return "Tracker not active";
             }
+            if(product.get().getBuyCount()==1){
+                product.get().setActive(false);
+            }
+            product.get().setClickCount(product.get().getClickCount()-1); // Decrement click count of product
+            productRepository.save(product.get()); // Save the updated product
             tracker.setCount(tracker.getCount() + 1); // Increment click count
             trackerRepository.save(tracker); // Save the updated tracker
         }
@@ -167,6 +180,10 @@ public class TrackerService {
             if(!user.get().isActive() || !product.get().isActive()) {
                 return new ResponseEntity<>("User or Product not active", HttpStatus.FORBIDDEN);
             }
+            // Check if product clickCount or BuyCount > 0
+            if(product.get().getBuyCount()<=0){
+                return null;
+            }
 
             // Find the LinkTrackerTable entry based on the user and product associations
             Optional<Tracker> linkTracker = Optional.ofNullable(trackerRepository.findByUserAndProduct(user.get(), product.get()));
@@ -177,6 +194,12 @@ public class TrackerService {
                 if(!tracker.isActive()){
                     return new ResponseEntity<>("Tracker not active", HttpStatus.NOT_FOUND);
                 }
+                if(product.get().getBuyCount()<=buyCount){
+                    buyCount = product.get().getBuyCount();
+                    product.get().setActive(false);
+                }
+                product.get().setBuyCount(product.get().getBuyCount()-buyCount); // Decrement the buy count of product
+                productRepository.save(product.get());
                 tracker.setBuyCount(tracker.getBuyCount() + buyCount); // Increment the buy count
                 trackerRepository.save(tracker);
             }

@@ -71,7 +71,7 @@ public class DeactivationService {
 //        productHistory.setProductId(product.getProductId()); // Preserve original productId
 //        productHistory.setProductName(product.getProductName());
 //        productHistory.setProductBaseurl(product.getProductBaseurl());
-//        productHistory.setProductType(product.getProductType());
+//        productHistory.setType(product.getType());
 //        productHistory.setPerClickPrice(product.getPerClickPrice());
 //        productHistory.setPerBuyPrice(product.getPerBuyPrice());
 //        productHistory.setUserId(product.getUser().getId()); // Store original userId

@@ -85,12 +85,12 @@ const UserProfile = () => {
         />
 
         {/* Payable Amount Card */}
-        <SummaryCard
+        {/* <SummaryCard
           type="payable"
           title="Payable Amount Summary"
           data={profileData.payableAmounts}
           totalAmount={profileData.totalPayableAmount}
-        />
+        /> */}
 
         {/* Transaction History */}
         <TransactionHistory transactions={profileData.payments} title="Transaction Summary"/>

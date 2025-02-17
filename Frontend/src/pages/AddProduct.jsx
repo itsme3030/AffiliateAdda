@@ -5,15 +5,17 @@ import { useNavigate } from "react-router-dom";
 function AddProduct() {
   const [productName, setProductName] = useState("");
   const [productBaseurl, setProductBaseurl] = useState("");
-  const [perClickPrice, setPerClickPrice] = useState("");
   const [productType, setProductType] = useState("");
+  const [perClickPrice, setPerClickPrice] = useState("");
+  const [clickCount, setClickCount] = useState("");
   const [perBuyPrice, setPerBuyPrice] = useState(""); // New state for perBuyPrice
+  const [buyCount, setBuyCount] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const shouldShowPriceField = 
-    productType === "Product - Amazon" || 
-    productType === "Product - Flipkart" || 
+  const shouldShowPriceField =
+    productType === "Product - Amazon" ||
+    productType === "Product - Flipkart" ||
     productType === "Product";
 
   // This hook will check if the user is authenticated when the component mounts
@@ -122,15 +124,14 @@ function AddProduct() {
             type="number"
             id="perClickPrice"
             value={perClickPrice}
-            onChange={(e) => 
-              {
-                // Ensure the input only allows up to two digits after the decimal point
-                const value = e.target.value;
-                const regex = /^\d+(\.\d{0,2})?$/; // Regex for up to 2 decimals
-                if (regex.test(value)) {
-                  setPerClickPrice(value);
-                }
+            onChange={(e) => {
+              // Ensure the input only allows up to two digits after the decimal point
+              const value = e.target.value;
+              const regex = /^\d+(\.\d{0,2})?$/; // Regex for up to 2 decimals
+              if (regex.test(value)) {
+                setPerClickPrice(value);
               }
+            }
             }
             required
             className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -139,17 +140,41 @@ function AddProduct() {
           />
         </div>
 
+        <div>
+          <label htmlFor="clickCount" className="block text-sm font-medium text-gray-700">
+            Click Count
+          </label>
+          <input
+            type="number"
+            id="clickCount"
+            value={clickCount}
+            onChange={(e) => {
+              // Ensure the input only allows up to two digits after the decimal point
+              const value = e.target.value;
+              const regex = /^\d+$/; // Regex for integers only
+              if (regex.test(value)) {
+                setPerClickPrice(value);
+              }
+            }
+            }
+            required
+            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter clickCount"
+            step="1"
+          />
+        </div>
+
         {shouldShowPriceField && (
-          <div>
-            <label htmlFor="perBuyPrice" className="block text-sm font-medium text-gray-700">
-              Price per Buy
-            </label>
-            <input
-              type="number"
-              id="perBuyPrice"
-              value={perBuyPrice}
-              onChange={(e) => 
-                {
+          <>
+            <div>
+              <label htmlFor="perBuyPrice" className="block text-sm font-medium text-gray-700">
+                Price per Buy
+              </label>
+              <input
+                type="number"
+                id="perBuyPrice"
+                value={perBuyPrice}
+                onChange={(e) => {
                   // Ensure the input only allows up to two digits after the decimal point
                   const value = e.target.value;
                   const regex = /^\d+(\.\d{0,2})?$/; // Regex for up to 2 decimals
@@ -157,13 +182,38 @@ function AddProduct() {
                     setPerBuyPrice(value);
                   }
                 }
-              }
-              required
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter price per buy"
-              step="0.01"
-            />
-          </div>
+                }
+                required
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter price per buy"
+                step="0.01"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="buyCount" className="block text-sm font-medium text-gray-700">
+                Buy Count
+              </label>
+              <input
+                type="number"
+                id="buyCount"
+                value={buyCount}
+                onChange={(e) => {
+                  // Ensure the input only allows up to two digits after the decimal point
+                  const value = e.target.value;
+                  const regex = /^\d+$/; // Regex for integers only
+                  if (regex.test(value)) {
+                    setPerClickPrice(value);
+                  }
+                }
+                }
+                required
+                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter buyCount"
+                step="1"
+              />
+            </div>
+          </>
         )}
 
         <button

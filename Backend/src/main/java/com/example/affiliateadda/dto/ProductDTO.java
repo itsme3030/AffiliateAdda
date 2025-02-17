@@ -16,13 +16,6 @@ public class ProductDTO {
         this.perBuyPrice = perBuyPrice;
     }
 
-    public ProductDTO(Long productId, String productName, double perClickPrice, String productType) {
-        this.productId = productId;
-        this.productName = productName;
-        this.perClickPrice = perClickPrice;
-        this.productType = productType;
-    }
-
     // Getters and Setters
     public Long getProductId() {
         return productId;

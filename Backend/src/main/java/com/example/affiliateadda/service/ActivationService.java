@@ -141,7 +141,7 @@ public class ActivationService {
 //        product.setProductId(productId);
 //        product.setProductName(productHistory.getProductName());
 //        product.setProductBaseurl(productHistory.getProductBaseurl());
-//        product.setProductType(productHistory.getProductType());
+//        product.setType(productHistory.getType());
 //        product.setPerBuyPrice(productHistory.getPerBuyPrice());
 //        product.setPerClickPrice(productHistory.getPerClickPrice());
 //        product.setUser(user);

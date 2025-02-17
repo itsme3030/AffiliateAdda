@@ -59,7 +59,7 @@ public class ProductService {
                         product.getProductId(),           // productId
                         product.getProductName(),         // productName
                         product.getPerClickPrice() * commission,       // perClickPrice
-                        product.getProductType(),         // productType
+                        product.getType(),         // productType
                         product.getPerBuyPrice() * commission         // perBuyPrice
                 ))
                 .collect(Collectors.toList()); // Collect to list
