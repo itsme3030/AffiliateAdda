@@ -88,6 +88,18 @@ function ProductCard({ product }) {
       break;
   }
 
+  const handleProductDetail = () => {
+    // console.log("image : ",productImage);
+    navigate("/product-detail", {
+      state: {
+        productDetail: {
+          ...product,  // Spread the existing product details
+          image: productImage // Add the image name or path here
+        }
+      }
+    });
+  }
+
   return (
     <div className="max-w-sm rounded-lg shadow-lg bg-white overflow-hidden border border-gray-200 p-6 space-y-4">
       {/* Image at the top */}
@@ -113,11 +125,17 @@ function ProductCard({ product }) {
         onClick={handleGenerateLink}
         disabled={loading} // Disable button while loading
         className={`w-full py-2 font-semibold rounded-lg focus:outline-none focus:ring-2 ${loading
-            ? "bg-gray-400 text-white cursor-not-allowed"
-            : "bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500"
+          ? "bg-gray-400 text-white cursor-not-allowed"
+          : "bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500"
           }`}
       >
         {loading ? "Generating..." : "Generate Link"}
+      </button>
+
+      <button
+        onClick={handleProductDetail}
+        className="w-full py-2 font-semibold rounded-lg focus:outline-none focus:ring-2 bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500">
+        View Details
       </button>
 
       {/* Show the generated link if it exists */}

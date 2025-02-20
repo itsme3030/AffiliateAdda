@@ -1,7 +1,10 @@
 package com.example.affiliateadda.service;
 
+import com.example.affiliateadda.dto.MonthlyTrackerDTO;
 import com.example.affiliateadda.dto.ProfileResponseDTO;
 
+import com.example.affiliateadda.dto.ProfileReviewDTO;
+import com.example.affiliateadda.dto.UserDetailDTO;
 import com.example.affiliateadda.model.*;
 
 import com.example.affiliateadda.repository.*;
@@ -33,6 +36,10 @@ public class UserService {
 
     @Autowired
     private ProductHistoryRepository productHistoryRepository;
+    @Autowired
+    private ReviewRepository reviewRepository;
+    @Autowired
+    private MonthlyTrackerRepository monthlyTrackerRepository;
 
 //    public double findUserEarnings(Long userId) {
 //        List<Tracker> trackers = trackerRepository.findByUserId(userId);
@@ -105,6 +112,7 @@ public class UserService {
 
             ProfileResponseDTO.EarningDTO earningDTO = new ProfileResponseDTO.EarningDTO();
             earningDTO.settId(tId);
+            earningDTO.setProductId(product.getProductId());
             earningDTO.setProductGeneratedUrl(productGeneratedUrl);
             earningDTO.setProductName(product.getProductName());
             earningDTO.setPerClickPrice(product.getPerClickPrice() * commission);
@@ -112,6 +120,21 @@ public class UserService {
             earningDTO.setPerBuyPrice(product.getPerBuyPrice() * commission);
             earningDTO.setBuyCount(buyCount);
             earningDTO.setActive(tracker.isActive());
+            earningDTO.setCreatedAt(tracker.getCreatedAt());
+
+            // Monthly tracker
+            List<MonthlyTrackerDTO> monthlyTrackerDTOs = new ArrayList<>();
+            List<MonthlyTracker> monthlyTrackers = tracker.getMonthlyTrackers();
+            for (MonthlyTracker monthlyTracker : monthlyTrackers) {
+                MonthlyTrackerDTO monthlyTrackerDTO = new MonthlyTrackerDTO();
+                monthlyTrackerDTO.setMonthlyTrackerId(monthlyTracker.getMonthlyTrackerId());
+                monthlyTrackerDTO.settId(tracker.getTId());
+                monthlyTrackerDTO.setCount(monthlyTracker.getCount());
+                monthlyTrackerDTO.setBuyCount(monthlyTracker.getBuyCount());
+                monthlyTrackerDTO.setMonth(monthlyTracker.getMonth());
+                monthlyTrackerDTOs.add(monthlyTrackerDTO);
+            }
+            earningDTO.setMonthlyTrackers(monthlyTrackerDTOs);
 
             earnings.add(earningDTO);
             totalEarnings += earningForProduct + earningForProductBuy;
@@ -179,6 +202,24 @@ public class UserService {
             double payableForProduct = product.getPerClickPrice() * totalCountForProduct +
                                         product.getPerBuyPrice() * totalCountForProductBuy;
 
+            // Monthly trackerDTOs
+            List<Tracker> trackers1 = trackerRepository.findByProduct(product);
+            List<MonthlyTrackerDTO> monthlyTrackerDTOs = new ArrayList<>();
+            for (Tracker tracker : trackers1) {
+                // Monthly tracker
+                List<MonthlyTracker> monthlyTrackers = tracker.getMonthlyTrackers();
+                for (MonthlyTracker monthlyTracker : monthlyTrackers) {
+                    MonthlyTrackerDTO monthlyTrackerDTO = new MonthlyTrackerDTO();
+                    monthlyTrackerDTO.setMonthlyTrackerId(monthlyTracker.getMonthlyTrackerId());
+                    monthlyTrackerDTO.settId(tracker.getTId());
+                    monthlyTrackerDTO.setCount(monthlyTracker.getCount());
+                    monthlyTrackerDTO.setBuyCount(monthlyTracker.getBuyCount());
+                    monthlyTrackerDTO.setMonth(monthlyTracker.getMonth());
+
+                    monthlyTrackerDTOs.add(monthlyTrackerDTO);
+                }
+            }
+
             ProfileResponseDTO.PayableDTO payableDTO = new ProfileResponseDTO.PayableDTO();
             payableDTO.setProductId(productId);
             payableDTO.setProductBaseurl(productBaseurl);
@@ -188,6 +229,8 @@ public class UserService {
             payableDTO.setPerBuyPrice(product.getPerBuyPrice());
             payableDTO.setBuyCount(totalCountForProductBuy);
             payableDTO.setActive(product.isActive());
+            payableDTO.setCreatedAt(product.getCreatedAt());
+            payableDTO.setMonthlyTrackers(monthlyTrackerDTOs);
 
             payableAmounts.add(payableDTO);
             totalPayableAmount += payableForProduct;
@@ -246,6 +289,38 @@ public class UserService {
 //        System.out.println("Total withdrawals: --------------> " + totalWithdrawals);
 //        System.out.println("Total payments: ---------------> " + totalPays);
 
+        // Review
+        List<Review> reviews = reviewRepository.findByUser(user);
+        List<ProfileReviewDTO> reviewDTOs = new ArrayList<>();
+        for (Review review : reviews) {
+            ProfileReviewDTO profileReviewDTO = new ProfileReviewDTO();
+            profileReviewDTO.setReviewId(review.getReviewId());
+            profileReviewDTO.setReviewDate(review.getReviewDate());
+            profileReviewDTO.setRating(review.getRating());
+            profileReviewDTO.setReviewText(review.getReviewText());
+            profileReviewDTO.setProductName(review.getProduct().getProductName());
+            reviewDTOs.add(profileReviewDTO);
+        }
+
+        // UserProfile
+        UserDetailDTO userDetailDTO = new UserDetailDTO();
+        if(user.getUserDetail() != null){
+            userDetailDTO.setUserDetailId(user.getUserDetail().getUserDetailId());
+            userDetailDTO.setFirstName(user.getUserDetail().getFirstName());
+            userDetailDTO.setLastName(user.getUserDetail().getLastName());
+            userDetailDTO.setEmail(user.getUserDetail().getEmail());
+            userDetailDTO.setPhone(user.getUserDetail().getPhone());
+            userDetailDTO.setAddress(user.getUserDetail().getAddress());
+            userDetailDTO.setCity(user.getUserDetail().getCity());
+            userDetailDTO.setState(user.getUserDetail().getState());
+            userDetailDTO.setCountry(user.getUserDetail().getCountry());
+            userDetailDTO.setZip(user.getUserDetail().getZip());
+        }
+
+
+        // Monthly Tracker : 1 user - * tracker , 1 tracker - * monthly tracker
+
+
         // Build the response DTO
         ProfileResponseDTO profileResponseDTO = new ProfileResponseDTO();
         profileResponseDTO.setUsername(user.getUsername());
@@ -256,6 +331,8 @@ public class UserService {
         profileResponseDTO.setTotalPays(totalPays);
         profileResponseDTO.setTotalWithdrawals(totalWithdrawals);
         profileResponseDTO.setPayments(payments);
+        profileResponseDTO.setReviews(reviewDTOs);
+        profileResponseDTO.setUserDetail(userDetailDTO);
 
         return profileResponseDTO;
     }

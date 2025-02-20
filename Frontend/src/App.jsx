@@ -1,20 +1,26 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+
 import GoogleAuthentication from './components/GoogleAuthentication';
 import Logout from "./components/Logout";
+import Header from "./components/Header";
+import ProductDetail from "./components/ProductDetail";
+import UserProfile from "./components/UserProfileComponents/UserProfile";
+
 import Home from "./pages/Home";
 import AdminHome from "./pages/AdminHome";  // Admin-specific Home page
 import AddProduct from "./pages/AddProduct";
-import UserProfile from "./components/UserProfile";
-import Header from "./components/Header";
 import Affiliate from "./pages/Affiliate";
-import { useEffect, useState } from "react";
-// import * as jwt_decode from 'jwt-decode';
-// import jwt_decode from 'jsonwebtoken';
-import { jwtDecode } from "jwt-decode";
 import Payments from "./pages/Payments";
+
+
+
+
+import { jwtDecode } from "jwt-decode";
 
 function App() {
     const [role, setRole] = useState(null);
+    // const [username, setUsername] = useState("");
 
     // Check for role or JWT token in local storage 
     useEffect(() => {
@@ -24,7 +30,7 @@ function App() {
             setRole(decodedToken.role);
             console.log("role set as (Inside App.jsx):" + decodedToken.role);
         } else {
-            setRole("USER");
+            setRole("Guest");
         }
     }, []);
 
@@ -36,10 +42,11 @@ function App() {
             <Header role={role} />
             <Routes>
                 {/* For User Role */}
-                {role === "USER" ? (
+                {(role === "USER" || role === "Guest") ? (
                     <>
                         <Route path="/" element={<Home />} />
                         <Route path="/affiliate" element={<Affiliate />} />
+                        <Route path="/product-detail" element={<ProductDetail/>} />
                         <Route path="/Authenticate" element={<GoogleAuthentication setRole={setRole} />} />
                         <Route path="/logout" element={<Logout setRole={setRole}/>} />
                         <Route path="/add-product" element={<AddProduct />} />

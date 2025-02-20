@@ -41,7 +41,7 @@ const SummaryCard = ({ profileData }) => {
         </div>
 
         {/* Total Payable Amount & Total Pays side by side */}
-        {/* <div className="flex justify-between items-center space-x-4">
+        <div className="flex justify-between items-center space-x-4">
           <div className="flex-1">
             <p className="text-gray-600"><strong>Total Payable Amount:</strong></p>
             <p className="font-semibold text-red-600">${totalPayableAmount.toFixed(2)}</p>
@@ -56,7 +56,7 @@ const SummaryCard = ({ profileData }) => {
               ${(totalPayableAmount - totalPays).toFixed(2)}
             </p>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

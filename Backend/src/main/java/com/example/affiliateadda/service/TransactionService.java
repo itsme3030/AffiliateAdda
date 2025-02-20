@@ -1,10 +1,7 @@
 package com.example.affiliateadda.service;
 
 import com.example.affiliateadda.model.*;
-import com.example.affiliateadda.repository.ProductRepository;
-import com.example.affiliateadda.repository.TrackerRepository;
-import com.example.affiliateadda.repository.TransactionRepository;
-import com.example.affiliateadda.repository.UserRepository;
+import com.example.affiliateadda.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +24,8 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private UserDetailRepository userDetailRepository;
 
     public boolean processPayment(Principal principal, double amount) {
         String username = principal.getName();
@@ -90,6 +89,18 @@ public class TransactionService {
         transaction.setStatus(TransactionStatus.COMPLETED);
         transaction.setTransactionDate(LocalDateTime.now());
         transactionRepository.save(transaction);
+
+        //update detail in userprofile section
+        UserDetail userDetail = user.get().getUserDetail();
+        if(userDetail == null){
+            userDetail = new UserDetail();
+            userDetail.setUser(user.get());
+            userDetail.setTotalWithdrawal(amount);
+            userDetailRepository.save(userDetail);
+        }else{
+            userDetail.setTotalWithdrawal(userDetail.getTotalWithdrawal() + amount);
+            userDetailRepository.save(userDetail);
+        }
 
         success = true;
         return success;

@@ -1,7 +1,10 @@
 package com.example.affiliateadda.service;
 
 import com.example.affiliateadda.dto.ProductDTO;
+import com.example.affiliateadda.dto.ReviewDTO;
 import com.example.affiliateadda.model.Product;
+import com.example.affiliateadda.model.ProductDetail;
+import com.example.affiliateadda.model.Review;
 import com.example.affiliateadda.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,18 +54,48 @@ public class ProductService {
         // Fetch all products from the repository
         List<Product> products = productRepository.findAll();
 
+        // Choosing the commission (you can adjust as needed)
         double commission = 0.5;
 
         // Map the Product list to ProductDTO
         return products.stream()
-                .map(product -> new ProductDTO(
-                        product.getProductId(),           // productId
-                        product.getProductName(),         // productName
-                        product.getPerClickPrice() * commission,       // perClickPrice
-                        product.getType(),         // productType
-                        product.getPerBuyPrice() * commission         // perBuyPrice
-                ))
+                .map(product -> {
+                    // Fetch the associated product detail
+                    ProductDetail productDetail = product.getProductDetail();
+
+                    // Fetch reviews for the product
+                    List<ReviewDTO> reviewDTOs = product.getReviews().stream()
+                            .map(review -> new ReviewDTO(review)) // Convert each review to ReviewDTO
+                            .collect(Collectors.toList());
+
+                    // Create and return the ProductDTO object with all details
+                    return new ProductDTO(
+                            product.getProductId(),                // productId
+                            product.getProductName(),              // productName
+                            product.getPerClickPrice() * commission, // perClickPrice
+                            product.getType(),                     // productType
+                            product.getSubType(),                  // productSubType
+                            product.getPerBuyPrice() * commission,  // perBuyPrice
+                            productDetail.getDescription(),        // description (from ProductDetail)
+                            productDetail.getShortDescription(),   // shortDescription (from ProductDetail)
+                            productDetail.getTags(),               // tags (from ProductDetail)
+                            productDetail.getRating(),             // rating (from ProductDetail)
+                            productDetail.getRatingCount(),
+                            reviewDTOs                             // List of reviews for the product
+                    );
+                })
                 .collect(Collectors.toList()); // Collect to list
     }
+
+//    Fetch reviews for a specific product
+//    public List<ReviewDTO> getReviewsForProduct(Long productId) {
+//        // Fetch reviews by productId from the repository
+//        List<Review> reviews = reviewRepository.findByProductId(productId);
+//
+//        // Map the reviews to ReviewDTO
+//        return reviews.stream()
+//                .map(review -> new ReviewDTO(review)) // Convert Review to ReviewDTO
+//                .collect(Collectors.toList());
+//    }
 
 }

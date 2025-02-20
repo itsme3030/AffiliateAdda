@@ -3,6 +3,7 @@ package com.example.affiliateadda.model;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -24,6 +25,7 @@ public class Product {
     double perBuyPrice = 0L;
     Long buyCount = 0L;
     boolean active = true;
+    private LocalDateTime createdAt;
 
     @OneToOne(mappedBy = "product")
     ProductDetail productDetail;
@@ -200,5 +202,13 @@ public class Product {
 
     public void setPerBuyPrice(double perBuyPrice) {
         this.perBuyPrice = perBuyPrice;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }

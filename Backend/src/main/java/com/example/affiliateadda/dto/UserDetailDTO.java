@@ -1,26 +1,7 @@
-package com.example.affiliateadda.model;
+package com.example.affiliateadda.dto;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
-@Table(name = "users_detail")
-public class UserDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDetailDTO {
     private long userDetailId;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    private double totalWithdrawal = 0L;
-
     private String firstName;
     private String lastName;
     private String email;
@@ -37,22 +18,6 @@ public class UserDetail {
 
     public void setUserDetailId(long userDetailId) {
         this.userDetailId = userDetailId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public double getTotalWithdrawal() {
-        return totalWithdrawal;
-    }
-
-    public void setTotalWithdrawal(double totalWithdrawal) {
-        this.totalWithdrawal = totalWithdrawal;
     }
 
     public String getFirstName() {

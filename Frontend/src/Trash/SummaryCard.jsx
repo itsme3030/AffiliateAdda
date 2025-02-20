@@ -3,6 +3,7 @@ import { FaArrowDown, FaArrowUp, FaCopy, FaTrash , FaCheckCircle } from 'react-i
 import axios from 'axios';
 
 const SummaryCard = ({ type, title, data, totalAmount }) => {
+  console.log("data : SummuryCard : ",data);
   const [showDetails, setShowDetails] = useState(false);
   const [token, setToken] = useState(null);
 

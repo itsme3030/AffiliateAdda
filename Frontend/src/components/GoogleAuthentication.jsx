@@ -38,6 +38,10 @@ const GoogleAuthentication = ({ setRole }) => {
             const role = decodedToken.role;
             console.log("JWT Token role :", role);
 
+            const username = decodedToken.sub;
+            console.log("username : ",username);
+            sessionStorage.setItem("username",username);
+
             // navigate("/");
 
             // Update the role state in parent component
@@ -73,7 +77,7 @@ const GoogleAuthentication = ({ setRole }) => {
             <div className="flex justify-center items-center min-h-screen bg-gray-50">
                 <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
                     <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
-                        Welcome to Pay Per Go
+                        Welcome to Affiliat Adda
                     </h2>
                     <div className="text-center">
                         {loading ? (

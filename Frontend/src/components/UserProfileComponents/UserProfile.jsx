@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import SummaryCard from './SummaryCard';
+
+import EarningsSummaryCard from './EarningsSummaryCard';
+import PayableAmountSummaryCard from './PayableAmountSummaryCard';
 import TransactionHistory from './TransactionHistory';
-import { FaSpinner } from 'react-icons/fa'; // Loading spinner
 import OverallSummary from './OverallSummary';
+
+import ProfileVisualization from './ProfileVisualization ';
+import EarningVisualization from './EarningVisualization';
+import PayableVisualization from './PayableVisualization';
+import UserReviews from './UserReviews';
+
+import { FaSpinner } from 'react-icons/fa'; // Loading spinner
+import ProfileCard from './ProfileCard';
 
 const UserProfile = () => {
   const [profileData, setProfileData] = useState(null);
+  // console.log(profileData);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -28,6 +38,7 @@ const UserProfile = () => {
       })
       .then((response) => {
         setProfileData(response.data);
+        // console.log(response.data);
         setLoading(false);
       })
       .catch((error) => {
@@ -56,9 +67,11 @@ const UserProfile = () => {
 
   const handleMakePaymentClick = () => {
     //console.log("profileData.payments", profileData);
-    navigate("/payments", { state: {
-      Allpayments: profileData
-    } }); // Pass profileData in the state
+    navigate("/payments", {
+      state: {
+        Allpayments: profileData
+      }
+    }); // Pass profileData in the state
     // Not safe - Because we can change it in developer tool.
     // Will find other way...
   };
@@ -75,9 +88,15 @@ const UserProfile = () => {
       {/* Overall Summary */}
       <OverallSummary profileData={profileData} />
 
+      {/* user Details */}
+      <ProfileCard userDetail={profileData.userDetail} />
+
+      {/* user Reviews */}
+      <UserReviews reviews={profileData.reviews} />
+
       <div className="grid grid-cols-1 gap-6">
         {/* Earnings Card */}
-        <SummaryCard
+        <EarningsSummaryCard
           type="earnings"
           title="Earnings Summary"
           data={profileData.earnings}
@@ -85,19 +104,28 @@ const UserProfile = () => {
         />
 
         {/* Payable Amount Card */}
-        {/* <SummaryCard
+        <PayableAmountSummaryCard
           type="payable"
           title="Payable Amount Summary"
           data={profileData.payableAmounts}
           totalAmount={profileData.totalPayableAmount}
-        /> */}
+        />
 
         {/* Transaction History */}
-        <TransactionHistory transactions={profileData.payments} title="Transaction Summary"/>
+        <TransactionHistory transactions={profileData.payments} title="Transaction Summary" />
       </div>
 
+      {/* Profile Visualization Component */}
+      <ProfileVisualization data={profileData} />
+
+      {/* Earning Visualization Component */}
+      <EarningVisualization earnings={profileData.earnings} totalEarnings={profileData.totalEarnings} />
+
+      {/* Payable Visualization Component */}
+      <PayableVisualization payableAmounts={profileData.payableAmounts} totalPayableAmount={profileData.totalPayableAmount} />
+
       <div className="flex justify-center mt-6">
-        <button 
+        <button
           onClick={handleMakePaymentClick}
           className="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold  hover:bg-blue-800 transition">
           Make Payment

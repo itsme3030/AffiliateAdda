@@ -3,6 +3,10 @@ package com.example.affiliateadda.model;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
+import java.util.List;
+
 @Entity
 //@Data
 //@AllArgsConstructor
@@ -19,6 +23,7 @@ public class Tracker {
     Long count = 0L;
     Long buyCount = 0L;
     boolean active = true;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -27,6 +32,9 @@ public class Tracker {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @OneToMany(mappedBy = "tracker")
+    private List<MonthlyTracker> monthlyTrackers;
 
     public Tracker() {}
 
@@ -113,5 +121,19 @@ public class Tracker {
         this.product = product;
     }
 
+    public List<MonthlyTracker> getMonthlyTrackers() {
+        return monthlyTrackers;
+    }
 
+    public void setMonthlyTrackers(List<MonthlyTracker> monthlyTrackers) {
+        this.monthlyTrackers = monthlyTrackers;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }

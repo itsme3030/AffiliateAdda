@@ -1,5 +1,6 @@
 package com.example.affiliateadda.dto;
 
+import com.example.affiliateadda.model.Review;
 import com.example.affiliateadda.model.TransactionStatus;
 import com.example.affiliateadda.model.TransactionType;
 
@@ -8,8 +9,12 @@ import java.util.List;
 
 public class ProfileResponseDTO {
     private String username;
+    private UserDetailDTO userDetail;
+    private List<ProfileReviewDTO> reviews;
+
     private List<EarningDTO> earnings;
     private double totalEarnings;
+
     private List<PayableDTO> payableAmounts;
     private double totalPayableAmount;
 
@@ -17,6 +22,43 @@ public class ProfileResponseDTO {
     private double totalWithdrawals;
     private double totalPays;
     private List<PaymentsDTO> payments;
+
+    // Monthly based tracking
+//    private List<MonthlyTrackerDTO> monthlyTrackers;
+//
+//
+//    public List<MonthlyTrackerDTO> getMonthlyTrackers() {
+//        return monthlyTrackers;
+//    }
+//
+//    public void setMonthlyTrackers(List<MonthlyTrackerDTO> monthlyTrackers) {
+//        this.monthlyTrackers = monthlyTrackers;
+//    }
+
+    public UserDetailDTO getUserDetail() {
+        return userDetail;
+    }
+
+    public void setUserDetail(UserDetailDTO userDetail) {
+        this.userDetail = userDetail;
+    }
+
+    public List<ProfileReviewDTO> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<ProfileReviewDTO> reviews) {
+        this.reviews = reviews;
+    }
+
+
+//    public List<Review> getReviews() {
+//        return reviews;
+//    }
+//
+//    public void setReviews(List<Review> reviews) {
+//        this.reviews = reviews;
+//    }
 
     public List<PaymentsDTO> getPayments() {
         return payments;
@@ -135,16 +177,48 @@ public class ProfileResponseDTO {
 
     public static class EarningDTO {
         private Long tId;
+        private Long productId;
         private String productGeneratedUrl;
         private String productName;
         private double perClickPrice;
         private long count;
         private double perBuyPrice;
         private long buyCount;
+        private double commission = 0.5;
         private boolean active;
+        private LocalDateTime createdAt;
+        private List<MonthlyTrackerDTO> monthlyTrackers;
 
         // Getters and setters
 
+
+        public double getCommission() {
+            return commission;
+        }
+
+        public Long getProductId() {
+            return productId;
+        }
+
+        public void setProductId(Long productId) {
+            this.productId = productId;
+        }
+
+        public List<MonthlyTrackerDTO> getMonthlyTrackers() {
+            return monthlyTrackers;
+        }
+
+        public void setMonthlyTrackers(List<MonthlyTrackerDTO> monthlyTrackers) {
+            this.monthlyTrackers = monthlyTrackers;
+        }
+
+        public LocalDateTime getCreatedAt() {
+            return createdAt;
+        }
+
+        public void setCreatedAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+        }
 
         public boolean isActive() {
             return active;
@@ -220,9 +294,27 @@ public class ProfileResponseDTO {
         private double perBuyPrice;
         private long buyCount;
         private boolean active;
+        private LocalDateTime createdAt;
+        private List<MonthlyTrackerDTO> monthlyTrackers;
 
         // Getters and setters
 
+
+        public List<MonthlyTrackerDTO> getMonthlyTrackers() {
+            return monthlyTrackers;
+        }
+
+        public void setMonthlyTrackers(List<MonthlyTrackerDTO> monthlyTrackers) {
+            this.monthlyTrackers = monthlyTrackers;
+        }
+
+        public LocalDateTime getCreatedAt() {
+            return createdAt;
+        }
+
+        public void setCreatedAt(LocalDateTime createdAt) {
+            this.createdAt = createdAt;
+        }
 
         public boolean isActive() {
             return active;

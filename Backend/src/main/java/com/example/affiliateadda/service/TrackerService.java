@@ -1,8 +1,10 @@
 package com.example.affiliateadda.service;
 
+import com.example.affiliateadda.model.MonthlyTracker;
 import com.example.affiliateadda.model.Product;
 import com.example.affiliateadda.model.Tracker;
 import com.example.affiliateadda.model.User;
+import com.example.affiliateadda.repository.MonthlyTrackerRepository;
 import com.example.affiliateadda.repository.ProductRepository;
 import com.example.affiliateadda.repository.TrackerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.util.Base64;
 import java.util.Optional;
 
@@ -34,6 +38,9 @@ public class TrackerService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private MonthlyTrackerRepository monthlyTrackerRepository;
 
 
     public String generateLink(Long userId, Long productId, String productBaseurl) {
@@ -81,7 +88,7 @@ public class TrackerService {
         // Set the user and product associations
         tracker.setUser(user.get());
         tracker.setProduct(product.get());
-
+        tracker.setCreatedAt(LocalDateTime.now());
         // Save or update the record in the database
         trackerRepository.save(tracker);
 
@@ -114,9 +121,9 @@ public class TrackerService {
             return null;
         }
         // Check if product clickCount or BuyCount > 0
-        if(product.get().getClickCount()<=0 || product.get().getBuyCount()<=0){
-            return null;
-        }
+//        if(product.get().getClickCount()<=0 || product.get().getBuyCount()<=0){
+//            return null;
+//        }
 
         // Find the LinkTrackerTable entry based on the user and product associations
         Optional<Tracker> linkTracker = Optional.ofNullable(trackerRepository.findByUserAndProduct(user.get(), product.get()));
@@ -126,13 +133,33 @@ public class TrackerService {
             if(!tracker.isActive()){
                 return "Tracker not active";
             }
-            if(product.get().getBuyCount()==1){
-                product.get().setActive(false);
-            }
-            product.get().setClickCount(product.get().getClickCount()-1); // Decrement click count of product
-            productRepository.save(product.get()); // Save the updated product
+//            if(product.get().getBuyCount()==1){
+//                product.get().setActive(false);
+//            }
+//            product.get().setClickCount(product.get().getClickCount()-1); // Decrement click count of product
+//            productRepository.save(product.get()); // Save the updated product
             tracker.setCount(tracker.getCount() + 1); // Increment click count
             trackerRepository.save(tracker); // Save the updated tracker
+
+            // Get the current month
+            YearMonth currentMonth = YearMonth.now();
+
+            // Find or create the MonthlyTracker record for the current month
+            Optional<MonthlyTracker> monthlyTrackerOptional = monthlyTrackerRepository.findByTrackerAndMonth(tracker, currentMonth);
+
+            if (monthlyTrackerOptional.isPresent()) {
+                MonthlyTracker monthlyTracker = monthlyTrackerOptional.get();
+                // Increment the count for the current month
+                monthlyTracker.setCount(monthlyTracker.getCount() + 1);
+                monthlyTrackerRepository.save(monthlyTracker);
+            } else {
+                // If no entry exists for this month, create a new one
+                MonthlyTracker monthlyTracker = new MonthlyTracker();
+                monthlyTracker.setTracker(tracker);
+                monthlyTracker.setMonth(currentMonth);
+                monthlyTracker.setCount(1L);  // First click of the month
+                monthlyTrackerRepository.save(monthlyTracker);
+            }
         }
 
         //debug
@@ -181,9 +208,9 @@ public class TrackerService {
                 return new ResponseEntity<>("User or Product not active", HttpStatus.FORBIDDEN);
             }
             // Check if product clickCount or BuyCount > 0
-            if(product.get().getBuyCount()<=0){
-                return null;
-            }
+//            if(product.get().getBuyCount()<=0){
+//                return null;
+//            }
 
             // Find the LinkTrackerTable entry based on the user and product associations
             Optional<Tracker> linkTracker = Optional.ofNullable(trackerRepository.findByUserAndProduct(user.get(), product.get()));
@@ -194,14 +221,34 @@ public class TrackerService {
                 if(!tracker.isActive()){
                     return new ResponseEntity<>("Tracker not active", HttpStatus.NOT_FOUND);
                 }
-                if(product.get().getBuyCount()<=buyCount){
-                    buyCount = product.get().getBuyCount();
-                    product.get().setActive(false);
-                }
-                product.get().setBuyCount(product.get().getBuyCount()-buyCount); // Decrement the buy count of product
-                productRepository.save(product.get());
+//                if(product.get().getBuyCount()<=buyCount){
+//                    buyCount = product.get().getBuyCount();
+//                    product.get().setActive(false);
+//                }
+//                product.get().setBuyCount(product.get().getBuyCount()-buyCount); // Decrement the buy count of product
+//                productRepository.save(product.get());
                 tracker.setBuyCount(tracker.getBuyCount() + buyCount); // Increment the buy count
                 trackerRepository.save(tracker);
+
+                // Get the current month
+                YearMonth currentMonth = YearMonth.now();
+
+                // Find or create the MonthlyTracker record for the current month
+                Optional<MonthlyTracker> monthlyTrackerOptional = monthlyTrackerRepository.findByTrackerAndMonth(tracker, currentMonth);
+                if (monthlyTrackerOptional.isPresent()) {
+                    MonthlyTracker monthlyTracker = monthlyTrackerOptional.get();
+                    // Increment the count for the current month
+                    monthlyTracker.setBuyCount(monthlyTracker.getBuyCount() + buyCount);
+                    monthlyTrackerRepository.save(monthlyTracker);
+                } else {
+                    // If no entry exists for this month, create a new one
+                    MonthlyTracker monthlyTracker = new MonthlyTracker();
+                    monthlyTracker.setTracker(tracker);
+                    monthlyTracker.setMonth(currentMonth);
+                    monthlyTracker.setBuyCount(buyCount);  // First Buy of the month
+                    monthlyTrackerRepository.save(monthlyTracker);
+                }
+
             }
 
             return ResponseEntity.ok("Buy count updated successfully");

@@ -21,7 +21,7 @@ function Logout({ setRole }) {
             // Optional: Force a reload to clear cached pages
             //window.location.reload();
 
-            setRole("USER");
+            setRole("Guest");
 
             // Redirect to login or home page
             navigate("/");
