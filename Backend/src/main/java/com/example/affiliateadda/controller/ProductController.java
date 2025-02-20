@@ -1,5 +1,6 @@
 package com.example.affiliateadda.controller;
 
+import com.example.affiliateadda.dto.ProductAdditionDTO;
 import com.example.affiliateadda.dto.ProductDTO;
 import com.example.affiliateadda.model.Product;
 import com.example.affiliateadda.model.User;
@@ -35,27 +36,21 @@ public class ProductController {
 
     // Endpoint to add a new product
     @PostMapping("/add")
-    public ResponseEntity<Product> addProduct(@RequestBody Product product, Principal principal) {
+    public ResponseEntity<ProductAdditionDTO> addProduct(@RequestBody ProductAdditionDTO productAdditionDTO, Principal principal) {
 
         //debug
         //System.out.println("------------------------------------------------->inside addProduct - controller : "+product);
         //System.out.println("Product received: " + product.getProductName() + ", " + product.getProductBaseurl() + ", " + product.getPerClickPrice());
 
         //Get User
-        //System.out.println("------------------------------------------------->finding the user");
         String username = principal.getName();
-        //System.out.println("------------------------------------------------->Username is " + username);
+
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty()) {
-            return ResponseEntity.badRequest().body(product);
+            return ResponseEntity.badRequest().body(productAdditionDTO);
         }
-        //debug
-        //System.out.println("-------------------------------------------------->User found :"+user);
 
-        //set User to Product
-        product.setUser(user.get());
-
-        Product savedProduct = productService.addProduct(product);
+        ProductAdditionDTO savedProduct = productService.addProduct(productAdditionDTO,user);
         return ResponseEntity.ok(savedProduct);
     }
 

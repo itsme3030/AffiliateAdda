@@ -22,7 +22,7 @@ public class ProductDetail {
 
     private String description;
     private String shortDescription;
-    private String tags;
+    private String tags; //Comma separated values
     private int rating=0;
     private Long ratingCount=0L;
 

@@ -27,7 +27,7 @@ public class Product {
     boolean active = true;
     private LocalDateTime createdAt;
 
-    @OneToOne(mappedBy = "product")
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     ProductDetail productDetail;
 
     @OneToMany(mappedBy = "product")

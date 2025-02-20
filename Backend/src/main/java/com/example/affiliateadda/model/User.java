@@ -32,7 +32,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Product> products;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserDetail userDetail;
 
     @OneToMany(mappedBy = "user")

@@ -1,14 +1,19 @@
 package com.example.affiliateadda.service;
 
+import com.example.affiliateadda.dto.ProductAdditionDTO;
 import com.example.affiliateadda.dto.ProductDTO;
 import com.example.affiliateadda.dto.ReviewDTO;
 import com.example.affiliateadda.model.Product;
 import com.example.affiliateadda.model.ProductDetail;
 import com.example.affiliateadda.model.Review;
+import com.example.affiliateadda.model.User;
+import com.example.affiliateadda.repository.ProductDetailRepository;
 import com.example.affiliateadda.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,16 +23,18 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ProductDetailRepository productDetailRepository;
 
     public Product getProductById(Long productId) {
         return productRepository.findByProductId(productId);
     }
 
-    public Product addProduct(Product product) {
-        System.out.println("---------------------------------------------------->inside addProduct - controller : "+product);
-        System.out.println("Product received: " + product.getProductName() + ", " + product.getProductBaseurl() + ", " + product.getPerClickPrice()+ ", "+product.getPerBuyPrice());
-        return productRepository.save(product);
-    }
+//    public Product addProduct(ProductAdditionDTO productAdditionDTO) {
+//        System.out.println("---------------------------------------------------->inside addProduct - controller : "+product);
+//        System.out.println("Product received: " + product.getProductName() + ", " + product.getProductBaseurl() + ", " + product.getPerClickPrice()+ ", "+product.getPerBuyPrice());
+//        return productRepository.save(product);
+//    }
 
     public Optional<Product> findByProductId(Long product_id) {
         return Optional.ofNullable(productRepository.findByProductId(product_id));
@@ -85,6 +92,31 @@ public class ProductService {
                     );
                 })
                 .collect(Collectors.toList()); // Collect to list
+    }
+
+    public ProductAdditionDTO addProduct(ProductAdditionDTO productAdditionDTO, Optional<User> user) {
+        Product product = new Product();
+        product.setUser(user.get());
+        product.setProductName(productAdditionDTO.getProductName());
+        product.setProductBaseurl(productAdditionDTO.getProductBaseurl());
+        product.setPerClickPrice(productAdditionDTO.getPerClickPrice());
+        product.setPerBuyPrice(productAdditionDTO.getPerBuyPrice());
+        product.setType(productAdditionDTO.getType());
+        product.setSubType(productAdditionDTO.getSubType());
+        product.setCreatedAt(LocalDateTime.now());
+
+        ProductDetail productDetail = new ProductDetail();
+        productDetail.setDescription(productAdditionDTO.getDescription());
+        productDetail.setShortDescription(productAdditionDTO.getShortDescription());
+        productDetail.setTags(productAdditionDTO.getTags());
+
+        product.setProductDetail(productDetail);
+        productDetail.setProduct(product);
+
+        productRepository.save(product);
+        productDetailRepository.save(productDetail);
+
+        return productAdditionDTO;
     }
 
 //    Fetch reviews for a specific product

@@ -5,30 +5,30 @@ import { useNavigate } from "react-router-dom";
 function AddProduct() {
   const [productName, setProductName] = useState("");
   const [productBaseurl, setProductBaseurl] = useState("");
-  const [productType, setProductType] = useState("");
+  const [type, setProductType] = useState("");
+  const [subType, setSubType] = useState("");  // State for subType
   const [perClickPrice, setPerClickPrice] = useState("");
-  const [clickCount, setClickCount] = useState("");
-  const [perBuyPrice, setPerBuyPrice] = useState(""); // New state for perBuyPrice
-  const [buyCount, setBuyCount] = useState("");
+  const [perBuyPrice, setPerBuyPrice] = useState(""); // State for perBuyPrice
+  const [description, setDescription] = useState("");  // State for description
+  const [shortDescription, setShortDescription] = useState(""); // Short description
+  const [tags, setTags] = useState(""); // Tags as comma separated values
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const shouldShowPriceField =
-    productType === "Product - Amazon" ||
-    productType === "Product - Flipkart" ||
-    productType === "Product";
+    type === "Product - Amazon" ||
+    type === "Product - Flipkart" ||
+    type === "Product";
 
-  // This hook will check if the user is authenticated when the component mounts
+  // Hook to check authentication
   useEffect(() => {
-    // const token = localStorage.getItem("token");
     const token = sessionStorage.getItem("token");
     if (!token) {
-      // If no token is found, redirect to the authentication page
       navigate("/Authenticate");
     }
-  }, [navigate]); // Run this effect when the component is mounted
+  }, [navigate]);
 
-  // Handle form submission
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -36,12 +36,17 @@ function AddProduct() {
       productName,
       productBaseurl,
       perClickPrice: parseFloat(perClickPrice),
-      productType,
-      perBuyPrice: parseFloat(perBuyPrice), // Include perBuyPrice here
+      perBuyPrice: parseFloat(perBuyPrice),
+      type,
+      subType,  // Include subType in the data
+      description,
+      shortDescription,
+      tags
     };
 
+    console.log("Product data : ",productData);
+
     try {
-      // const token = localStorage.getItem("token");
       const token = sessionStorage.getItem("token");
       const response = await axios.post(`${import.meta.env.VITE_API}/product/add`, productData, {
         headers: {
@@ -50,8 +55,7 @@ function AddProduct() {
       });
 
       if (response.status === 200) {
-        // Redirect to the list of products or success page
-        navigate("/"); // Redirect to the home page or a success page
+        navigate("/"); // Redirect on success
       }
     } catch (err) {
       setError("Error adding product. Please try again.");
@@ -59,8 +63,18 @@ function AddProduct() {
     }
   };
 
+  // Define subtypes based on the product type
+  const subTypes = {
+    "Product": ["Electronics", "Cloths", "Books", "Furniture", "Accessories"],
+    "Product - Amazon": ["Electronics", "Cloths", "Books", "Home Appliances", "Sports Gear"],
+    "Product - Flipkart": ["Electronics", "Cloths", "Books", "Furniture", "Toys"],
+    "YouTube Video": ["Entertainment", "Gaming", "Music", "Sports", "Science and Technology"],
+    "Website": ["Blog Website", "eCommerce Website", "Business Website", "Personal Website", "Portfolio Website", "Educational Website", "News Website", "Entertainment Website"],
+    "Landing Page": ["Lead Generation", "Promotional", "Event", "Product Launch", "Services"]
+  };
+
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Add a New Product</h2>
       {error && <div className="bg-red-200 text-red-700 p-3 rounded-md mb-4">{error}</div>}
 
@@ -101,10 +115,13 @@ function AddProduct() {
           </label>
           <select
             id="productType"
-            value={productType}
-            onChange={(e) => setProductType(e.target.value)}
+            value={type}
+            onChange={(e) => {
+              setProductType(e.target.value);
+              setSubType("");  // Reset subType when type changes
+            }}
             required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm        focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select Product Type</option>
             <option value="Product - Amazon">Product - Amazon</option>
@@ -116,6 +133,28 @@ function AddProduct() {
           </select>
         </div>
 
+        {type && (
+          <div>
+            <label htmlFor="subType" className="block text-sm font-medium text-gray-700">
+              Product Subtype
+            </label>
+            <select
+              id="subType"
+              value={subType}
+              onChange={(e) => setSubType(e.target.value)}
+              required
+              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Select Subtype</option>
+              {subTypes[type]?.map((subtype) => (
+                <option key={subtype} value={subtype}>
+                  {subtype}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
         <div>
           <label htmlFor="perClickPrice" className="block text-sm font-medium text-gray-700">
             Price per Click
@@ -125,42 +164,16 @@ function AddProduct() {
             id="perClickPrice"
             value={perClickPrice}
             onChange={(e) => {
-              // Ensure the input only allows up to two digits after the decimal point
               const value = e.target.value;
               const regex = /^\d+(\.\d{0,2})?$/; // Regex for up to 2 decimals
               if (regex.test(value)) {
                 setPerClickPrice(value);
               }
-            }
-            }
+            }}
             required
             className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter price per click"
             step="0.01"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="clickCount" className="block text-sm font-medium text-gray-700">
-            Click Count
-          </label>
-          <input
-            type="number"
-            id="clickCount"
-            value={clickCount}
-            onChange={(e) => {
-              // Ensure the input only allows up to two digits after the decimal point
-              const value = e.target.value;
-              const regex = /^\d+$/; // Regex for integers only
-              if (regex.test(value)) {
-                setPerClickPrice(value);
-              }
-            }
-            }
-            required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter clickCount"
-            step="1"
           />
         </div>
 
@@ -175,50 +188,68 @@ function AddProduct() {
                 id="perBuyPrice"
                 value={perBuyPrice}
                 onChange={(e) => {
-                  // Ensure the input only allows up to two digits after the decimal point
                   const value = e.target.value;
                   const regex = /^\d+(\.\d{0,2})?$/; // Regex for up to 2 decimals
                   if (regex.test(value)) {
                     setPerBuyPrice(value);
                   }
-                }
-                }
-                required
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm  focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter price per buy"
-                step="0.01"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="buyCount" className="block text-sm font-medium text-gray-700">
-                Buy Count
-              </label>
-              <input
-                type="number"
-                id="buyCount"
-                value={buyCount}
-                onChange={(e) => {
-                  // Ensure the input only allows up to two digits after the decimal point
-                  const value = e.target.value;
-                  const regex = /^\d+$/; // Regex for integers only
-                  if (regex.test(value)) {
-                    setPerClickPrice(value);
-                  }
-                }
-                }
+                }}
                 required
                 className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter buyCount"
-                step="1"
+                placeholder="Enter price per buy"
+                step="0.01"
               />
             </div>
           </>
         )}
 
+        <div>
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            Description
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter product description"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="shortDescription" className="block text-sm font-medium text-gray-700">
+            Short Description
+          </label>
+          <input
+            type="text"
+            id="shortDescription"
+            value={shortDescription}
+            onChange={(e) => setShortDescription(e.target.value)}
+            required
+            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter short description"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="tags" className="block text-sm font-medium text-gray-700">
+            Tags (comma separated)
+          </label>
+          <input
+            type="text"
+            id="tags"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            required
+            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Enter tags"
+          />
+        </div>
+
         <button
           type="submit"
-          className="w-full py-3 mt-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="flex justify-center py-3 px-6 mt-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 mx-auto"
         >
           Add Product
         </button>
