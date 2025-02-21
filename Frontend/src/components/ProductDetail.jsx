@@ -84,20 +84,64 @@ function ProductDetail() {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4 lg:px-8">
+    <div className="bg-gray-50 container mx-auto py-8 px-4 lg:px-8">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Product Image Section */}
-        <div className="justify-center items-center">
-          <div className="max-w-sm">
+        {/* Product Image Section and Product Details Section */}
+        <div className="flex flex-col lg:flex-row gap-8 bg-gray-100">
+          {/* Product Image Section */}
+          <div className="flex-1 flex justify-center items-center">
             <img
               src={image}
               alt={productName}
-              className="w-full h-96 object-cover rounded-lg shadow-lg"
+              className="w-auto h-auto object-cover rounded-lg shadow-lg"
             />
           </div>
+        </div>
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Product Details Section (without reviews) */}
+          <div className="flex-1">
+            <h2 className="text-3xl font-semibold text-gray-800 mb-4">{productName}</h2>
+            <p className="text-xl text-gray-600 mb-4">Price per click: ${perClickPrice}</p>
+            <p className="text-xl text-gray-600 mb-4">Price per buy: ${perBuyPrice}</p>
 
-          {/* Conditional Review Form below Image */}
-          <div className="mt-6 w-full">
+            {/* Rating */}
+            <div className="flex items-center mb-4">
+              {renderStars(rating)}
+              <span className="ml-2 text-gray-600">({ratingCount})</span>
+            </div>
+
+            {/* Product Description */}
+            <h3 className="text-2xl font-medium text-gray-800 mb-2">Description</h3>
+            <p className="text-gray-600 mb-4">{description}</p>
+
+            {/* Tags */}
+            {productDetail.tags && (
+              <div className="mb-4">
+                <h3 className="text-xl font-medium text-gray-800">Tags</h3>
+                <ul className="flex flex-wrap gap-2">
+                  {productDetail.tags.split(',').map((tag, idx) => (
+                    <li
+                      key={idx}
+                      className="bg-blue-100 text-blue-600 rounded-full px-4 py-1 text-sm"
+                    >
+                      {tag.trim()}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <br/>
+      <hr/>
+
+      {/* Review Form Section and Reviews Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+        {/* Review Form Section */}
+        <div className="flex flex-col space-y-4">
+          <div className="w-full">
             <h4 className="text-xl font-medium text-gray-800">
               {hasReviewed ? "Update Rating" : "Rate the Product"}
             </h4>
@@ -141,42 +185,10 @@ function ProductDetail() {
           </div>
         </div>
 
-        {/* Product Details Section */}
-        <div>
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">{productName}</h2>
-          <p className="text-xl text-gray-600 mb-4">Price per click: ${perClickPrice}</p>
-          <p className="text-xl text-gray-600 mb-4">Price per buy: ${perBuyPrice}</p>
-
-          {/* Rating */}
-          <div className="flex items-center mb-4">
-            {renderStars(rating)}
-            <span className="ml-2 text-gray-600">({ratingCount})</span>
-          </div>
-
-          {/* Product Description */}
-          <h3 className="text-2xl font-medium text-gray-800 mb-2">Description</h3>
-          <p className="text-gray-600 mb-4">{description}</p>
-
-          {/* Tags */}
-          {productDetail.tags && (
-            <div className="mb-4">
-              <h3 className="text-xl font-medium text-gray-800">Tags</h3>
-              <ul className="flex flex-wrap gap-2">
-                {productDetail.tags.split(',').map((tag, idx) => (
-                  <li
-                    key={idx}
-                    className="bg-blue-100 text-blue-600 rounded-full px-4 py-1 text-sm"
-                  >
-                    {tag.trim()}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Reviews Section */}
+        {/* Reviews Section */}
+        <div className="flex flex-col space-y-4">
           {reviews && reviews.length > 0 && (
-            <div className="mb-6">
+            <div className="mb-6 overflow-y-auto" style={{ maxHeight: "350px" }}>
               <h3 className="text-xl font-medium text-gray-800">Customer Reviews</h3>
               <div className="space-y-4">
                 {reviews.map((review) => (
