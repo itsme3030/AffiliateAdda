@@ -30,10 +30,24 @@ public class TransactionController {
         //debug
         System.out.println("----------------------------------------->inside processPayment : Pay : " + transactionDTO.getAmount());
         try {
-            boolean paymentSuccess = transactionService.processPayment(principal, transactionDTO.getAmount());
-            if (paymentSuccess) {
-                return ResponseEntity.ok("Payment Successful");
+            String orderId = transactionService.processPayment(principal, transactionDTO.getAmount());
+            if (orderId != null) {
+                return ResponseEntity.ok(orderId);
             } else {
+                return ResponseEntity.status(400).body("Payment Failed");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("An error occurred: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/updatePay")
+    public ResponseEntity<String> updatePayment(Principal principal, @RequestBody TransactionDTO transactionDTO) {
+        try {
+            String msg = transactionService.updatePayment(principal, transactionDTO.getOrderId(), transactionDTO.getPaymentId());
+            if (msg != null) {
+                return ResponseEntity.ok(msg);
+            }else {
                 return ResponseEntity.status(400).body("Payment Failed");
             }
         } catch (Exception e) {

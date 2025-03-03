@@ -2,13 +2,17 @@ package com.example.affiliateadda.service;
 
 import com.example.affiliateadda.model.*;
 import com.example.affiliateadda.repository.*;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+
+import com.razorpay.*;
 
 @Service
 public class TransactionService {
@@ -27,20 +31,23 @@ public class TransactionService {
     @Autowired
     private UserDetailRepository userDetailRepository;
 
-    public boolean processPayment(Principal principal, double amount) {
+    @Value("${razorpay.api.key}")
+    private String apiKey;
+
+    @Value("${razorpay.api.secret}")
+    private String apiSecret;
+
+    public String processPayment(Principal principal, double amount) {
         String username = principal.getName();
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isEmpty()) {
-            return false;
+            return null;
         }
 
         //debug
         System.out.println("User " + username);
 
-        boolean success = false;
-
-
-//        // We will use it for per month pay : Mail to user for remaining payment...
+        // We will use it for per month pay : Mail to user for remaining payment...
 //        double userPayableAmount = findUserPayableAmount(user.get().getId());
 //        double userPays = findUserPays(user.get());
 //        double remainingPays = userPayableAmount - userPays;
@@ -50,17 +57,59 @@ public class TransactionService {
         transaction.setAmount(amount);
         transaction.setUser(user.get());
         transaction.setTransactionType(TransactionType.PAYMENT);
-        transaction.setStatus(TransactionStatus.COMPLETED);
         transaction.setTransactionDate(LocalDateTime.now());
-        transactionRepository.save(transaction);
+
+        //RazorPay
+        String orderId;
+        try{
+            RazorpayClient razorpay = new RazorpayClient(apiKey, apiSecret);
+
+            JSONObject orderRequest = new JSONObject();
+            orderRequest.put("amount",amount*100); // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            orderRequest.put("currency","INR");
+            orderRequest.put("receipt", "tnx"); // Will pass proper receipt in the future.
+
+            Order order = razorpay.orders.create(orderRequest);
+            System.out.println("Order created");
+
+            //OrderID
+            orderId = order.get("id");
+            transaction.setOrderId(orderId);
+            transaction.setStatus(TransactionStatus.PENDING);
+            transactionRepository.save(transaction);
+
+        } catch (RazorpayException e) {
+            // Log the specific error from Razorpay
+            System.err.println("Error from Razorpay API: " + e.getMessage());
+            transaction.setStatus(TransactionStatus.FAILED);
+            transactionRepository.save(transaction);
+            throw new RuntimeException(e);
+        }
+
+        //PaymentID - done
+        //transaction.setStatus(TransactionStatus.COMPLETED);
+        //transactionRepository.save(transaction);
 
         //debug
         System.out.println("Transaction " + transaction.getTransactionId());
 
-        success = true;
-        return success;
+        return orderId;
     }
 
+    public String updatePayment(Principal principal, String orderId, String paymentId) {
+        String username = principal.getName();
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isEmpty()) {
+            return null;
+        }
+
+        Transaction transaction = transactionRepository.findByOrderId(orderId);
+        transaction.setPaymentId(paymentId);
+        transaction.setStatus(TransactionStatus.COMPLETED);
+        transactionRepository.save(transaction);
+
+        return "Payment Successful";
+    }
 
     public boolean processWithdrawal(Principal principal, double amount) {
         String username = principal.getName();

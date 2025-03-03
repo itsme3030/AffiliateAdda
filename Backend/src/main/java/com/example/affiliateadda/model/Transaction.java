@@ -31,8 +31,29 @@ public class Transaction {
     @Column(nullable = false)
     private TransactionStatus status;
 
+    //OrderId and TnxId
+    private String orderId;
+
+    private String paymentId;
+
     // Getters and Setters
 
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
+    }
 
     public Long getTransactionId() {
         return transactionId;
