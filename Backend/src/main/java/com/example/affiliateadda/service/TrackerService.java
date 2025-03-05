@@ -27,6 +27,9 @@ public class TrackerService {
     @Value("${dummy.frontend.url}")
     private String dummyFrontendUrl;
 
+    @Value("${Domain}")
+    private String domain;
+
     @Autowired
     private TrackerRepository trackerRepository;
 
@@ -74,7 +77,7 @@ public class TrackerService {
         String encodedParams = Base64.getEncoder().encodeToString(queryString.getBytes());
 
         // Construct the base URL with the encoded query parameters
-        String mydomainurl = "http://localhost:8080/link/track";
+        String mydomainurl = domain+"/link/track";
         String url = String.format("%s?data=%s", mydomainurl, encodedParams);
 
         // Check if user and product exist
