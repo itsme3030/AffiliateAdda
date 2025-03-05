@@ -12,6 +12,7 @@ import com.example.affiliateadda.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -131,7 +132,7 @@ public class UserService {
                 monthlyTrackerDTO.settId(tracker.getTId());
                 monthlyTrackerDTO.setCount(monthlyTracker.getCount());
                 monthlyTrackerDTO.setBuyCount(monthlyTracker.getBuyCount());
-                monthlyTrackerDTO.setMonth(monthlyTracker.getMonth());
+                monthlyTrackerDTO.setMonth(YearMonth.parse(monthlyTracker.getMonth())); //YearMonth.parse(monthlyTracker.getMonth())
                 monthlyTrackerDTOs.add(monthlyTrackerDTO);
             }
             earningDTO.setMonthlyTrackers(monthlyTrackerDTOs);
@@ -214,7 +215,7 @@ public class UserService {
                     monthlyTrackerDTO.settId(tracker.getTId());
                     monthlyTrackerDTO.setCount(monthlyTracker.getCount());
                     monthlyTrackerDTO.setBuyCount(monthlyTracker.getBuyCount());
-                    monthlyTrackerDTO.setMonth(monthlyTracker.getMonth());
+                    monthlyTrackerDTO.setMonth(YearMonth.parse(monthlyTracker.getMonth()));
 
                     monthlyTrackerDTOs.add(monthlyTrackerDTO);
                 }

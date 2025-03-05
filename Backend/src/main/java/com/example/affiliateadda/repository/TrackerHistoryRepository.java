@@ -1,6 +1,6 @@
 package com.example.affiliateadda.repository;
 
-import com.example.affiliateadda.model.TrackerHistory;
+import com.example.affiliateadda.model.History.TrackerHistory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

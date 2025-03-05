@@ -1,4 +1,4 @@
-package com.example.affiliateadda.model;
+package com.example.affiliateadda.model.History;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

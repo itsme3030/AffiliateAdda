@@ -15,7 +15,7 @@ public class MonthlyTracker {
     @JoinColumn(name = "tracker_id", nullable = false)
     private Tracker tracker;
 
-    private YearMonth month;  // This will store the month and year
+    private String month;  // This will store the month and year
     private Long count=0L;       // Click count for this particular month
     private Long buyCount=0L;   // Buy count for this particular month
 
@@ -37,11 +37,11 @@ public class MonthlyTracker {
         this.tracker = tracker;
     }
 
-    public YearMonth getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public void setMonth(YearMonth month) {
+    public void setMonth(String month) {
         this.month = month;
     }
 

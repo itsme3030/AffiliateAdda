@@ -1,5 +1,6 @@
 package com.example.affiliateadda.model;
 
+import com.google.api.client.util.DateTime;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +26,8 @@ public class User {
 
     @Column(nullable = false)
     private boolean active = true;
+
+    private DateTime creationDate;
 
     @OneToMany(mappedBy = "user")
     private List<Tracker> trackers;
@@ -65,6 +68,14 @@ public class User {
         this.active = active;
         this.trackers = trackers;
         this.products = products;
+    }
+
+    public DateTime getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(DateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public List<Review> getReviews() {

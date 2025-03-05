@@ -156,7 +156,7 @@ public class TrackerService {
                 // If no entry exists for this month, create a new one
                 MonthlyTracker monthlyTracker = new MonthlyTracker();
                 monthlyTracker.setTracker(tracker);
-                monthlyTracker.setMonth(currentMonth);
+                monthlyTracker.setMonth(currentMonth.toString());
                 monthlyTracker.setCount(1L);  // First click of the month
                 monthlyTrackerRepository.save(monthlyTracker);
             }
@@ -244,7 +244,7 @@ public class TrackerService {
                     // If no entry exists for this month, create a new one
                     MonthlyTracker monthlyTracker = new MonthlyTracker();
                     monthlyTracker.setTracker(tracker);
-                    monthlyTracker.setMonth(currentMonth);
+                    monthlyTracker.setMonth(currentMonth.toString());
                     monthlyTracker.setBuyCount(buyCount);  // First Buy of the month
                     monthlyTrackerRepository.save(monthlyTracker);
                 }
