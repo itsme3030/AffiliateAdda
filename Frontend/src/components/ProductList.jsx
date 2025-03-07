@@ -12,7 +12,9 @@ function ProductList({ searchTerm, selectedType, selectedSubType, perClickPrice,
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${import.meta.env.VITE_API}/product/list`);
+
         setProducts(response.data);
+        console.log(products);
       } catch (err) {
         setError("Failed to fetch products");
         console.error("Error fetching products:", err);
@@ -25,7 +27,7 @@ function ProductList({ searchTerm, selectedType, selectedSubType, perClickPrice,
   }, []);
 
   // Filter products based on all filters
-  const filteredProducts = products.filter((product) => {
+  const filteredProducts = products?.filter((product) => {
     const matchesType = selectedType ? product.productType === selectedType : true;
     const matchesSubType = selectedSubType ? product.productSubType === selectedSubType : true;
     const matchesSearch = searchTerm ? product.productName.toLowerCase().includes(searchTerm.toLowerCase()) : true;
