@@ -4,7 +4,6 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 
 import PayableYearlyLineChart from './PayableYearlyLineChart';
 
-// Register the necessary ChartJS components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 function PayableVisualization({ payableAmounts, totalPayableAmount }) {
@@ -12,8 +11,6 @@ function PayableVisualization({ payableAmounts, totalPayableAmount }) {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [chartData, setChartData] = useState(null);
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-
-  // console.log("Payable : ",payableAmounts);
 
   useEffect(() => {
     let clickCount = 0;
@@ -35,7 +32,7 @@ function PayableVisualization({ payableAmounts, totalPayableAmount }) {
         filteredPayableAmounts = filteredPayableAmounts.filter((payableAmount) => payableAmount.productId === selectedProduct);
       }
 
-      // Loop through the earnings and calculate the required data
+      // Loop through the data and calculate the required values
       filteredPayableAmounts.forEach((payableAmount) => {
         if (selectedMonth) {
           payableAmount.monthlyTrackers.forEach((tracker) => {
@@ -46,7 +43,6 @@ function PayableVisualization({ payableAmounts, totalPayableAmount }) {
             }
           });
         } else {
-          // Default: Use the total counts and earnings
           clickCount += payableAmount.count;
           buyCount += payableAmount.buyCount;
           payableAmountsSum += payableAmount.count * payableAmount.perClickPrice + payableAmount.buyCount * payableAmount.perBuyPrice;
@@ -121,18 +117,18 @@ function PayableVisualization({ payableAmounts, totalPayableAmount }) {
 
   return (
     <>
-      <div className="bg-gray-100 rounded-xl p-4 md:p-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-        <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg w-full md:w-1/2">
-          <h1 className="text-xl font-semibold mb-4">Payable Visualization</h1>
+      <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-4 md:p-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 transition-colors duration-500">
+        <div className="container mx-auto p-6 bg-white dark:bg-gray-700 shadow-lg rounded-lg w-full md:w-1/2 transition-colors duration-500">
+          <h1 className="text-xl font-semibold dark:text-cyan-100 mb-4">Payable Visualization</h1>
           
           {/* Year Selection Dropdown */}
           <div className="mb-4">
-            <label htmlFor="year" className="text-sm">Select Year: </label>
+            <label htmlFor="year" className="text-sm dark:text-cyan-100">Select Year: </label>
             <select
               id="year"
               value={selectedYear}
               onChange={handleYearChange}
-              className="border p-2 rounded-md ml-2 w-full md:w-auto"
+              className="border p-2 rounded-md ml-2 w-full md:w-auto dark:bg-gray-700 dark:text-cyan-100 dark:border-gray-600"
             >
               {[2022, 2023, 2024, 2025].map((year) => (
                 <option key={year} value={year}>{year}</option>
@@ -144,12 +140,12 @@ function PayableVisualization({ payableAmounts, totalPayableAmount }) {
           <PayableYearlyLineChart payableAmounts={payableAmounts} selectedYear={selectedYear} />
         </div>
 
-        <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg w-full md:w-1/2">
+        <div className="container mx-auto p-6 bg-white dark:bg-gray-700 shadow-lg rounded-lg w-full md:w-1/2 transition-colors duration-500">
           <div className="mb-6 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4 w-full">
             <select
               value={selectedMonth || ''}
               onChange={handleMonthChange}
-              className="border p-2 rounded w-full md:w-auto"
+              className="border p-2 rounded w-full md:w-auto dark:bg-gray-700 dark:text-cyan-100 dark:border-gray-600"
             >
               <option value="">Select Month</option>
               {getMonthOptions()}
@@ -158,7 +154,7 @@ function PayableVisualization({ payableAmounts, totalPayableAmount }) {
             <select
               value={selectedProduct || ''}
               onChange={handleProductChange}
-              className="border p-2 rounded w-full md:w-auto"
+              className="border p-2 rounded w-full md:w-auto dark:bg-gray-700 dark:text-cyan-100 dark:border-gray-600"
             >
               <option value="">Select Product</option>
               {getProductOptions()}
@@ -166,12 +162,33 @@ function PayableVisualization({ payableAmounts, totalPayableAmount }) {
           </div>
 
           <div className="mb-6">
-            <h3 className="text-xl font-semibold">Total Payable Amount: ${totalPayableAmount}</h3>
+            <h3 className="text-xl font-semibold dark:text-cyan-100">Total Payable Amount: ${totalPayableAmount}</h3>
           </div>
 
           {chartData && (
-            <div className="bg-white p-6 shadow-lg rounded-md">
-              <Bar data={chartData} options={{ responsive: true }} />
+            <div className="bg-white dark:bg-gray-700 p-6 shadow-lg rounded-md transition-colors duration-500">
+              <Bar
+                data={chartData}
+                options={{
+                  responsive: true,
+                  scales: {
+                    x: {
+                      ticks: { color: '#a5f3fc' },
+                      grid: { color: 'rgba(255,255,255,0.2)' },
+                    },
+                    y: {
+                      ticks: { color: '#a5f3fc' },
+                      grid: { color: 'rgba(255,255,255,0.2)' },
+                    },
+                  },
+                  plugins: {
+                    legend: {
+                      labels: { color: '#a5f3fc' },
+                    },
+                    tooltip: { enabled: true },
+                  },
+                }}
+              />
             </div>
           )}
         </div>
