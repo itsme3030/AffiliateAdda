@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AdminSummaryCard from '../components/AdminSummaryCard';
-import { FaSpinner , FaTrash , FaTimesCircle , FaCheckCircle  } from 'react-icons/fa'; // Loading spinner
+import { FaSpinner, FaTrash, FaTimesCircle, FaCheckCircle } from 'react-icons/fa'; // Loading spinner
 
 const AdminHome = () => {
   const [adminData, setAdminData] = useState(null);
@@ -12,10 +12,8 @@ const AdminHome = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // const storedToken = localStorage.getItem("token");
     const storedToken = sessionStorage.getItem("token");
-    // console.log("Local storage token : ",storedToken);
-    console.log("sessionStorage token : ",storedToken);
+    console.log("sessionStorage token : ", storedToken);
     if (!storedToken) {
       navigate("/Authenticate");
       return;
@@ -25,7 +23,7 @@ const AdminHome = () => {
     axios
       .get(`${import.meta.env.VITE_API}/admin/home`, {
         headers: {
-          "Authorization" : `Bearer ${storedToken}`,
+          "Authorization": `Bearer ${storedToken}`,
         },
       })
       .then((response) => {
@@ -40,9 +38,9 @@ const AdminHome = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-lg text-gray-600 flex items-center">
-          <FaSpinner className="animate-spin mr-2 text-blue-500" /> Loading...
+      <div className="flex justify-center items-center h-screen bg-gray-50 dark:bg-gradient-to-tr dark:from-cyan-900 dark:via-gray-900 dark:to-black transition-colors duration-500">
+        <div className="text-lg text-gray-600 dark:text-cyan-100 flex items-center">
+          <FaSpinner className="animate-spin mr-2 text-blue-500 dark:text-cyan-400" /> Loading...
         </div>
       </div>
     );
@@ -50,8 +48,8 @@ const AdminHome = () => {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="text-lg text-red-600">{error}</div>
+      <div className="flex justify-center items-center h-screen bg-gray-50 dark:bg-gradient-to-tr dark:from-cyan-900 dark:via-gray-900 dark:to-black transition-colors duration-500">
+        <div className="text-lg text-red-600 dark:text-red-400">{error}</div>
       </div>
     );
   }
@@ -66,22 +64,21 @@ const AdminHome = () => {
     const url = `${import.meta.env.VITE_API}/admin/deactivateUser/${userId}`;
     // deactivating user
     axios
-    .post(url, {}, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(response => {
-      console.log('Deactivation response:', response.data);
-    })
-    .catch(error => {
-      console.error('Error deactivating:', error);
-      if (error.response) {
-        // If response from server, log response status and data
-        console.error('Error response:', error.response.status, error.response.data);
-      }
-    });
+      .post(url, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => {
+        console.log('Deactivation response:', response.data);
+      })
+      .catch(error => {
+        console.error('Error deactivating:', error);
+        if (error.response) {
+          console.error('Error response:', error.response.status, error.response.data);
+        }
+      });
   };
 
   // Handle Activate User (For now just log the userId)
@@ -96,27 +93,26 @@ const AdminHome = () => {
 
     // activating user
     axios
-    .post(url, {}, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(response => {
-      console.log('Activation response:', response.data);
-    })
-    .catch(error => {
-      console.error('Error activating:', error);
-      if (error.response) {
-        // If response from server, log response status and data
-        console.error('Error response:', error.response.status, error.response.data);
-      }
-    });
+      .post(url, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => {
+        console.log('Activation response:', response.data);
+      })
+      .catch(error => {
+        console.error('Error activating:', error);
+        if (error.response) {
+          console.error('Error response:', error.response.status, error.response.data);
+        }
+      });
   };
 
   return (
-    <div className="container mx-auto p-6 md:p-8 lg:p-12">
-      <h2 className="text-4xl font-semibold mb-8 text-center text-gray-800 tracking-wide">
+    <div className="container mx-auto p-6 md:p-8 lg:p-12 bg-gray-50 dark:bg-gradient-to-tr dark:from-cyan-900 dark:via-gray-900 dark:to-black transition-colors duration-500">
+      <h2 className="text-4xl font-semibold mb-8 text-center text-gray-800 dark:text-cyan-100 tracking-wide">
         Admin Dashboard
       </h2>
 
@@ -152,7 +148,7 @@ const AdminHome = () => {
         />
       </div>
 
-      <h3 className="text-2xl font-semibold mb-4 text-center text-gray-800">
+      <h3 className="text-2xl font-semibold mb-4 text-center text-gray-800 dark:text-cyan-100">
         Users Overview
       </h3>
 
@@ -160,7 +156,7 @@ const AdminHome = () => {
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto border-collapse">
           <thead>
-            <tr className="bg-gray-200 text-gray-700">
+            <tr className="bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-cyan-100">
               <th className="py-3 px-6 text-left">Username</th>
               <th className="py-3 px-6 text-left">Total Earnings</th>
               <th className="py-3 px-6 text-left">Total Payable Amount</th>
@@ -169,27 +165,27 @@ const AdminHome = () => {
           </thead>
           <tbody>
             {adminData.users.map((user) => (
-              <tr key={user.userId} className="border-t border-gray-200">
+              <tr key={user.userId} className="border-t border-gray-200 dark:border-gray-700">
                 <td className="py-3 px-6">{user.username}</td>
                 <td className="py-3 px-6">{user.totalEarnings.toFixed(2)}</td>
                 <td className="py-3 px-6">{user.totalPayableAmount.toFixed(2)}</td>
                 <td className="py-3 px-6 text-center">
-                {user.active ? (
-                  <button 
-                    onClick={() => handleDeactivateUser(user.userId)} 
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    <FaTrash /> Deactivate
-                  </button>
-                ) : (
-                  <button 
-                    onClick={() => handleActivateUser(user.userId)} 
-                    className="text-blue-600 hover:text-blue-800"
-                  >
-                    <FaCheckCircle /> Activate
-                  </button>
-                )}
-              </td>
+                  {user.active ? (
+                    <button 
+                      onClick={() => handleDeactivateUser(user.userId)} 
+                      className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-600"
+                    >
+                      <FaTrash /> Deactivate
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => handleActivateUser(user.userId)} 
+                      className="text-blue-600 dark:text-cyan-300 hover:text-blue-800 dark:hover:text-cyan-500"
+                    >
+                      <FaCheckCircle /> Activate
+                    </button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

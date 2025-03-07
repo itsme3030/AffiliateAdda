@@ -25,13 +25,11 @@ function Affiliate() {
   useEffect(() => {
     // Update the subtypes based on selected product type
     setSubTypes(availableSubTypes[selectedType] || []);
-    setSelectedSubType('')
+    setSelectedSubType('');
   }, [selectedType]);
 
-  // console.log("--->",selectedType," - ",selectedSubType);
-
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-tr dark:from-cyan-900 dark:via-gray-900 dark:to-black py-8 px-4 sm:px-6 lg:px-8 transition-colors duration-500">
       {/* Filters Section */}
       <div className="mb-8">
         <div className="flex flex-wrap gap-4 justify-center mb-6">
@@ -39,10 +37,8 @@ function Affiliate() {
           <select
             id="productType"
             value={selectedType}
-            onChange={(e) => {
-              setSelectedType(e.target.value)  
-            }}
-            className="p-3 w-full sm:w-1/2 md:w-1/4 lg:w-1/6 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            onChange={(e) => setSelectedType(e.target.value)}
+            className="p-3 w-full sm:w-1/2 md:w-1/4 lg:w-1/6 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-cyan-100 transition-colors duration-500"
           >
             <option value="">Select Product Type</option>
             {['Product - Amazon', 'Product - Flipkart', 'Product', 'YouTube Video', 'Website', 'Landing Page'].map((category) => (
@@ -56,7 +52,7 @@ function Affiliate() {
               id="subType"
               value={selectedSubType}
               onChange={(e) => setSelectedSubType(e.target.value)}
-              className="p-3 w-full sm:w-1/2 md:w-1/4 lg:w-1/6 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="p-3 w-full sm:w-1/2 md:w-1/4 lg:w-1/6 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-cyan-100 transition-colors duration-500"
             >
               <option value="">Select Subtype</option>
               {subTypes.map((subtype) => (
@@ -68,34 +64,31 @@ function Affiliate() {
           {/* Price Filters */}
           <input
             type="number"
-            className="p-3 w-full sm:w-1/2 md:w-1/4 lg:w-1/6 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-3 w-full sm:w-1/2 md:w-1/4 lg:w-1/6 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-cyan-100 transition-colors duration-500"
             placeholder="Max Price per Click"
             value={perClickPrice}
             onChange={(e) => setPerClickPrice(e.target.value)}
           />
           <input
             type="number"
-            className="p-3 w-full sm:w-1/2 md:w-1/4 lg:w-1/6 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="p-3 w-full sm:w-1/2 md:w-1/4 lg:w-1/6 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-cyan-100 transition-colors duration-500"
             placeholder="Max Price per Buy"
             value={perBuyPrice}
             onChange={(e) => setPerBuyPrice(e.target.value)}
           />
-
-          
-
         </div>
 
         {/* Search Bar */}
         <div className="flex justify-center mb-8">
           <input
             type="text"
-            className="p-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 border border-gray-300 rounded-lg"
+            className="p-3 w-full sm:w-1/2 md:w-1/3 lg:w-1/4 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-cyan-100 transition-colors duration-500"
             placeholder="Search by product name"
             value={searchTerm}
             onChange={handleSearchChange}
           />
           <button
-            className="ml-4 p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            className="ml-4 p-3 bg-blue-500 dark:bg-cyan-700 text-white rounded-lg hover:bg-blue-600 dark:hover:bg-cyan-800 transition-colors duration-500"
             onClick={() => console.log(`Searching for: ${searchTerm}`)}
           >
             Search

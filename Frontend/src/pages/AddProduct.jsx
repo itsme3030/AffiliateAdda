@@ -44,7 +44,7 @@ function AddProduct() {
       tags
     };
 
-    console.log("Product data : ",productData);
+    console.log("Product data : ", productData);
 
     try {
       const token = sessionStorage.getItem("token");
@@ -74,13 +74,19 @@ function AddProduct() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold text-center text-gray-700 mb-6">Add a New Product</h2>
-      {error && <div className="bg-red-200 text-red-700 p-3 rounded-md mb-4">{error}</div>}
+    <div className="max-w-6xl mx-auto p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md transition-colors duration-500">
+      <h2 className="text-2xl font-semibold text-center text-gray-700 dark:text-cyan-100 mb-6">
+        Add a New Product
+      </h2>
+      {error && (
+        <div className="bg-red-200 dark:bg-red-800 text-red-700 dark:text-red-300 p-3 rounded-md mb-4">
+          {error}
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="productName" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="productName" className="block text-sm font-medium text-gray-700 dark:text-cyan-100">
             Product Name
           </label>
           <input
@@ -89,13 +95,13 @@ function AddProduct() {
             value={productName}
             onChange={(e) => setProductName(e.target.value)}
             required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:text-cyan-100"
             placeholder="Enter product name"
           />
         </div>
 
         <div>
-          <label htmlFor="productBaseurl" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="productBaseurl" className="block text-sm font-medium text-gray-700 dark:text-cyan-100">
             Product Base URL
           </label>
           <input
@@ -104,13 +110,13 @@ function AddProduct() {
             value={productBaseurl}
             onChange={(e) => setProductBaseurl(e.target.value)}
             required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:text-cyan-100"
             placeholder="Enter product base URL"
           />
         </div>
 
         <div>
-          <label htmlFor="productType" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="productType" className="block text-sm font-medium text-gray-700 dark:text-cyan-100">
             Product Type
           </label>
           <select
@@ -121,7 +127,7 @@ function AddProduct() {
               setSubType("");  // Reset subType when type changes
             }}
             required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:text-cyan-100"
           >
             <option value="">Select Product Type</option>
             <option value="Product - Amazon">Product - Amazon</option>
@@ -135,7 +141,7 @@ function AddProduct() {
 
         {type && (
           <div>
-            <label htmlFor="subType" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="subType" className="block text-sm font-medium text-gray-700 dark:text-cyan-100">
               Product Subtype
             </label>
             <select
@@ -143,7 +149,7 @@ function AddProduct() {
               value={subType}
               onChange={(e) => setSubType(e.target.value)}
               required
-              className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="mt-1 block w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:text-cyan-100"
             >
               <option value="">Select Subtype</option>
               {subTypes[type]?.map((subtype) => (
@@ -156,7 +162,7 @@ function AddProduct() {
         )}
 
         <div>
-          <label htmlFor="perClickPrice" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="perClickPrice" className="block text-sm font-medium text-gray-700 dark:text-cyan-100">
             Price per Click
           </label>
           <input
@@ -171,7 +177,7 @@ function AddProduct() {
               }
             }}
             required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:text-cyan-100"
             placeholder="Enter price per click"
             step="0.01"
           />
@@ -180,7 +186,7 @@ function AddProduct() {
         {shouldShowPriceField && (
           <>
             <div>
-              <label htmlFor="perBuyPrice" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="perBuyPrice" className="block text-sm font-medium text-gray-700 dark:text-cyan-100">
                 Price per Buy
               </label>
               <input
@@ -195,7 +201,7 @@ function AddProduct() {
                   }
                 }}
                 required
-                className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="mt-1 block w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:text-cyan-100"
                 placeholder="Enter price per buy"
                 step="0.01"
               />
@@ -204,7 +210,7 @@ function AddProduct() {
         )}
 
         <div>
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-cyan-100">
             Description
           </label>
           <textarea
@@ -212,13 +218,13 @@ function AddProduct() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:text-cyan-100"
             placeholder="Enter product description"
           />
         </div>
 
         <div>
-          <label htmlFor="shortDescription" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="shortDescription" className="block text-sm font-medium text-gray-700 dark:text-cyan-100">
             Short Description
           </label>
           <input
@@ -227,13 +233,13 @@ function AddProduct() {
             value={shortDescription}
             onChange={(e) => setShortDescription(e.target.value)}
             required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:text-cyan-100"
             placeholder="Enter short description"
           />
         </div>
 
         <div>
-          <label htmlFor="tags" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="tags" className="block text-sm font-medium text-gray-700 dark:text-cyan-100">
             Tags (comma separated)
           </label>
           <input
@@ -242,14 +248,14 @@ function AddProduct() {
             value={tags}
             onChange={(e) => setTags(e.target.value)}
             required
-            className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="mt-1 block w-full p-3 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:text-cyan-100"
             placeholder="Enter tags"
           />
         </div>
 
         <button
           type="submit"
-          className="flex justify-center py-3 px-6 mt-4 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 mx-auto"
+          className="flex justify-center py-3 px-6 mt-4 bg-green-600 dark:bg-green-700 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 dark:hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-500 dark:focus:ring-green-600 mx-auto"
         >
           Add Product
         </button>
