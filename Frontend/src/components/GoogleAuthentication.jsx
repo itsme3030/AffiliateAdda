@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa"; // Import spinner icon for loading
-// import * as jwt_decode from 'jwt-decode'; 
-// import jwt_decode from 'jsonwebtoken';
 import { jwtDecode } from "jwt-decode";
 
 const GoogleAuthentication = ({ setRole }) => {
@@ -39,10 +37,8 @@ const GoogleAuthentication = ({ setRole }) => {
             console.log("JWT Token role :", role);
 
             const username = decodedToken.sub;
-            console.log("username : ",username);
-            sessionStorage.setItem("username",username);
-
-            // navigate("/");
+            console.log("username : ", username);
+            sessionStorage.setItem("username", username);
 
             // Update the role state in parent component
             setRole(role);
@@ -71,19 +67,17 @@ const GoogleAuthentication = ({ setRole }) => {
     };
 
     return (
-        <GoogleOAuthProvider
-            clientId={import.meta.env.VITE_CLIENTID || ""}
-        >
-            <div className="flex justify-center items-center min-h-screen bg-gray-50">
-                <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-                    <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENTID || ""}>
+            <div className="flex justify-center items-center min-h-screen bg-gray-50 dark:bg-gradient-to-tr dark:from-cyan-900 dark:via-gray-900 dark:to-black transition-colors duration-500">
+                <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg dark:shadow-cyan-800 max-w-md w-full transition-colors duration-500">
+                    <h2 className="text-2xl font-semibold text-center text-gray-800 dark:text-cyan-100 mb-6">
                         Welcome to Affiliat Adda
                     </h2>
                     <div className="text-center">
                         {loading ? (
                             <button
                                 disabled
-                                className="bg-blue-500 text-white w-full py-2 rounded-lg flex justify-center items-center disabled:opacity-50"
+                                className="bg-blue-500 dark:bg-cyan-700 text-white w-full py-2 rounded-lg flex justify-center items-center disabled:opacity-50 transition-colors duration-300"
                             >
                                 <FaSpinner className="animate-spin w-5 h-5 mr-2" />
                                 Authenticating...
@@ -99,7 +93,9 @@ const GoogleAuthentication = ({ setRole }) => {
                         )}
 
                         {errorMessage && (
-                            <div className="mt-4 text-red-600 text-sm">{errorMessage}</div>
+                            <div className="mt-4 text-red-600 dark:text-red-400 text-sm">
+                                {errorMessage}
+                            </div>
                         )}
                     </div>
                 </div>

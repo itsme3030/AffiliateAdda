@@ -151,7 +151,7 @@ const Home = () => {
               Join Our Network
             </Link>
             <Link
-              to="/products"
+              to="/affiliate"
               className="
                 bg-white/10 backdrop-blur-md hover:bg-white/20
                 text-white font-bold py-3 px-8 rounded-full

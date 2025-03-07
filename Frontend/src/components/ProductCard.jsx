@@ -101,32 +101,31 @@ function ProductCard({ product }) {
   }
 
   return (
-    <div className="max-w-sm rounded-lg shadow-lg bg-white overflow-hidden border border-gray-200 p-6 space-y-4">
+    <div className="max-w-sm rounded-lg shadow-lg bg-white dark:bg-gray-800 overflow-hidden border border-gray-200 dark:border-gray-700 p-6 space-y-4 transition-colors duration-500 hover:shadow-xl dark:hover:shadow-cyan-800">
       {/* Image at the top */}
-      <div className="w-full h-48 bg-gray-300 rounded-lg mb-4">
+      <div className="w-full h-48 bg-gray-300 dark:bg-gray-700 rounded-lg mb-4">
         {/* Placeholder image */}
         <img
           src={productImage} // Placeholder image URL
           alt={product.productName}
-          className="w-full h-full object-cover rounded-lg shadow-md hover:shadow-xl"
+          className="w-full h-full object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
         />
       </div>
 
       {/* Product details */}
-      <h3 className="text-md font-semibold text-gray-800 truncate">
+      <h3 className="text-md font-semibold text-gray-800 dark:text-cyan-100 truncate">
         {product.productName}
       </h3>
-      <p className="text-sm text-gray-600">Price per click: ${product.perClickPrice}</p>
-      {/* <p className="text-sm text-gray-600">Product Type: {product.productType}</p> */}
-      <p className="text-sm text-gray-600">Price per buy: ${product.perBuyPrice}</p>
+      <p className="text-sm text-gray-600 dark:text-cyan-300">Price per click: ${product.perClickPrice}</p>
+      <p className="text-sm text-gray-600 dark:text-cyan-300">Price per buy: ${product.perBuyPrice}</p>
 
       {/* Button to generate link */}
       <button
         onClick={handleGenerateLink}
         disabled={loading} // Disable button while loading
-        className={`w-full py-2 font-semibold rounded-lg focus:outline-none focus:ring-2 ${loading
-          ? "bg-gray-400 text-white cursor-not-allowed"
-          : "bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500"
+        className={`w-full py-2 font-semibold rounded-lg focus:outline-none focus:ring-2 transition-colors duration-300 ${loading
+          ? "bg-gray-400 dark:bg-gray-600 text-white cursor-not-allowed"
+          : "bg-blue-500 dark:bg-cyan-700 text-white hover:bg-blue-600 dark:hover:bg-cyan-800 focus:ring-blue-500 dark:focus:ring-cyan-600"
           }`}
       >
         {loading ? "Generating..." : "Generate Link"}
@@ -134,20 +133,21 @@ function ProductCard({ product }) {
 
       <button
         onClick={handleProductDetail}
-        className="w-full py-2 font-semibold rounded-lg focus:outline-none focus:ring-2 bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500">
+        className="w-full py-2 font-semibold rounded-lg focus:outline-none focus:ring-2 bg-blue-500 dark:bg-cyan-700 text-white hover:bg-blue-600 dark:hover:bg-cyan-800 focus:ring-blue-500 dark:focus:ring-cyan-600 transition-colors duration-300"
+      >
         View Details
       </button>
 
       {/* Show the generated link if it exists */}
       {generatedLink && (
         <div className="generated-link space-y-2 mt-4">
-          <p className="text-sm text-gray-700">Generated Link:</p>
+          <p className="text-sm text-gray-700 dark:text-cyan-100">Generated Link:</p>
           <div className="flex items-center space-x-2">
-            <span className="text-blue-500 truncate max-w-xs">{generatedLink}</span>
+            <span className="text-blue-500 dark:text-cyan-300 truncate max-w-xs">{generatedLink}</span>
             {/* Copy button */}
             <button
               onClick={handleCopyLink}
-              className="text-blue-500 hover:text-blue-700"
+              className="text-blue-500 dark:text-cyan-300 hover:text-blue-700 dark:hover:text-cyan-200"
             >
               <FaClipboard className="w-5 h-5" />
             </button>
@@ -156,11 +156,11 @@ function ProductCard({ product }) {
       )}
 
       {/* Show error message if link generation fails */}
-      {error && <div className="text-red-600 text-sm mt-2">{error}</div>}
+      {error && <div className="text-red-600 dark:text-red-400 text-sm mt-2">{error}</div>}
 
       {/* Show success message when the link is copied */}
       {copyMessage && (
-        <div className="text-green-500 text-sm mt-2">{copyMessage}</div>
+        <div className="text-green-500 dark:text-green-400 text-sm mt-2">{copyMessage}</div>
       )}
     </div>
   );
