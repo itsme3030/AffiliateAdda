@@ -104,13 +104,13 @@ const EarningVisualization = ({ earnings, totalEarnings }) => {
 
   return (
     <>
-      <div className="bg-gray-100 rounded-xl p-4 md:p-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-        <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg w-full md:w-1/2">
+      <div className="bg-gray-100 dark:bg-gray-800 rounded-xl p-4 md:p-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4 transition-colors duration-500">
+        <div className="container mx-auto p-6 bg-white dark:bg-gray-700 shadow-lg rounded-lg w-full md:w-1/2 transition-colors duration-500">
           <div className="mb-6 flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-4 w-full">
             <select
               value={selectedMonth || ''}
               onChange={handleMonthChange}
-              className="border p-2 rounded w-full md:w-auto"
+              className="border p-2 rounded w-full md:w-auto dark:bg-gray-700 dark:text-cyan-100 dark:border-gray-600"
             >
               <option value="">Select Month</option>
               {getMonthOptions()}
@@ -119,7 +119,7 @@ const EarningVisualization = ({ earnings, totalEarnings }) => {
             <select
               value={selectedTracker || ''}
               onChange={handleTrackerChange}
-              className="border p-2 rounded w-full md:w-auto"
+              className="border p-2 rounded w-full md:w-auto dark:bg-gray-700 dark:text-cyan-100 dark:border-gray-600"
             >
               <option value="">Select Tracker</option>
               {getTrackerOptions()}
@@ -127,27 +127,47 @@ const EarningVisualization = ({ earnings, totalEarnings }) => {
           </div>
 
           <div className="mb-6">
-            <h3 className="text-xl font-semibold">Total Earnings: ${totalEarnings}</h3>
+            <h3 className="text-xl font-semibold text-gray-800 dark:text-cyan-100">Total Earnings: ${totalEarnings}</h3>
           </div>
 
           {chartData && (
-            <div className="bg-white p-6 shadow-lg rounded-md">
-              <Bar data={chartData} options={{ responsive: true }} />
+            <div className="bg-white dark:bg-gray-700 p-6 shadow-lg rounded-md transition-colors duration-500">
+              <Bar
+                data={chartData}
+                options={{
+                  responsive: true,
+                  scales: {
+                    x: {
+                      ticks: { color: '#cffafe' },
+                      grid: { color: 'rgba(255,255,255,0.2)' },
+                    },
+                    y: {
+                      ticks: { color: '#cffafe' },
+                      grid: { color: 'rgba(255,255,255,0.2)' },
+                    },
+                  },
+                  plugins: {
+                    legend: {
+                      labels: { color: '#cffafe' },
+                    },
+                  },
+                }}
+              />
             </div>
           )}
         </div>
 
-        <div className="container mx-auto p-6 bg-white shadow-lg rounded-lg w-full md:w-1/2">
-          <h1 className="text-xl font-semibold mb-4">Earnings Visualization</h1>
+        <div className="container mx-auto p-6 bg-white dark:bg-gray-700 shadow-lg rounded-lg w-full md:w-1/2 transition-colors duration-500">
+          <h1 className="text-xl font-semibold dark:text-cyan-100 mb-4">Earnings Visualization</h1>
 
           {/* Year Selection Dropdown */}
           <div className="mb-4">
-            <label htmlFor="year" className="text-sm">Select Year: </label>
+            <label htmlFor="year" className="text-sm dark:text-cyan-100">Select Year: </label>
             <select
               id="year"
               value={selectedYear}
               onChange={handleYearChange}
-              className="border p-2 rounded-md ml-2 w-full md:w-auto"
+              className="border p-2 rounded-md ml-2 w-full md:w-auto dark:bg-gray-700 dark:text-cyan-100 dark:border-gray-600"
             >
               {[2022, 2023, 2024, 2025].map((year) => (
                 <option key={year} value={year}>{year}</option>

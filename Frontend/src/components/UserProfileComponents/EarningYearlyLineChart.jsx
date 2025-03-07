@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
-import { PointElement } from 'chart.js';
+import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, Title, Tooltip, Legend, PointElement } from 'chart.js';
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, Title, Tooltip, Legend, PointElement);
 
@@ -28,10 +27,7 @@ const EarningYearlyLineChart = ({ earnings, selectedYear }) => {
           if (trackerYear === selectedYear.toString()) {
             clickCountData[trackerMonth] += tracker.count;
             buyCountData[trackerMonth] += tracker.buyCount;
-
-            // Calculate earnings based on click and buy counts
-            earningsData[trackerMonth] +=
-              tracker.count * earning.perClickPrice + tracker.buyCount * earning.perBuyPrice;
+            earningsData[trackerMonth] += tracker.count * earning.perClickPrice + tracker.buyCount * earning.perBuyPrice;
           }
         });
       });
@@ -82,27 +78,32 @@ const EarningYearlyLineChart = ({ earnings, selectedYear }) => {
 
   return (
     <div className="chart-container mt-6">
-      <h2 className="text-lg font-semibold mb-4">Earnings and Metrics - {selectedYear}</h2>
-
-      {/* Line Chart with responsive styling */}
-      <div  style={{ position: 'relative', width: '100%', maxHeight: '400px', height: 'auto' }}>
+      <h2 className="text-lg font-semibold dark:text-cyan-100 mb-4">Earnings and Metrics - {selectedYear}</h2>
+      <div className="bg-white dark:bg-gray-700 p-4 rounded-md shadow-lg" style={{ position: 'relative', width: '100%', maxHeight: '400px', height: 'auto' }}>
         <Line
           data={chartData}
           options={{
-            responsive: true, // Ensures chart adjusts to screen size
-            maintainAspectRatio: true, // Maintains aspect ratio
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+              x: {
+                ticks: { color: '#cffafe' },
+                grid: { color: 'rgba(255,255,255,0.2)' },
+              },
+              y: {
+                ticks: { color: '#cffafe' },
+                grid: { color: 'rgba(255,255,255,0.2)' },
+              },
+            },
             plugins: {
               legend: {
-                position: 'top',
+                labels: { color: '#cffafe' },
               },
-              tooltip: {
-                enabled: true,
-              },
+              tooltip: { enabled: true },
             },
           }}
         />
       </div>
-
     </div>
   );
 };

@@ -13,16 +13,12 @@ import AddProduct from "./pages/AddProduct";
 import Affiliate from "./pages/Affiliate";
 import Payments from "./pages/Payments";
 
-
-
-
 import { jwtDecode } from "jwt-decode";
 
 function App() {
     const [role, setRole] = useState(null);
-    // const [username, setUsername] = useState("");
 
-    // Check for role or JWT token in local storage 
+    // Check for role or JWT token in sessionStorage 
     useEffect(() => {
         const token = sessionStorage.getItem("token");
         if (token) {
@@ -34,50 +30,41 @@ function App() {
         }
     }, []);
 
-    // Debugging: Check role value
     console.log("Current Role:", role);
 
     return (
         <BrowserRouter>
-            <Header role={role} />
-            <Routes>
-                {/* For User Role */}
-                {(role === "USER" || role === "Guest") ? (
-                    <>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/affiliate" element={<Affiliate />} />
-                        <Route path="/product-detail" element={<ProductDetail/>} />
-                        <Route path="/Authenticate" element={<GoogleAuthentication setRole={setRole} />} />
-                        <Route path="/logout" element={<Logout setRole={setRole}/>} />
-                        <Route path="/add-product" element={<AddProduct />} />
-                        <Route path="/user-profile" element={<UserProfile />} />
-                        <Route path="/payments" element={<Payments />} />
-                        <Route path="/admin-home" element={<Navigate to="/" />} />
-                        {/* Optional: A route for handling 404 (not found) */}
-                        {/* <Route path="*" element={<NotFound />} /> */}
-                    </>
-                ) : 
-                null
-                }
+            <div className="min-h-screen bg-gray-50 dark:bg-gradient-to-tr dark:from-cyan-900 dark:via-gray-900 dark:to-black transition-colors duration-500">
+                <Header role={role} />
+                <Routes>
+                    {/* For User Role */}
+                    {(role === "USER" || role === "Guest") ? (
+                        <>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/affiliate" element={<Affiliate />} />
+                            <Route path="/product-detail" element={<ProductDetail />} />
+                            <Route path="/Authenticate" element={<GoogleAuthentication setRole={setRole} />} />
+                            <Route path="/logout" element={<Logout setRole={setRole} />} />
+                            <Route path="/add-product" element={<AddProduct />} />
+                            <Route path="/user-profile" element={<UserProfile />} />
+                            <Route path="/payments" element={<Payments />} />
+                            <Route path="/admin-home" element={<Navigate to="/" />} />
+                        </>
+                    ) : null}
 
-                {/* For Admin Role */}
-                {role === "ADMIN" ? (
-                    <>
-                        <Route path="/admin-home" element={<AdminHome />} />
-                        <Route path="/logout" element={<Logout setRole={setRole}/>} />
-                        <Route path="/" element={<Navigate to="/admin-home" />} />
-                        <Route path="/user-profile" element={<Navigate to="/admin-home" />} />
-                        <Route path="/add-product" element={<Navigate to="/admin-home" />} />
-                        <Route path="/Authenticate" element={<Navigate to="/admin-home" />} />
-                    </>
-                ) : 
-                null
-                }
-
-                {/* Redirect if no role is defined */}
-                {/* <Route path="*" element={<Navigate to="/" />} /> */}
-
-            </Routes>
+                    {/* For Admin Role */}
+                    {role === "ADMIN" ? (
+                        <>
+                            <Route path="/admin-home" element={<AdminHome />} />
+                            <Route path="/logout" element={<Logout setRole={setRole} />} />
+                            <Route path="/" element={<Navigate to="/admin-home" />} />
+                            <Route path="/user-profile" element={<Navigate to="/admin-home" />} />
+                            <Route path="/add-product" element={<Navigate to="/admin-home" />} />
+                            <Route path="/Authenticate" element={<Navigate to="/admin-home" />} />
+                        </>
+                    ) : null}
+                </Routes>
+            </div>
         </BrowserRouter>
     );
 }
