@@ -8,6 +8,6 @@ import java.time.YearMonth;
 import java.util.Optional;
 
 public interface MonthlyTrackerRepository extends JpaRepository<MonthlyTracker, Long> {
-    Optional<MonthlyTracker> findByTrackerAndMonth(Tracker tracker, YearMonth month);
+    Optional<MonthlyTracker> findByTrackerAndMonth(Tracker tracker, String month);
 
 }

@@ -148,7 +148,7 @@ public class TrackerService {
             YearMonth currentMonth = YearMonth.now();
 
             // Find or create the MonthlyTracker record for the current month
-            Optional<MonthlyTracker> monthlyTrackerOptional = monthlyTrackerRepository.findByTrackerAndMonth(tracker, currentMonth);
+            Optional<MonthlyTracker> monthlyTrackerOptional = monthlyTrackerRepository.findByTrackerAndMonth(tracker, currentMonth.toString());
 
             if (monthlyTrackerOptional.isPresent()) {
                 MonthlyTracker monthlyTracker = monthlyTrackerOptional.get();
@@ -237,7 +237,7 @@ public class TrackerService {
                 YearMonth currentMonth = YearMonth.now();
 
                 // Find or create the MonthlyTracker record for the current month
-                Optional<MonthlyTracker> monthlyTrackerOptional = monthlyTrackerRepository.findByTrackerAndMonth(tracker, currentMonth);
+                Optional<MonthlyTracker> monthlyTrackerOptional = monthlyTrackerRepository.findByTrackerAndMonth(tracker, currentMonth.toString());
                 if (monthlyTrackerOptional.isPresent()) {
                     MonthlyTracker monthlyTracker = monthlyTrackerOptional.get();
                     // Increment the count for the current month
