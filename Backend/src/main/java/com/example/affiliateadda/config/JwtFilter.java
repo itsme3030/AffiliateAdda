@@ -44,13 +44,13 @@ public class JwtFilter extends OncePerRequestFilter {
         String token = extractTokenFromRequest(request);
 
         //debug
-        System.out.println("doFilterInternal : Token : "+token);
+        //System.out.println("doFilterInternal : Token : "+token);
 
         if (token != null && jwtUtil.validateToken(token, getUserDetailsFromToken(token))) {
             String username = jwtUtil.extractUserName(token);
 
             //debug
-            System.out.println(username);
+            //System.out.println(username);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -66,10 +66,10 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private String extractTokenFromRequest(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
-        System.out.println("extractTokenFromRequest : Header : "+header);
+        //System.out.println("extractTokenFromRequest : Header : "+header);
         if (header != null && header.startsWith("Bearer ")) {
-            System.out.println(header);
-            System.out.println(header.substring(7));
+            //System.out.println(header);
+            //System.out.println(header.substring(7));
             return header.substring(7);
         }
 

@@ -81,12 +81,5 @@ public class ReviewService {
             return reviewRepository.save(newReview);
         }
     }
-
-    // Method to fetch all reviews for a product
-//    public List<Review> getReviewsForProduct(Long productId) {
-//        Product product = productRepository.findById(productId)
-//                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
-//        return reviewRepository.findByProduct(product);
-//    }
 }
 

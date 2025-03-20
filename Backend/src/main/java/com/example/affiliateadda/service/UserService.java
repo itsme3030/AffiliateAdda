@@ -33,11 +33,6 @@ public class UserService {
     private TransactionRepository transactionRepository;
 
     @Autowired
-    private TrackerHistoryRepository trackerHistoryRepository;
-
-    @Autowired
-    private ProductHistoryRepository productHistoryRepository;
-    @Autowired
     private ReviewRepository reviewRepository;
     @Autowired
     private MonthlyTrackerRepository monthlyTrackerRepository;

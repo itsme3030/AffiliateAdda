@@ -30,12 +30,6 @@ public class ProductService {
         return productRepository.findByProductId(productId);
     }
 
-//    public Product addProduct(ProductAdditionDTO productAdditionDTO) {
-//        System.out.println("---------------------------------------------------->inside addProduct - controller : "+product);
-//        System.out.println("Product received: " + product.getProductName() + ", " + product.getProductBaseurl() + ", " + product.getPerClickPrice()+ ", "+product.getPerBuyPrice());
-//        return productRepository.save(product);
-//    }
-
     public Optional<Product> findByProductId(Long product_id) {
         return Optional.ofNullable(productRepository.findByProductId(product_id));
     }
@@ -119,15 +113,5 @@ public class ProductService {
         return productAdditionDTO;
     }
 
-//    Fetch reviews for a specific product
-//    public List<ReviewDTO> getReviewsForProduct(Long productId) {
-//        // Fetch reviews by productId from the repository
-//        List<Review> reviews = reviewRepository.findByProductId(productId);
-//
-//        // Map the reviews to ReviewDTO
-//        return reviews.stream()
-//                .map(review -> new ReviewDTO(review)) // Convert Review to ReviewDTO
-//                .collect(Collectors.toList());
-//    }
 
 }

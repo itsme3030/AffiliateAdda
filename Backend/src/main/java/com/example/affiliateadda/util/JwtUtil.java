@@ -32,7 +32,7 @@ public class JwtUtil {
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
             SecretKey secretKey = keyGen.generateKey();
-            System.out.println("Secret Key : " + secretKey.toString());
+//            System.out.println("Secret Key : " + secretKey.toString());
             return Base64.getEncoder().encodeToString(secretKey.getEncoded());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("Error generating secret key", e);
@@ -60,20 +60,20 @@ public class JwtUtil {
     public String extractUserName(String token) {
         // extract the username from jwt token
         //debug
-        System.out.println("inside extractUserName");
+        //System.out.println("inside extractUserName");
         return extractClaim(token, Claims::getSubject);
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimResolver) {
         //debug
-        System.out.println("inside extractClaim");
+        //System.out.println("inside extractClaim");
         final Claims claims = extractAllClaims(token);
         return claimResolver.apply(claims);
     }
 
     private Claims extractAllClaims(String token) {
         //debug
-        System.out.println("inside extractAllClaims");
+        //System.out.println("inside extractAllClaims");
         return Jwts.parserBuilder()
                 .setSigningKey(getKey())
                 .build().parseClaimsJws(token).getBody();
@@ -82,7 +82,7 @@ public class JwtUtil {
 
     public boolean validateToken(String token, UserDetails userDetails) {
         //debug : inside validate token
-        System.out.println("inside validate token");
+        //System.out.println("inside validate token");
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }

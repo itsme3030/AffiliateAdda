@@ -19,15 +19,6 @@ public class DeactivationService {
     @Autowired
     private TrackerRepository trackerRepository;
 
-    @Autowired
-    private UserHistoryRepository userHistoryRepository;
-
-    @Autowired
-    private ProductHistoryRepository productHistoryRepository;
-
-    @Autowired
-    private TrackerHistoryRepository trackerHistoryRepository;
-
     // Method to deactivate a tracker (generated link)
     public void deactivateTracker(Long trackerId, String reason) {
         //debug
@@ -37,21 +28,6 @@ public class DeactivationService {
 
         tracker.setActive(false);
         trackerRepository.save(tracker);
-
-//        // Archive tracker to history table
-//        TrackerHistory trackerHistory = new TrackerHistory();
-//        trackerHistory.settId(tracker.getTId()); // Preserve original trackerId
-//        trackerHistory.setProductGeneratedUrl(tracker.getProductGeneratedUrl());
-//        trackerHistory.setCount(tracker.getCount());
-//        trackerHistory.setBuyCount(tracker.getBuyCount());
-//        trackerHistory.setUserId(tracker.getUser().getId()); // Store original userId
-//        trackerHistory.setProductId(tracker.getProduct().getProductId()); // Store original productId
-//        trackerHistory.setDeletedAt(LocalDateTime.now());
-//        trackerHistory.setReason(reason);
-//        trackerHistoryRepository.save(trackerHistory);
-//
-//        // Delete tracker (soft delete)
-//        trackerRepository.delete(tracker);
 
     }
 
@@ -65,19 +41,6 @@ public class DeactivationService {
 
         product.setActive(false);
         productRepository.save(product);
-
-//        // Archive product to history table
-//        ProductHistory productHistory = new ProductHistory();
-//        productHistory.setProductId(product.getProductId()); // Preserve original productId
-//        productHistory.setProductName(product.getProductName());
-//        productHistory.setProductBaseurl(product.getProductBaseurl());
-//        productHistory.setType(product.getType());
-//        productHistory.setPerClickPrice(product.getPerClickPrice());
-//        productHistory.setPerBuyPrice(product.getPerBuyPrice());
-//        productHistory.setUserId(product.getUser().getId()); // Store original userId
-//        productHistory.setDeletedAt(LocalDateTime.now());
-//        productHistory.setReason(reason);
-//        productHistoryRepository.save(productHistory);
 
         // Archive associated trackers (generated links for this product)
         List<Tracker> trackers = trackerRepository.findByProduct(product);  // Fetch all trackers associated with the product
@@ -95,16 +58,6 @@ public class DeactivationService {
 
         user.setActive(false);
         userRepository.save(user);
-
-//        // Archive user to history table
-//        UserHistory userHistory = new UserHistory();
-//        userHistory.setUserId(user.getId()); // Store original userId from the User table
-//        userHistory.setUsername(user.getUsername());
-//        userHistory.setPassword(user.getPassword());
-//        userHistory.setRole(user.getRole());
-//        userHistory.setDeletedAt(LocalDateTime.now());
-//        userHistory.setReason(reason);
-//        userHistoryRepository.save(userHistory);
 
         // Archive associated trackers
         List<Tracker> trackers = trackerRepository.findByUser(user);

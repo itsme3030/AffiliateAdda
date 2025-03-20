@@ -4,7 +4,6 @@ import com.example.affiliateadda.dto.AdminHomeResponseDTO;
 import com.example.affiliateadda.dto.ProfileResponseDTO;
 import com.example.affiliateadda.model.*;
 import com.example.affiliateadda.repository.TransactionRepository;
-import com.example.affiliateadda.repository.UserHistoryRepository;
 import com.example.affiliateadda.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,14 +19,13 @@ public class AdminService {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserHistoryRepository userHistoryRepository;
+
     @Autowired
     private TransactionRepository transactionRepository;
 
     public AdminHomeResponseDTO getAdminHomeData() {
         // 1. Total number of users
-        long totalUsers = userRepository.count() + userHistoryRepository.count();
+        long totalUsers = userRepository.count();
 
         // 2. Get total earnings and payable amounts for all users
         double totalEarnings = 0;
@@ -66,25 +64,6 @@ public class AdminService {
                 websiteEarnings += transaction.getAmount()/2; // 50% commission for each user
             }
         }
-
-//        for (UserHistory userHistory : userHistories) {
-//            if(userHistory.getRole().equals("ADMIN")) {
-//                totalUsers--;
-//                continue;
-//            }
-//            ProfileResponseDTO profile = userService.getUserProfile(userHistory.getUserId());
-//            totalEarnings += profile.getTotalEarnings();
-//            totalPayableAmount += profile.getTotalPayableAmount();
-//
-//            AdminHomeResponseDTO.UserDataDTO userData = new AdminHomeResponseDTO.UserDataDTO();
-//            userData.setUserId(userHistory.getUserId());
-//            userData.setUsername(userHistory.getUsername());
-//            userData.setTotalEarnings(profile.getTotalEarnings());
-//            userData.setTotalPayableAmount(profile.getTotalPayableAmount());
-//            userData.setActive(false);
-//
-//            userList.add(userData);
-//        }
 
         // Create and return the response DTO
         AdminHomeResponseDTO response = new AdminHomeResponseDTO();

@@ -22,15 +22,6 @@ public class ActivationService {
     @Autowired
     private TrackerRepository trackerRepository;
 
-    @Autowired
-    private UserHistoryRepository userHistoryRepository;
-
-    @Autowired
-    private ProductHistoryRepository productHistoryRepository;
-
-    @Autowired
-    private TrackerHistoryRepository trackerHistoryRepository;
-
     @PersistenceContext
     private EntityManager entityManager;  // Inject EntityManager
 
@@ -60,51 +51,6 @@ public class ActivationService {
         tracker.setActive(true);
         trackerRepository.save(tracker);
 
-//        TrackerHistory trackerHistory = trackerHistoryRepository.findById(trackerId).orElseThrow(() -> new RuntimeException("Tracker history not found"));
-//        System.out.println(trackerHistory);
-//
-//        User user = userRepository.findById(trackerHistory.getUserId()).orElse(null);
-//        System.out.println(user);
-//        if (user == null) {
-//            //System.out.println("------------------------------------------------------------------>User not found");
-//            throw new RuntimeException("User not found");
-//        }
-//
-//        Product product = productRepository.findById(trackerHistory.getProductId()).orElse(null);
-//        System.out.println(product);
-//        if (product == null) {
-//            //System.out.println("-------------------------------------------------------------------->product not found");
-//            throw new RuntimeException("Product not found");
-//        }
-//
-//        // Instead of creating a new tracker, check if it exists (restore logic)
-//        Tracker tracker = trackerRepository.findById(trackerId).orElse(null);
-//
-//        if (tracker == null) {
-//            // If tracker doesn't exist, create a new one
-//            tracker = new Tracker();
-//            tracker.setTId(trackerId);
-//        }
-//
-//        tracker.setTId(trackerId);
-//        tracker.setCount(trackerHistory.getCount());
-//        tracker.setBuyCount(trackerHistory.getBuyCount());
-//        tracker.setProductGeneratedUrl(trackerHistory.getProductGeneratedUrl());
-//        tracker.setUser(user);
-//        tracker.setProduct(product);
-//
-//        try {
-//            // Save tracker
-//            Tracker tempTracker = trackerRepository.save(tracker);
-//            //Tracker tempTracker = entityManager.merge(tracker);
-//            System.out.println("Tracker saved successfully----------->" + tempTracker);
-//
-//            // Remove from history after restoring
-//            trackerHistoryRepository.delete(trackerHistory);
-//        } catch (Exception e) {
-//            System.out.println("what is the error????? --------------> "+e.getMessage());
-//            throw new RuntimeException(e);
-//        }
     }
 
     public void activateProduct(Long productId, String reason) {
@@ -130,37 +76,6 @@ public class ActivationService {
             trackerRepository.save(tracker);
         }
 
-//        ProductHistory productHistory = productHistoryRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product history not found"));
-//
-//        User user = userRepository.findById(productHistory.getUserId()).orElse(null);
-//        if (user == null) {
-//            throw new RuntimeException("User not found");
-//        }
-//
-//        Product product = new Product();
-//        product.setProductId(productId);
-//        product.setProductName(productHistory.getProductName());
-//        product.setProductBaseurl(productHistory.getProductBaseurl());
-//        product.setType(productHistory.getType());
-//        product.setPerBuyPrice(productHistory.getPerBuyPrice());
-//        product.setPerClickPrice(productHistory.getPerClickPrice());
-//        product.setUser(user);
-//
-//        // Save Product
-//        productRepository.save(product);
-//
-//        // Restore associated trackers
-//        List<TrackerHistory> trackerHistories = trackerHistoryRepository.findByProductId(productId);
-//        for (TrackerHistory trackerHistory : trackerHistories) {
-//            User tempUser = userRepository.findById(trackerHistory.getUserId()).orElse(null);
-//            if (tempUser == null) {
-//                continue;
-//            }
-//            activateTracker(trackerHistory.gettId(),reason);
-//        }
-//
-//        // Remove from history after restoring
-//        productHistoryRepository.delete(productHistory);
     }
 
     public void activateUser(Long userId, String reason) {
@@ -184,33 +99,5 @@ public class ActivationService {
             activateProduct(product.getProductId(), reason);
         }
 
-//        UserHistory userHistory = userHistoryRepository.findById(userId).orElseThrow(() -> new RuntimeException("User history not found"));
-//
-//        User user = new User();
-//        user.setId(userId);
-//        user.setUsername(userHistory.getUsername());
-//        user.setPassword(userHistory.getPassword());
-//        user.setRole("USER");
-//
-//        //Save
-//        userRepository.save(user);
-//
-//        // Restore associated trackers
-//        List<TrackerHistory> trackerHistories = trackerHistoryRepository.findByUserId(userId);
-//        for (TrackerHistory trackerHistory : trackerHistories) {
-//            Product tempProduct = productRepository.findById(trackerHistory.getProductId()).orElse(null);
-//            if (tempProduct == null) {
-//                continue;
-//            }
-//            activateTracker(trackerHistory.gettId(),reason);  // Activate each tracker
-//        }
-//
-//        // Restore associated products (if user uploaded products)
-//        List<ProductHistory> productHistories = productHistoryRepository.findByUserId(userId);
-//        for (ProductHistory productHistory : productHistories) {
-//            activateProduct(productHistory.getProductId(),reason);  // Activate each product
-//        }
-//
-//        userHistoryRepository.delete(userHistory);
     }
 }
