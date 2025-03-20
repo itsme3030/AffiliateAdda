@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation , useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Payments() {
@@ -8,7 +8,7 @@ function Payments() {
   const { Allpayments } = location.state || {}; // Extract payments from the state
 
   //console.log("Payments : ",Allpayments);
-  
+
   const [amount, setAmount] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -56,9 +56,56 @@ function Payments() {
             },
           }
         );
-        setSuccessMessage(response.data); // "Payment Successful"
-        setAmount("");
-        navigate("/user-profile");
+
+        // Get orderId from response
+        const orderId = response.data;
+
+        // Razorpay payment initialization
+        const options = {
+          key: import.meta.env.VITE_RAZORPAY_KEY || "",
+          amount: parseFloat(amount) * 100, // Convert to paise
+          currency: "INR",
+          name: "AffiliateAdda",
+          description: "Test Transaction",
+          // image: "logo.png", // Optional, add logo
+          order_id: orderId, // Use the orderId from backend
+          handler: function (response) {
+            // Send the payment details (razorpay_order_id, razorpay_payment_id, razorpay_signature) to your backend for verification
+            axios.post(
+              `${import.meta.env.VITE_API}/transactions/updatePay`,
+              {
+                orderId: response.razorpay_order_id,
+                paymentId: response.razorpay_payment_id,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            ).then((result) => {
+              setSuccessMessage("Payment Successful");
+              setAmount("");
+              navigate("/user-profile");
+            }).catch((err) => {
+              setError("Payment verification failed.");
+            });
+          },
+          prefill: {
+            name: "",
+            email: "",
+            contact: "",
+          },
+          theme: {
+            color: "#3399cc",
+          },
+        };
+
+        const razorpay = new window.Razorpay(options);
+        razorpay.open();
+
+        // setSuccessMessage("Payment Successful"); // "Payment Successful"
+        // setAmount("");
+        // navigate("/user-profile");
       } catch (err) {
         setError(err.response?.data || "An error occurred while processing payment.");
       } finally {
