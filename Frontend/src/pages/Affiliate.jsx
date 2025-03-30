@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ProductList from "../components/ProductList";
-import axios from "axios";
 
 function Affiliate() {
   const [searchTerm, setSearchTerm] = useState('');
