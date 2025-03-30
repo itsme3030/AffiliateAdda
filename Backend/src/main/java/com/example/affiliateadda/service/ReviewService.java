@@ -1,5 +1,6 @@
 package com.example.affiliateadda.service;
 
+import com.example.affiliateadda.dto.ReviewDTO;
 import com.example.affiliateadda.model.*;
 import com.example.affiliateadda.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class ReviewService {
     private TrackerRepository trackerRepository;
 
     // Method to submit a new review or update an existing review
-    public Review submitReview(Long productId, Long userId, int rating, String reviewText) {
+    public ReviewDTO submitReview(Long productId, Long userId, int rating, String reviewText) {
 
         //debug
         System.out.println("inside submitReview - service");
@@ -65,7 +66,10 @@ public class ReviewService {
 
             productDetailRepository.save(productDetail);
 
-            return reviewRepository.save(review);
+            Review savedReview = reviewRepository.save(review);
+            ReviewDTO reviewDTO = new ReviewDTO(savedReview);
+
+            return reviewDTO;
         } else {
             // Create new review
             Review newReview = new Review();
@@ -78,7 +82,10 @@ public class ReviewService {
             productDetail.setRatingCount(productDetail.getRatingCount() + 1);
             productDetailRepository.save(productDetail);
 
-            return reviewRepository.save(newReview);
+            Review savedReview = reviewRepository.save(newReview);
+            ReviewDTO reviewDTO = new ReviewDTO(savedReview);
+
+            return reviewDTO;
         }
     }
 }

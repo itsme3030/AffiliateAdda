@@ -1,5 +1,6 @@
 package com.example.affiliateadda.controller;
 
+import com.example.affiliateadda.dto.ReviewDTO;
 import com.example.affiliateadda.dto.ReviewSubmitDto;
 import com.example.affiliateadda.model.Review;
 import com.example.affiliateadda.model.User;
@@ -21,7 +22,7 @@ public class ReviewController {
 
     // Endpoint to submit or update a review
     @PostMapping("/submit")
-    public ResponseEntity<Review> submitReview(@RequestBody ReviewSubmitDto reviewSubmitDto) {
+    public ResponseEntity<ReviewDTO> submitReview(@RequestBody ReviewSubmitDto reviewSubmitDto) {
 
         //debug
         System.out.println("inside submitReview - controller");
@@ -30,14 +31,14 @@ public class ReviewController {
         User user = userRepository.findByUsername(reviewSubmitDto.getUsername())
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        Review review = reviewService.submitReview(
+        ReviewDTO reviewDTO = reviewService.submitReview(
                 reviewSubmitDto.getProductId(),
                 user.getId(),
                 reviewSubmitDto.getRating(),
                 reviewSubmitDto.getReviewText()
         );
 
-        return ResponseEntity.ok(review);
+        return ResponseEntity.ok(reviewDTO);
     }
 
     // Endpoint to get all reviews for a product
