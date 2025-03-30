@@ -74,9 +74,22 @@ function ProductDetail() {
       })
       .then((response) => {
         console.log('Review submitted successfully:', response.data);
-        setUserRating(0);
-        setUserReview('');
+        // setUserRating(0);
+        // setUserReview('');
         setHasReviewed(true);  // Mark the review as submitted
+
+        navigate("/affiliate");
+
+        //Will Work in future : same page with updated data
+        // navigate("/product-detail", {
+        //   state: {
+        //     productDetail: {
+        //       ...response.data,  // Spread the existing product details
+        //       image: image // Add the image name or path here
+        //     }
+        //   }
+        // });
+
       })
       .catch((error) => {
         console.error('Error submitting review:', error);

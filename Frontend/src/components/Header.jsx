@@ -33,7 +33,7 @@ function Header({ role }) {
               <Link
                 key={to}
                 to={to}
-                className="flex items-center gap-1 px-3 py-2 text-sm rounded-lg bg-gray-100 hover:bg-gray-300 transition-all"
+                className="flex items-center gap-1 px-3 py-2 text-sm rounded-lg md:bg-gray-100 hover:bg-gray-300 transition-all"
               >
                 {icon} <span>{label}</span>
               </Link>
@@ -52,7 +52,7 @@ function Header({ role }) {
             </Link>
           ) : role === "USER" ? (
             [
-              { to: "/user-profile", icon: <FaUserAlt />},
+              { to: "/user-profile", icon: <FaUserAlt /> },
               { to: "/logout", icon: <FaSignOutAlt />, label: "Logout" }
             ].map(({ to, icon, label }) => (
               <Link

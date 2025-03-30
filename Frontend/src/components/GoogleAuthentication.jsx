@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { FaSpinner } from "react-icons/fa"; // Import spinner icon for loading
-// import * as jwt_decode from 'jwt-decode'; 
-// import jwt_decode from 'jsonwebtoken';
 import { jwtDecode } from "jwt-decode";
 
 const GoogleAuthentication = ({ setRole }) => {
@@ -39,8 +37,8 @@ const GoogleAuthentication = ({ setRole }) => {
             console.log("JWT Token role :", role);
 
             const username = decodedToken.sub;
-            console.log("username : ",username);
-            sessionStorage.setItem("username",username);
+            console.log("username : ", username);
+            sessionStorage.setItem("username", username);
 
             // navigate("/");
 
@@ -74,8 +72,8 @@ const GoogleAuthentication = ({ setRole }) => {
         <GoogleOAuthProvider
             clientId={import.meta.env.VITE_CLIENTID || ""}
         >
-            <div className="flex justify-center items-center min-h-screen bg-gray-50">
-                <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+            <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600">
+                <div className="bg-white p-10 rounded-xl shadow-xl max-w-sm w-full">
                     <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">
                         Welcome to Affiliat Adda
                     </h2>

@@ -17,12 +17,14 @@ import Payments from "./pages/Payments";
 
 
 import { jwtDecode } from "jwt-decode";
+import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
 
 function App() {
-    const [role, setRole] = useState(null);
+    const [role, setRole] = useState("Guest");
     // const [username, setUsername] = useState("");
 
-    // Check for role or JWT token in local storage 
+    // Check for role or JWT token in sessionStorage 
     useEffect(() => {
         const token = sessionStorage.getItem("token");
         if (token) {
@@ -48,6 +50,8 @@ function App() {
                         <Route path="/affiliate" element={<Affiliate />} />
                         <Route path="/product-detail" element={<ProductDetail/>} />
                         <Route path="/Authenticate" element={<GoogleAuthentication setRole={setRole} />} />
+                        <Route path="/AboutUs" element={<AboutUs/>} />
+                        <Route path="/Contact" element={<Contact/>} />
                         <Route path="/logout" element={<Logout setRole={setRole}/>} />
                         <Route path="/add-product" element={<AddProduct />} />
                         <Route path="/user-profile" element={<UserProfile />} />

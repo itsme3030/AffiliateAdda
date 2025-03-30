@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { FaArrowDown, FaArrowUp, FaCopy, FaTrash, FaCheckCircle } from 'react-icons/fa';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const EarningsSummaryCard = ({ title, data, totalAmount }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [token, setToken] = useState(null);
+
+  const navigate = useNavigate(); // Initialize useNavigate hook
 
   useEffect(() => {
     const storedToken = sessionStorage.getItem("token");
@@ -44,6 +47,8 @@ const EarningsSummaryCard = ({ title, data, totalAmount }) => {
     })
     .then(response => {
       console.log('Deactivate response:', response.data);
+      // navigate to /user-profile
+      navigate("/user-profile");
     })
     .catch(error => {
       console.error('Error Deactivate:', error);
@@ -67,6 +72,8 @@ const EarningsSummaryCard = ({ title, data, totalAmount }) => {
     })
     .then(response => {
       console.log('Activation response:', response.data);
+      // navigate to /user-profile
+      navigate("/user-profile");
     })
     .catch(error => {
       console.error('Error activating:', error);

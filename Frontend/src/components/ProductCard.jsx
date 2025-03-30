@@ -101,7 +101,7 @@ function ProductCard({ product }) {
   }
 
   return (
-    <div className="max-w-sm rounded-lg shadow-lg bg-white overflow-hidden border border-gray-200 p-6 space-y-4">
+    <div className="max-w-sm rounded-lg shadow-lg bg-gray-200 overflow-hidden border border-gray-200 p-6 space-y-2">
       {/* Image at the top */}
       <div className="w-full h-48 bg-gray-300 rounded-lg mb-4">
         {/* Placeholder image */}

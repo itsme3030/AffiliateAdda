@@ -36,20 +36,20 @@ function ProductList({ searchTerm, selectedType, selectedSubType, perClickPrice,
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8 ">
       {error && (
         <div className="mb-4 text-center text-white bg-red-500 p-4 rounded-lg shadow-md">
           {error}
         </div>
       )}
-      
+
       {loading && (
         <div className="flex justify-center items-center space-x-2">
           <div className="w-8 h-8 border-4 border-t-4 border-blue-500 rounded-full animate-spin"></div>
           <p>Loading products...</p>
         </div>
       )}
-      
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredProducts.length > 0 ? (
           filteredProducts.map((product) => (

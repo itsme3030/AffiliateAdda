@@ -31,7 +31,7 @@ function Affiliate() {
   // console.log("--->",selectedType," - ",selectedSubType);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-200 py-8 px-4 sm:px-6 lg:px-8 ">
       {/* Filters Section */}
       <div className="mb-8">
         <div className="flex flex-wrap gap-4 justify-center mb-6">

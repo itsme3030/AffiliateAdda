@@ -44,6 +44,8 @@ const PayableAmountSummaryCard = ({ title, data, totalAmount }) => {
     })
     .then(response => {
       console.log('Deactivate response:', response.data);
+      // navigate to /user-profile
+      navigate("/user-profile");
     })
     .catch(error => {
       console.error('Error Deactivate:', error);
@@ -67,6 +69,8 @@ const PayableAmountSummaryCard = ({ title, data, totalAmount }) => {
     })
     .then(response => {
       console.log('Activation response:', response.data);
+      // navigate to /user-profile
+      navigate("/user-profile");
     })
     .catch(error => {
       console.error('Error activating:', error);
