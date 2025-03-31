@@ -2,20 +2,19 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import AdminSummaryCard from '../components/AdminSummaryCard';
-import { FaSpinner , FaTrash , FaTimesCircle , FaCheckCircle  } from 'react-icons/fa'; // Loading spinner
+import { FaSpinner, FaTrash, FaTimesCircle, FaCheckCircle } from 'react-icons/fa'; // Loading spinner
 
 const AdminHome = () => {
   const [adminData, setAdminData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null); // New state for success messages
   const [token, setToken] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // const storedToken = localStorage.getItem("token");
     const storedToken = sessionStorage.getItem("token");
-    // console.log("Local storage token : ",storedToken);
-    console.log("sessionStorage token : ",storedToken);
+    console.log("sessionStorage token : ", storedToken);
     if (!storedToken) {
       navigate("/Authenticate");
       return;
@@ -25,7 +24,7 @@ const AdminHome = () => {
     axios
       .get(`${import.meta.env.VITE_API}/admin/home`, {
         headers: {
-          "Authorization" : `Bearer ${storedToken}`,
+          "Authorization": `Bearer ${storedToken}`,
         },
       })
       .then((response) => {
@@ -33,7 +32,7 @@ const AdminHome = () => {
         setLoading(false);
       })
       .catch((error) => {
-        setError('Error fetching admin data');
+        setError('Error fetching admin data'); // Display error if data fetch fails
         setLoading(false);
       });
   }, []);
@@ -56,7 +55,7 @@ const AdminHome = () => {
     );
   }
 
-  // Handle Deactivate User (For now just log the userId)
+  // Handle Deactivate User
   const handleDeactivateUser = (userId) => {
     console.log("User Deactivated with ID:", userId);
     if (!token) {
@@ -64,54 +63,48 @@ const AdminHome = () => {
       return;
     }
     const url = `${import.meta.env.VITE_API}/admin/deactivateUser/${userId}`;
-    // deactivating user
     axios
-    .post(url, {}, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(response => {
-      console.log('Deactivation response:', response.data);
-    })
-    .catch(error => {
-      console.error('Error deactivating:', error);
-      if (error.response) {
-        // If response from server, log response status and data
-        console.error('Error response:', error.response.status, error.response.data);
-      }
-    });
+      .post(url, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => {
+        console.log('Deactivation response:', response.data);
+        setSuccessMessage('User deactivated successfully!'); // Show success message
+        setTimeout(() => window.location.reload(), 2000); // Refresh after 2 seconds
+      })
+      .catch(error => {
+        console.error('Error deactivating:', error);
+        setError('Failed to deactivate user. Please try again later.'); // Display error message
+      });
   };
 
-  // Handle Activate User (For now just log the userId)
+  // Handle Activate User
   const handleActivateUser = (userId) => {
     console.log("User Activated with ID:", userId);
-    
     if (!token) {
       navigate("/Authenticate");
       return;
     }
     const url = `${import.meta.env.VITE_API}/admin/activateUser/${userId}`;
-
-    // activating user
     axios
-    .post(url, {}, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(response => {
-      console.log('Activation response:', response.data);
-    })
-    .catch(error => {
-      console.error('Error activating:', error);
-      if (error.response) {
-        // If response from server, log response status and data
-        console.error('Error response:', error.response.status, error.response.data);
-      }
-    });
+      .post(url, {}, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      })
+      .then(response => {
+        console.log('Activation response:', response.data);
+        setSuccessMessage('User activated successfully!'); // Show success message
+        setTimeout(() => window.location.reload(), 2000); // Refresh after 2 seconds
+      })
+      .catch(error => {
+        console.error('Error activating:', error);
+        setError('Failed to activate user. Please try again later.'); // Display error message
+      });
   };
 
   return (
@@ -119,6 +112,20 @@ const AdminHome = () => {
       <h2 className="text-4xl font-semibold mb-8 text-center text-gray-800 tracking-wide">
         Admin Dashboard
       </h2>
+
+      {/* Show Success Message if exists */}
+      {successMessage && (
+        <div className="flex justify-center items-center mb-4">
+          <div className="text-lg text-green-600">{successMessage}</div>
+        </div>
+      )}
+
+      {/* Show Error Message if exists */}
+      {error && (
+        <div className="flex justify-center items-center mb-4">
+          <div className="text-lg text-red-600">{error}</div>
+        </div>
+      )}
 
       <div className="grid gap-6 mb-8">
         {/* Website Earnings */}
@@ -174,22 +181,22 @@ const AdminHome = () => {
                 <td className="py-3 px-6">{user.totalEarnings.toFixed(2)}</td>
                 <td className="py-3 px-6">{user.totalPayableAmount.toFixed(2)}</td>
                 <td className="py-3 px-6 text-center">
-                {user.active ? (
-                  <button 
-                    onClick={() => handleDeactivateUser(user.userId)} 
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    <FaTrash /> Deactivate
-                  </button>
-                ) : (
-                  <button 
-                    onClick={() => handleActivateUser(user.userId)} 
-                    className="text-blue-600 hover:text-blue-800"
-                  >
-                    <FaCheckCircle /> Activate
-                  </button>
-                )}
-              </td>
+                  {user.active ? (
+                    <button
+                      onClick={() => handleDeactivateUser(user.userId)}
+                      className="text-red-600 hover:text-red-800"
+                    >
+                      <FaTrash /> Deactivate
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => handleActivateUser(user.userId)}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      <FaCheckCircle /> Activate
+                    </button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

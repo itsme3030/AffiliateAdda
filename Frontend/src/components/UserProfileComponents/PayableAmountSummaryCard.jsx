@@ -45,10 +45,16 @@ const PayableAmountSummaryCard = ({ title, data, totalAmount }) => {
     .then(response => {
       console.log('Deactivate response:', response.data);
       // navigate to /user-profile
-      navigate("/user-profile");
+      // navigate("/user-profile");
+      setTimeout(() => window.location.reload(), 1000);
     })
     .catch(error => {
       console.error('Error Deactivate:', error);
+
+      alert("An error occurred while deactivating the tracker. Please try again later.");
+      // navigate to /user-profile
+      // navigate("/user-profile");
+      setTimeout(() => window.location.reload(), 1000);
     });
   };
 
@@ -70,10 +76,16 @@ const PayableAmountSummaryCard = ({ title, data, totalAmount }) => {
     .then(response => {
       console.log('Activation response:', response.data);
       // navigate to /user-profile
-      navigate("/user-profile");
+      // navigate("/user-profile");
+      setTimeout(() => window.location.reload(), 1000);
     })
     .catch(error => {
       console.error('Error activating:', error);
+
+      alert("An error occurred while activating the tracker. Please try again later.");
+      // navigate to /user-profile
+      // navigate("/user-profile");
+      setTimeout(() => window.location.reload(), 1000);
     });
   };
 

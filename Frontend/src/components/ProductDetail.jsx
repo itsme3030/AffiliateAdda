@@ -21,6 +21,8 @@ function ProductDetail() {
   const [userReview, setUserReview] = useState('');
   const [hasReviewed, setHasReviewed] = useState(false);
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [error, setError] = useState(null); // Error state
+  const [successMessage, setSuccessMessage] = useState(null); // Success message state
 
   // Check if the user has already reviewed the product
   useEffect(() => {
@@ -74,10 +76,8 @@ function ProductDetail() {
       })
       .then((response) => {
         console.log('Review submitted successfully:', response.data);
-        // setUserRating(0);
-        // setUserReview('');
         setHasReviewed(true);  // Mark the review as submitted
-
+        setSuccessMessage('Review submitted successfully!'); // Set success message
         navigate("/affiliate");
 
         //Will Work in future : same page with updated data
@@ -93,15 +93,15 @@ function ProductDetail() {
       })
       .catch((error) => {
         console.error('Error submitting review:', error);
+        setError('Error submitting your review. Please try again.'); // Set error message
       });
   };
 
   return (
     <div className="bg-gray-50 container mx-auto py-8 px-4 lg:px-8">
+      {/* Product Image and Details Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Product Image Section and Product Details Section */}
         <div className="flex flex-col lg:flex-row gap-8 bg-gray-100">
-          {/* Product Image Section */}
           <div className="flex-1 flex justify-center items-center">
             <img
               src={image}
@@ -111,32 +111,22 @@ function ProductDetail() {
           </div>
         </div>
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* Product Details Section (without reviews) */}
           <div className="flex-1">
             <h2 className="text-3xl font-semibold text-gray-800 mb-4">{productName}</h2>
             <p className="text-xl text-gray-600 mb-4">Price per click: ${perClickPrice}</p>
             <p className="text-xl text-gray-600 mb-4">Price per buy: ${perBuyPrice}</p>
-
-            {/* Rating */}
             <div className="flex items-center mb-4">
               {renderStars(rating)}
               <span className="ml-2 text-gray-600">({ratingCount})</span>
             </div>
-
-            {/* Product Description */}
             <h3 className="text-2xl font-medium text-gray-800 mb-2">Description</h3>
             <p className="text-gray-600 mb-4">{description}</p>
-
-            {/* Tags */}
             {productDetail.tags && (
               <div className="mb-4">
                 <h3 className="text-xl font-medium text-gray-800">Tags</h3>
                 <ul className="flex flex-wrap gap-2">
                   {productDetail.tags.split(',').map((tag, idx) => (
-                    <li
-                      key={idx}
-                      className="bg-blue-100 text-blue-600 rounded-full px-4 py-1 text-sm"
-                    >
+                    <li key={idx} className="bg-blue-100 text-blue-600 rounded-full px-4 py-1 text-sm">
                       {tag.trim()}
                     </li>
                   ))}
@@ -147,12 +137,11 @@ function ProductDetail() {
         </div>
       </div>
 
-      <br/>
-      <hr/>
+      <br />
+      <hr />
 
-      {/* Review Form Section and Reviews Section */}
+      {/* Review Form Section */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
-        {/* Review Form Section */}
         <div className="flex flex-col space-y-4">
           <div className="w-full">
             <h4 className="text-xl font-medium text-gray-800">
@@ -189,6 +178,10 @@ function ProductDetail() {
                 Submit Review
               </button>
             </form>
+
+            {/* Error or Success Message */}
+            {error && <p className="mt-4 text-red-600">{error}</p>}
+            {successMessage && <p className="mt-4 text-green-600">{successMessage}</p>}
 
             {hasReviewed && (
               <p className="mt-4 text-gray-600">

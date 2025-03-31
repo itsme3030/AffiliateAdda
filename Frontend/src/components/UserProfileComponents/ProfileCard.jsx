@@ -3,7 +3,17 @@ import ProfileImageBG from '../../images/Profilebackground.jpg';
 import ProfileImage from '../../images/ProfileImg.jpg';
 
 export default function ProfileCard({ userDetail }) {
-  const { firstName, lastName, email, phone, address, city, state, zip, country } = userDetail;
+  const {
+    firstName = "-- -- --", 
+    lastName = "-- -- --", 
+    email = "-- -- --", 
+    phone = "-- -- --", 
+    address = "-- -- --", 
+    city = "-- -- --", 
+    state = "-- -- --", 
+    zip = "-- -- --", 
+    country = "-- -- --"
+  } = userDetail || {}; // Default to "-- -- --" if userDetail is null or undefined
 
   let profilePictureBG = ProfileImageBG;
   let profilePicture = ProfileImage;

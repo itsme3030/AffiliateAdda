@@ -27,7 +27,7 @@ const Contact = () => {
   return (
     <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 py-6 px-8">
       <div className="container mx-auto text-center text-white">
-        <div className="flex flex-col items-center bg-white rounded-lg shadow-lg p-6 m-6 transform hover:scale-105 transition duration-300 ease-in-out text-gray-800">
+        <div className="bg-white bg-opacity-50 flex flex-col items-center rounded-lg shadow-lg p-6 m-6 transform hover:scale-105 transition duration-300 ease-in-out text-gray-800">
           <h1 className="text-2xl font-extrabold mb-2 text-center animate__animated animate__fadeIn">
             Contact Us
           </h1>
@@ -39,7 +39,7 @@ const Contact = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 px-4">
           {/* Contact Form */}
-          <div className="max-w-lg bg-white rounded-lg shadow-xl p-2 space-y-6 transform hover:scale-105 transition duration-300 ease-in-out">
+          <div className="bg-white bg-opacity-50 max-w-lg rounded-lg shadow-xl p-2 space-y-6 transform hover:shadow-gray-800">
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-gray-800 text-lg mb-2" htmlFor="name">
