@@ -4,12 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { FaClipboard } from "react-icons/fa"; // Import the clipboard icon
 
 // Images
-import amazon from "../images/amazon.png"
-import flipkart from "../images/flipkart.jpg"
-import Youtube from "../images/Youtube.png"
-import website from "../images/website.png"
-import Dummy from "../images/Dummy.png"
-import LandingPage from "../images/LandingPage.png"
+// import amazon from "../images/amazon.png"
+// import flipkart from "../images/flipkart.jpg"
+// import Youtube from "../images/Youtube.png"
+// import website from "../images/website.png"
+// import Dummy from "../images/Dummy.png"
+// import LandingPage from "../images/LandingPage.png"
+
+import amazon from "../assets/images/amazon.png"
+import flipkart from "../assets/images/flipkart.jpg"
+import Youtube from "../assets/images/Youtube.png"
+import website from "../assets/images/website.png"
+import Dummy from "../assets/images/Dummy.png"
+import LandingPage from "../assets/images/LandingPage.png"
+import ProfileImageBG from '../assets/images/Profilebackground.jpg'
 
 function ProductCard({ product }) {
   const [generatedLink, setGeneratedLink] = useState('');
@@ -84,7 +92,7 @@ function ProductCard({ product }) {
       break;
     case "Product":
     default:
-      productImage = Dummy; // Default image
+      productImage = ProfileImageBG; // Default image
       break;
   }
 

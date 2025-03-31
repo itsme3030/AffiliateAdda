@@ -1,6 +1,8 @@
 import { FaUser, FaEnvelope, FaPhone, FaMapPin } from 'react-icons/fa';
-import ProfileImageBG from '../../images/Profilebackground.jpg';
-import ProfileImage from '../../images/ProfileImg.jpg';
+// import ProfileImageBG from '../../images/Profilebackground.jpg';
+import ProfileImageBG from '../../assets/images/Profilebackground.jpg'
+// import ProfileImage from '../../images/ProfileImg.jpg';
+import ProfileImage from '../../assets/images/ProfileImg.jpg';
 
 export default function ProfileCard({ userDetail }) {
   const {
