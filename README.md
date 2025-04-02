@@ -1,4 +1,4 @@
-# AffiliateAdda
+# AffiliateAdda 
 
 This is an affiliate marketing platform where users can either promote products as affiliates or add products to be promoted as sellers. The website allows users to earn commissions for products they promote or pay commissions for products they list. The platform tracks all activities and transactions, and users can view detailed statistics about their earnings and activities.
 
@@ -29,8 +29,10 @@ This is an affiliate marketing platform where users can either promote products 
    - **Transaction History**: Displays a list of all transactions for easy analysis.
 
 ### 5. **Transactions**
-   - Users can perform transactions within the platform. Although payment gateways are not yet integrated, the system allows for basic internal transactions.
-   - Payment gateway integration is planned for future updates.
+   - Users can perform transactions within the platform, through the integration of the **RazorPay** payment gateway.
+   - Payments are securely processed through RazorPay, allowing users to make seamless transactions.
+   - The system supports a variety of payment methods, including debit/credit cards, net banking, and wallets.
+   - Future updates may include additional payment options or enhancements to improve the transaction experience.
 
 ### 6. **Admin Section**
    - **Admin Dashboard**: Admin users can analyze earnings, manage users, and activate or deactivate users.
